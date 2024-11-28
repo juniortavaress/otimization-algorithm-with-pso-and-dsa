@@ -1,0 +1,114 @@
+Abaqus/Explicit 2023                             DATE 28-Nov-2024  TIME 13:25:16
+-------------------------------------------------------------------------------
+ PREPROCESSOR WARNING MESSAGES
+-------------------------------------------------------------------------------
+
+
+***WARNING: There are 1979 warning messages in the data (.dat) file.  Please
+            check the data file for possible errors in the input file.
+
+
+-------------------------------------------------------------------------------
+           DOMAIN DECOMPOSITION INFORMATION
+-------------------------------------------------------------------------------
+
+
+     DOMAIN 1 HAS 12231 ELEMENTS AND 25314 NODES with WEIGHT 24.998
+
+     DOMAIN 2 HAS 12152 ELEMENTS AND 24953 NODES with WEIGHT 24.999
+
+     DOMAIN 3 HAS 12152 ELEMENTS AND 24927 NODES with WEIGHT 25.004
+
+     DOMAIN 4 HAS 12151 ELEMENTS AND 25127 NODES with WEIGHT 24.999
+
+
+-------------------------------------------------------------------------------
+ MODEL INFORMATION (IN GLOBAL X-Y COORDINATES)
+-------------------------------------------------------------------------------
+
+   Total mass in model = 2.62034E-07
+   Total capacitance in model = 0.86991
+   Center of mass of model = ( 1.468083E+00, 3.875479E-01, 9.999999E-03)
+
+    Moments of Inertia :
+                 About Center of Mass              About Origin
+      I(XX)          1.758600E-08                  5.696799E-08
+      I(YY)          1.798819E-07                  7.446622E-07
+      I(ZZ)          1.974155E-07                  8.015254E-07
+      I(XY)         -3.337093E-08                 -1.824559E-07
+      I(YZ)         -8.173065E-17                 -1.015508E-09
+      I(ZX)         -2.605695E-16                 -3.846880E-09
+
+-------------------------------------------------------------------------------
+ STABLE TIME INCREMENT INFORMATION
+-------------------------------------------------------------------------------
+
+
+  The stable time increment estimate for each element is based on
+  linearization about the initial state.
+
+
+   Initial time increment = 1.82461E-08
+
+   Statistics for all elements:
+      Mean = 1.24369E+05
+      Standard deviation = 1.91054E+05
+
+   Most critical elements:
+    Element number   Rank    Time increment   Increment ratio
+    (Instance name)
+   ----------------------------------------------------------
+
+
+  Instance name for the most critical element will be printed if the critical
+  element changes or at the beginning of a new page.
+
+
+-------------------------------------------------------------------------------
+
+  INFORMATION REGARDING INITIAL CONTACT OVERCLOSURES FOR NEWLY DEFINED GENERAL
+  CONTACT INTERACTIONS IN STEP 1
+
+-------------------------------------------------------------------------------
+
+  No initial node-face or edge-edge overclosures found.
+
+
+  No nodal position adjustments have been made.
+
+
+  No unresolved initial node-face or edge-edge overclosures found.
+
+
+Abaqus/Explicit 2023                             DATE 28-Nov-2024  TIME 13:25:33
+
+The single precision Abaqus/Explicit executable will be used in this analysis.
+
+The model has been decomposed into 4 domains.
+Domain level parallelization will be used with 4 processors.
+
+-------------------------------------------------------------------------------
+ SOLUTION PROGRESS
+-------------------------------------------------------------------------------
+
+ STEP 1  ORIGIN 0.0000
+
+  Total memory used for step 1 is approximately 268.6 megabytes.
+  Element by element stable time estimation algorithm will be used.
+  Scaling factor:  1.0000
+              STEP     TOTAL      WALL      STABLE    CRITICAL    KINETIC      TOTAL
+INCREMENT     TIME      TIME      TIME   INCREMENT     ELEMENT     ENERGY     ENERGY
+        0  0.000E+00 0.000E+00  00:00:11 8.164E-09         893  2.697E-03  1.740E+01
+INSTANCE WITH CRITICAL ELEMENT: TOOL-1
+Output Field Frame Number   0, of   50, at step time 0.000E+00
+
+***WARNING: THE ANALYSIS MAY NEED A LARGE NUMBER OF INCREMENTS (MORE THAN
+            300000), AND IT MAY BE AFFECTED BY ROUND-OFF ERRORS. RUNNING THE
+            DOUBLE PRECISION EXECUTABLE IS RECOMMENDED.
+
+    14770  1.200E-04 1.200E-04  00:01:42 7.710E-09         893  2.465E-03  1.755E+01
+INSTANCE WITH CRITICAL ELEMENT: TOOL-1
+Output Field Frame Number   1, of   50, at step time 1.200E-04
+    30288  2.400E-04 2.400E-04  00:03:58 7.729E-09         893  2.565E-03  1.771E+01
+INSTANCE WITH CRITICAL ELEMENT: TOOL-1
+Output Field Frame Number   2, of   50, at step time 2.400E-04
