@@ -1,0 +1,7 @@
+{
+    "id": "Collecting results",
+    "error": "index 0 is out of bounds for axis 0 with size 0",
+    "error_type": "<class 'IndexError'>",
+    "traceback": "Traceback (most recent call last):\n  File \"s:\\Junior\\abaqus-with-python\\otimization-scripts\\otimization-algorithm-with-pso-and-dsa\\otimization_algorithm\\simualtion_manager.py\", line 55, in simulation_manager\n    SimulationManager.get_results(self, destination_path, os.path.basename(destination_path[-4]))\n  File \"s:\\Junior\\abaqus-with-python\\otimization-scripts\\otimization-algorithm-with-pso-and-dsa\\otimization_algorithm\\simualtion_manager.py\", line 147, in get_results\n    self.simulated_forces = [filtered_row.iloc[0,3], filtered_row.iloc[0,7]]\n                             ~~~~~~~~~~~~~~~~~^^^^^\n  File \"c:\\ProgramData\\anaconda3\\Lib\\site-packages\\pandas\\core\\indexing.py\", line 1146, in __getitem__\n    return self.obj._get_value(*key, takeable=self._takeable)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"c:\\ProgramData\\anaconda3\\Lib\\site-packages\\pandas\\core\\frame.py\", line 4003, in _get_value\n    return series._values[index]\n           ~~~~~~~~~~~~~~^^^^^^^\nIndexError: index 0 is out of bounds for axis 0 with size 0\n",
+    "path": "s:\\Junior\\abaqus-with-python\\otimization-scripts\\otimization-algorithm-with-pso-and-dsa\\results\\odb-files\\sim_D1_0.08_D2_0.76_D3_-1.74.odb"
+}
