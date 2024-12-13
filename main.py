@@ -7,7 +7,7 @@ import subprocess
 from PySide6.QtWidgets import QApplication, QWidget, QLabel, QVBoxLayout
 from PySide6.QtCore import Qt, QThread
 from file_utils import FileUtils
-from otimization_algorithm.otimization_manager import main_otimization_manager
+from otimization_algorithm.otimization_manager import OtimizationManager
 from ui_form import Ui_Widget
 
 # Get the current directory and set paths for other modules
@@ -16,7 +16,7 @@ optimization_algorithm_path = os.path.join(current_dir, "otimization_algorithm")
 get_results_from_odb_path = os.path.join(current_dir, "get_result_from_odb_file")
 
 # Add paths to the system path
-print(current_dir)
+# print(current_dir)
 sys.path.append(current_dir)
 sys.path.append(optimization_algorithm_path)
 sys.path.append(get_results_from_odb_path)
@@ -85,18 +85,21 @@ class ScriptManager(QWidget):
         """
         Starts the geometry generation process using an Abaqus script.
         """
-        FileUtils.set_text(self, "message-1.0")
-        self.thread = QThread()
-        self.thread.run = lambda: ScriptManager.generate_inp_files(self)  
-        self.thread.finished.connect(lambda: self.call_pso_script())
-        self.thread.start()
+        try:
+            FileUtils.set_text(self, "message-1.0")
+            self.thread = QThread()
+            self.thread.run = lambda: ScriptManager.generate_inp_files(self)  
+            self.thread.finished.connect(lambda: self.call_pso_script())
+            self.thread.start()
+        except Exception as e:
+            print("GEOMETRY ERROR: ", e)
 
 
     def generate_inp_files(self):
         """
         Runs an Abaqus script to generate input files for simulations.
         """
-        
+        # pass
         path_to_manager_geometry = os.path.join(self.geometry_dir, "geometry_manager.py")
         abaqus_command = rf'C:\SIMULIA\Commands\abq2021.bat cae noGUI={path_to_manager_geometry}'
         result = subprocess.run(abaqus_command, shell=True, capture_output=True, check=True, text=True)
@@ -116,25 +119,30 @@ class ScriptManager(QWidget):
             self.thread.finished.connect(lambda: self.clean_folder())
             self.thread.start()
         except Exception as e:
-            print("ERROR: ", e)
+            print("PSO ERROR: ", e)
+
 
     def thread_to_pso(self):
         """
         Manages the optimization process by calling the main optimization manager.
         """
-        main_otimization_manager(self, self.inp_dir)
+        OtimizationManager.main_otimization_manager(self, self.inp_dir)
+        FileUtils.set_text(self, "message-4.1")
+
         
 
     def clean_folder(self):
         """
         Cleans up temporary Abaqus-related files from the current directory.
         """
-        for file in os.listdir(self.current_dir):
-            if file.startswith("abaqus"):
-                file_path = os.path.join(self.current_dir, file)
-                if os.path.isfile(file_path):  
-                   os.remove(file_path)
-
+        try:
+            for file in os.listdir(self.current_dir):
+                if file.startswith("abaqus"):
+                    file_path = os.path.join(self.current_dir, file)
+                    if os.path.isfile(file_path):  
+                        os.remove(file_path)
+        except:
+            print("\n->Error to delete abaqus files.")
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

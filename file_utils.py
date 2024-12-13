@@ -34,7 +34,7 @@ class FileUtils():
         elif message == "message-3.4":
             messages = ["<br>Collecting results from .odb file<br>"]
         elif message == "message-3.5":
-            messages = ["<br><b> Current iteration result </b><br>"]
+            messages = ["<br><b> Current iteration best result </b><br>"]
             messages.extend(["Cutting Force from Simulation: {0}<br>".format(self.simulated_forces[1])])
             messages.extend(["Cutting Force from Experiment: {0}<br>".format(self.target_forces[0])])
             error = (self.target_forces[0] - self.simulated_forces[1]) / self.target_forces[0]
@@ -83,17 +83,17 @@ class FileUtils():
         """
         mainclass.current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
         mainclass.geometry_dir = os.path.join(mainclass.current_dir, "geometry")
-        mainclass.geometry_datas_dir = os.path.join(mainclass.geometry_dir, "data")
         mainclass.results_dir = os.path.join(mainclass.current_dir, "results")
-        mainclass.json_dir = os.path.join(mainclass.results_dir, "json_files")
-        mainclass.excel_dir = os.path.join(mainclass.results_dir, "excel_files")
-        mainclass.info_dir = os.path.join(mainclass.results_dir, "info_dir")
-        mainclass.inp_and_simulation_dir = os.path.join(mainclass.results_dir, "inp-and-simulation")
-        mainclass.dafaut_datas_dir = os.path.join(mainclass.results_dir, "defaut")
+        mainclass.excel_dir = os.path.join(mainclass.current_dir, "results\excel_files")
+        # mainclass.info_dir = os.path.join(mainclass.current_dir, "results\info_dir")
+        mainclass.inp_and_simulation_dir = os.path.join(mainclass.current_dir, "results\inp-and-simulation")
+        mainclass.json_dir = os.path.join(mainclass.current_dir, "results\json_files")
+        mainclass.odb_processed_dir = os.path.join(mainclass.current_dir, 'results\odb-file-processed')
+        mainclass.odb_dir = os.path.join(mainclass.current_dir, "results\odb-files")
+      
+        mainclass.geometry_datas_dir = os.path.join(mainclass.geometry_dir, "data")
         mainclass.inp_dir = os.path.join(mainclass.inp_and_simulation_dir, "defaut\INPFiles")
         mainclass.cae_dir = os.path.join(mainclass.inp_and_simulation_dir, "defaut\CAE")
-        mainclass.odb_processed_dir = os.path.join(mainclass.results_dir, 'odb-file-processed')
-        mainclass.odb_dir = os.path.join(mainclass.results_dir, "odb-files")
 
         # if call == "temp-force":
         #     with open(os.path.join(mainclass.info_dir, "info.json"), "r") as file:
@@ -101,11 +101,11 @@ class FileUtils():
         #     mainclass.odb_dir = os.path.join(mainclass.current_dir, str(data["path_to_odb"]))
         
         if call == "main":
-            print('s5d5d5sd45')
             if os.path.exists(mainclass.results_dir):
                 shutil.rmtree(mainclass.results_dir)
 
-            for folder in [mainclass.json_dir, mainclass.excel_dir, mainclass.info_dir, mainclass.inp_dir, mainclass.cae_dir, mainclass.odb_processed_dir, mainclass.odb_dir]:
+            folders_to_create = [mainclass.excel_dir, mainclass.json_dir, mainclass.odb_processed_dir, mainclass.odb_dir, mainclass.inp_dir, mainclass.cae_dir]
+            for folder in folders_to_create:
                 if not os.path.exists(folder):
                     os.makedirs(folder)
             

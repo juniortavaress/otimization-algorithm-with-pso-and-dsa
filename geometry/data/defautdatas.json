@@ -78,8 +78,8 @@
             "cuttingDepth": 0.025
         },
         "stepsAndHistoryInformation": {
-            "timePeriod": 0.006,
-            "cuttingVelocity": 166.67
+            "timePeriod": 0.004,
+            "cuttingVelocity": 1000
         }
     },
     "paths": {

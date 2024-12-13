@@ -19,22 +19,23 @@ class getResults():
         file.create_folders(self, None)
 
 
-    def get_odb_path(self):
-        """
-        Prompts the user to select a directory containing ODB files and saves the path to a JSON file.
-        """
-        self.odb_dir = str(easygui.diropenbox("Select ODB folder"))
-        path_to_save_info = os.path.join(self.info_dir, "info.json")
-        FileUtils.save_as_json({"path_to_odb": self.odb_dir}, path_to_save_info)
+    # def get_odb_path(self):
+    #     """
+    #     Prompts the user to select a directory containing ODB files and saves the path to a JSON file.
+    #     """
+    #     self.odb_dir = str(easygui.diropenbox("Select ODB folder"))
+    #     path_to_save_info = os.path.join(self.info_dir, "info.json")
+    #     FileUtils.save_as_json({"path_to_odb": self.odb_dir}, path_to_save_info)
 
 
     def send_odb_path(self, odb_path):
         """
         Sets the ODB directory path and saves it to a JSON file.
         """
-        self.odb_dir = str(odb_path)
-        path_to_save_info = os.path.join(self.info_dir, "info.json")
-        FileUtils.save_as_json({"path_to_odb": self.odb_dir}, path_to_save_info)
+        pass
+        # self.odb_dir = str(odb_path)
+        # path_to_save_info = os.path.join(self.info_dir, "info.json")
+        # FileUtils.save_as_json({"path_to_odb": self.odb_dir}, path_to_save_info)
 
 
     def manage_abaqus_script(self):
@@ -59,14 +60,10 @@ class getResults():
 
 
     def get_data_from_odb(self, abaqus_command):
-        print('comando')
         """
         Executes a command to extract data from an ODB file.
         """
         result = subprocess.run(abaqus_command, shell=True, capture_output=True, check=True, text=True)
-        print(result)
-        print(result.stderr)
-        print(result.stdout)
         # if "Error" in result.stdout or "Error" in result.stderr:
         #     FileUtils.set_text(parent, "message-4.1")
         # else:
@@ -74,7 +71,6 @@ class getResults():
 
 
     def convert_json_to_excel(self):
-        print('excel')
         """
         Converts the generated JSON files into Excel format using the conversion script.
         """
