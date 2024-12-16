@@ -3,6 +3,7 @@ import re
 import shutil
 import traceback
 import json
+import numpy as np
 import pandas as pd
 from file_utils import FileUtils
 from get_result_from_odb_file.main_results import getResults
@@ -36,8 +37,14 @@ class SimulationManager:
             stage = "Editing inp file"
             SimulationManager.except_function(self, stage, e, lis_dir_inp)
             
+        # Step 2: Putting compiled files together 
+        try:
+            SimulationManager.copy_file(self, "CompiledFiles")
+        except Exception as e:
+            stage = "Transferring compiled files"
+            SimulationManager.except_function(self, stage, e)
 
-        # Step 2: Run the simulation
+        # Step 3: Run the simulation
         # import time
         # print('simulando')
         # time.sleep(30)
@@ -48,24 +55,23 @@ class SimulationManager:
             stage = "Rodando Simulação"
             SimulationManager.except_function(self, stage, e, lis_dir_inp)
 
-
-        # Step 3: Transfer .odb files
+        # Step 4: Transfer .odb files
         try:
             FileUtils.set_text(self, "message-3.3")
-            SimulationManager.copy_odb_file(self)
+            SimulationManager.copy_file(self, "ODB")
         except Exception as e:
             stage = "Transferring odb files"
             SimulationManager.except_function(self, stage, e)
 
-        # Step 4: Collect simulation results
+        # Step 5: Collect simulation results
         try:    
             FileUtils.set_text(self, "message-3.4")
             results = SimulationManager.get_results(self, index_names)
         except Exception as e:
             stage = "Collecting results"
             SimulationManager.except_function(self, stage, e)
-
         return results
+
 
     def edit_inp_file(self, file_path, parameters):
         # edit_inp_file(self, file_path, parameters)
@@ -74,25 +80,59 @@ class SimulationManager:
         """
         lis_dir_inp = []
         index_names = {}
+        filename = os.path.basename(file_path)[:-4]
+
         for j, new_values in enumerate(parameters):
             with open(file_path, 'r') as file:
                 lines = file.readlines()
+
+            # Changing D2
             pattern = r"^\*Damage Initiation.*JOHNSON COOK.*"  
             for i, line in enumerate(lines):
                 if re.match(pattern, line):
                     values = lines[i + 1].split(',')
-                    values[0] = f"{new_values[0]:>5}"  
                     values[1] = f"{new_values[1]:>7}"   
-                    values[2] = f"{new_values[2]:>7}" 
                     lines[i + 1] = ','.join(values)  
-                    break  
+                    break
+                
+            # Changing p
+            pattern = r"^\*Damage Evolution.*"  
+            for i, line in enumerate(lines):
+                if re.match(pattern, line):
+                    start_line = i + 1
+                    break
+            
+            p = new_values[0]
+            beta, u_pl = 3.00, 0.01649
+            L = np.array([0, 0.0003298, 0.0006596, 0.0009894, 0.0013192, 0.001649, 0.0019788, 0.0023086, 0.0026384, 0.0029682, 0.003298, 0.0036278, 0.0039576, 0.0042874, 0.0046172, 0.004947, 0.0052768, 
+                        0.0056066, 0.0059364, 0.0062662, 0.006596, 0.0069258, 0.0072556, 0.0075854, 0.0079152, 0.008245, 0.0085748, 0.0089046, 0.0092344, 0.0095642, 0.009894, 0.0102238, 0.0105536, 
+                        0.0108834, 0.0112132, 0.011543, 0.0118728, 0.0122026, 0.0125324, 0.0128622, 0.013192, 0.0135218, 0.0138516, 0.0141814, 0.0145112, 0.014841, 0.0151708, 0.0155006, 0.0158304, 
+                        0.0161602, 0.01649])
+            D_de = (1 - np.exp(-beta * (L / u_pl))) / (1 - np.exp(-beta)) * p
 
-            # Saving info
-            # dir_inp = S:\Junior\abaqus-with-python\otimization-scripts\otimization-algorithm-with-pso-and-dsa\results\inp-and-simulation\sim_D1_0.09_D2_0.95_D3_-1.56
-            filename = os.path.basename(file_path)[:-4]
-            params = f"{filename}_D1_{float(values[0].strip()):.2f}_D2_{float(values[1].strip()):.2f}_D3_{float(values[2].strip()):.2f}.inp"
+            for i, value in enumerate(D_de):
+                line_index = start_line + i
+                values = lines[line_index].split(',')
+                values[0] = f"{value:.9f}"
+                lines[line_index] = ','.join(values)  
+            
+            # Changing Ts
+            pattern = r"^\*Plastic, hardening=USER*"  
+            Ts = new_values[2]
+            for i, line in enumerate(lines):
+                if re.match(pattern, line):
+                    print(line)
+                    lines[i] = "*Plastic, hardening=USER, properties=9\n"
+                    lines[i+1] = f"1200., 800., 0.4, 0.0121, 0.0002, 0.005, 0.002, 0.0088, \n{Ts}\n"
+
+                    break
+
+
+            # params = f"{filename}_p_{foat(new_values[0].strip()):.2f}_D2_{float(new_values[1].strip()):.2f}_Ts_{float(new_values[2].strip()):.2f}.inp"
+            params = f"{filename}_p_{float(new_values[0]):.2f}_D2_{float(new_values[1]):.2f}_Ts_{float(new_values[2]):.2f}.inp"
             dir_inp = os.path.join(self.inp_and_simulation_dir, params[:-4])
             os.makedirs(dir_inp)
+
             with open(os.path.join(dir_inp, params), 'w') as file:
                 file.writelines(lines)
             lis_dir_inp.append(dir_inp)
@@ -115,22 +155,33 @@ class SimulationManager:
         # import time
         # time.sleep(15)
 
-    def copy_odb_file(self):
+    def copy_file(self, type):
         """
         Transfers .odb files from the simulation directory to the results directory.
         """
-        destination_odb_folder = self.odb_dir
-        for folder_name in os.listdir(self.inp_and_simulation_dir):
-            folder_path = os.path.join(self.inp_and_simulation_dir, folder_name)
-            if os.path.isdir(folder_path) and folder_name.lower() != "defaut":
-                for root, dirs, files in os.walk(folder_path):
-                    for file in files:
-                        if file.endswith(".odb"):
-                            source_path = os.path.join(root, file) 
-                            destination_path = os.path.join(destination_odb_folder, file)  
-                            shutil.copy2(source_path, destination_path)
-                            os.remove(source_path)
-        return destination_path
+        if type == "ODB":
+            destination_odb_folder = self.odb_dir
+            for folder_name in os.listdir(self.inp_and_simulation_dir):
+                folder_path = os.path.join(self.inp_and_simulation_dir, folder_name)
+                if os.path.isdir(folder_path) and folder_name.lower() != "defaut":
+                    for root, dirs, files in os.walk(folder_path):
+                        for file in files:
+                            if file.endswith(".odb"):
+                                source_path = os.path.join(root, file) 
+                                destination_path = os.path.join(destination_odb_folder, file)  
+                                shutil.copy2(source_path, destination_path)
+                                os.remove(source_path)
+        
+        elif type == "CompiledFiles":
+            self.compiled_files_dir
+
+            for folder_name in os.listdir(self.inp_and_simulation_dir):
+                folder_path = os.path.join(self.inp_and_simulation_dir, folder_name)
+                if folder_name.lower() != "defaut":
+                    source_path_list = ["abaqus_v6.env", "explicitU-D.dll", "explicitU.dll"]
+                    for file in source_path_list:
+                        source_path = os.path.join(self.compiled_files_dir, file)
+                        shutil.copy2(source_path, folder_path)
 
 
     def get_results(self, index_names):
@@ -159,6 +210,9 @@ class SimulationManager:
                 df = pd.read_excel(os.path.join(self.excel_dir, "Results.xlsx"), header=1)
                 filtered_row = df[df["Filename"] == file[:-4]]
                 simulated_forces = [filtered_row.iloc[0,3], filtered_row.iloc[0,7]]
+                print("\n\n\n\n\n=============================================")
+                print("NORMAL FORCE (MEAN OU MAX????)", filtered_row.iloc[0,3])
+                print("=============================================\n\n\n\n\n")
                 simulated_temperature = filtered_row.iloc[0,9]
                 # FileUtils.set_text(self, "message-3.5")
 

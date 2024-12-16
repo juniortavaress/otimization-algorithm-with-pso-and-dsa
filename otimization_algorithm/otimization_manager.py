@@ -13,7 +13,9 @@ class OtimizationManager():
         # Target values we want to reach
         target_forces = [479.59, 524.61]  # Target forces in x, y, z directions
         target_temperature = 86.37  # Target temperature
-        parameter_bounds = [(0.00, 0.10), (0.50, 1.00), (-2.00, -1.00)]
+
+        # p, D2, Ts
+        parameter_bounds = [(0.56, 0.84), (0.50, 1.00), (556, 834)]
 
         FileUtils.set_text(self, "message-2.2")
         OtimizationManager.start_pso(self, inp_folder, target_forces, target_temperature, parameter_bounds)
@@ -24,19 +26,22 @@ class OtimizationManager():
     def start_pso(self, inp_folder, target_forces, target_temperature, parameter_bounds):
         FileUtils.set_text(self, "message-2.3")
         self.call_count, self.best_position, self.best_score = run_pso(self, inp_folder, target_forces, target_temperature, parameter_bounds)
-        # print("Optimized Parameters:", [f"{param}: {value:.3f}" for param, value in zip(['D1', 'D2', 'D3'], self.best_position)])
-        # print("Optimized Error:", self.best_score, '\n')
 
-        # target_values = self.best_position
-        # data_path = os.path.join(self.excel_dir, "datas.xlsx")
-        # datas = pd.read_excel(data_path)
+        print("Optimized Parameters:", [f"{param}: {value:.3f}" for param, value in zip(['D1', 'D2', 'D3'], self.best_position)])
+        print("Optimized Error:", self.best_score, '\n')
 
-        # self.filtered_rows = datas[(datas['Parameter D1'].round(2) == target_values[0].round(2)) & 
-        #                     (datas['Parameter D2'].round(2) == target_values[1].round(2)) & 
-        #                     (datas['Parameter D3'].round(2) == target_values[2].round(2))]
-
-        # FileUtils.set_text(self, "message-2.4")
+        target_values = self.best_position
+        data_path = os.path.join(self.excel_dir, "datas.xlsx")
+        datas = pd.read_excel(data_path)
         
+        try:
+            self.filtered_rows = datas[(datas['Parameter p'].round(2) == target_values[0].round(2)) & 
+                                (datas['Parameter D2'].round(2) == target_values[1].round(2)) & 
+                                (datas['Parameter Ts'].round(2) == target_values[2].round(2))]
+
+            FileUtils.set_text(self, "message-2.4")
+        except:
+            pass
 
     def start_dsa():
         # Runninf DSA Algorithm

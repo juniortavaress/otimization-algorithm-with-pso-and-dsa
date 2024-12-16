@@ -69,6 +69,7 @@ class Main():
 
                 ModelName = str(data['generalInformation']['modelName'])
                 mdb.Model(modelType=STANDARD_EXPLICIT, name=ModelName)
+                
 
                 Materials(data) 
                 ChipPlateModel(data)

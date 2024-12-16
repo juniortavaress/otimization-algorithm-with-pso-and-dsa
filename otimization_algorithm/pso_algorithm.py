@@ -13,7 +13,7 @@ def run_pso(self, inp_folder, target_forces, target_temperature, parameter_bound
     lb = [b[0] for b in parameter_bounds]
     ub = [b[1] for b in parameter_bounds]
     
-    best_position, best_score = pso(self, objective_function_pso, lb, ub, swarmsize=3, omega=0.5, phip=2, phig=2, maxiter=5, minstep=1e-6, minfunc=1e-3)    
+    best_position, best_score = pso(self, objective_function_pso, lb, ub, swarmsize=3, omega=0.5, phip=2, phig=2, maxiter=2, minstep=1e-6, minfunc=1e-3)    
     return self.call_count, best_position, best_score
 
 
@@ -57,7 +57,8 @@ def objective_function(self, inp_folder, parameters, target_forces, target_tempe
         # print("normalized_force_error", normalized_force_error)
         # print("normalized_temp_error", normalized_temp_error)
 
-        # save_iteration_datas(self, param, target_forces, target_temperature, simulated_forces, simulated_temperature, percentage_errors)
+        save_iteration_datas(self, parameters[index], target_forces, target_temperature, simulated_forces, simulated_temperature, percentage_errors)
+
         error_list.append(np.sqrt(0.7 * normalized_force_error + 0.3 * normalized_temp_error))
         print('-T-', index, simulated_temperature)
         print('-F-', index, simulated_temperature)
@@ -68,7 +69,7 @@ def objective_function(self, inp_folder, parameters, target_forces, target_tempe
     return error_list
 
 def save_iteration_datas(self, parameters, target_forces, target_temperature, simulated_forces, simulated_temperature, percentage_errors):
-    data = {"Parameter D1": [parameters[0]], "Parameter D2": [parameters[1]], "Parameter D3": [parameters[2]],
+    data = {"Parameter p": [parameters[0]], "Parameter D2": [parameters[1]], "Parameter Ts": [parameters[2]],
              "Experiment Cutting Force": target_forces[0], "Simulation Cutting Force": simulated_forces[0], "Error Fc": percentage_errors[1],
              "Experiment Normal Force": target_forces[1], "Simulation Normal Force": simulated_forces[1], "Error Fn": percentage_errors[0],
              "Experiment Temperature": target_temperature, "Simulation Temperature": simulated_temperature, "Error T": percentage_errors[2]}

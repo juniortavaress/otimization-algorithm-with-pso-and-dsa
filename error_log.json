@@ -1,0 +1,6 @@
+{
+    "error_type": "<type 'exceptions.TypeError'>", 
+    "traceback": "Traceback (most recent call last):\n  File \"s:/Junior/abaqus-with-python/otimization-scripts/otimization-algorithm-with-pso-and-dsa/geometry/geometry_manager.py\", line 72, in createGeometryAndAssembly\n    mdb.setValues(absoluteZero=1.79769e+308)\nTypeError: keyword error on absoluteZero\n", 
+    "id": "createGeometryAndAssembly", 
+    "error": "keyword error on absoluteZero"
+}

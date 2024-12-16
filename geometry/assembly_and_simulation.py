@@ -103,6 +103,8 @@ class AssemblyModel():
 
 
     def setBoundaryConditionsAndPredefinedFields(self):
+        # Absolut zero
+        self.m.setValues(absoluteZero=1.79769e+308)
         # Setting boundary conditions for the simulation
         self.m.VelocityBC(amplitude=UNSET, createStepName='CuttingStep', distributionType=UNIFORM, fieldName='', localCsys=None, name='BC-WorkpieceBottom', region=self.m.rootAssembly.instances['Eulerian-1'].sets['WorkpieceBottom'], v1=self.CuttingVelocity, v2=0.0, v3=0.0, vr1=0.0, vr2=0.0, vr3=0.0)
         self.m.VelocityBC(amplitude=UNSET, createStepName='CuttingStep', distributionType=UNIFORM, fieldName='', localCsys=None, name='BC-zLock', region=self.m.rootAssembly.instances['Eulerian-1'].sets['EulerDomain'], v1=UNSET, v2=UNSET, v3=0.0, vr1=UNSET, vr2=UNSET, vr3=UNSET)

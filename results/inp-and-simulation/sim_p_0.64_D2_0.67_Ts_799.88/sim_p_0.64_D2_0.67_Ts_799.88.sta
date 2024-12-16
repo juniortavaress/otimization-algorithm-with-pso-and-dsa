@@ -1,0 +1,179 @@
+Abaqus/Explicit 2021                             DATE 16-Dec-2024  TIME 08:23:26
+-------------------------------------------------------------------------------
+ PREPROCESSOR WARNING MESSAGES
+-------------------------------------------------------------------------------
+
+
+***WARNING: There are 1979 warning messages in the data (.dat) file.  Please
+            check the data file for possible errors in the input file.
+
+
+-------------------------------------------------------------------------------
+           DOMAIN DECOMPOSITION INFORMATION
+-------------------------------------------------------------------------------
+
+
+     DOMAIN 1 HAS 12235 ELEMENTS AND 25324 NODES with WEIGHT 24.998
+
+     DOMAIN 2 HAS 12151 ELEMENTS AND 24953 NODES with WEIGHT 25.002
+
+     DOMAIN 3 HAS 12150 ELEMENTS AND 24923 NODES with WEIGHT 25.000
+
+     DOMAIN 4 HAS 12150 ELEMENTS AND 25125 NODES with WEIGHT 25.000
+
+
+
+***WARNING: Additional operations will be performed to resolve the irregular
+            numbering in the Eulerian mesh
+
+
+***WARNING: Additional operations will be performed to resolve the irregular
+            numbering in the Eulerian mesh
+
+
+***WARNING: Additional operations will be performed to resolve the irregular
+            numbering in the Eulerian mesh
+
+
+***WARNING: Additional operations will be performed to resolve the irregular
+            numbering in the Eulerian mesh
+
+-------------------------------------------------------------------------------
+ MODEL INFORMATION (IN GLOBAL X-Y COORDINATES)
+-------------------------------------------------------------------------------
+
+   Total mass in model = 2.62034E-07
+   Total capacitance in model = 9.98385E-02
+   Center of mass of model = ( 1.468083E+00, 3.875361E-01, 1.000000E-02)
+
+    Moments of Inertia :
+                 About Center of Mass              About Origin
+      I(XX)          1.758372E-08                  5.696331E-08
+      I(YY)          1.798819E-07                  7.446621E-07
+      I(ZZ)          1.974132E-07                  8.015206E-07
+      I(XY)         -3.336766E-08                 -1.824481E-07
+      I(YZ)         -2.310222E-17                 -1.015477E-09
+      I(ZX)         -5.631590E-17                 -3.846879E-09
+
+-------------------------------------------------------------------------------
+ STABLE TIME INCREMENT INFORMATION
+-------------------------------------------------------------------------------
+
+
+  The stable time increment estimate for each element is based on
+  linearization about the initial state.
+
+
+   Initial time increment = 1.82461E-08
+
+   Statistics for all elements:
+      Mean = 1.24369E+05
+      Standard deviation = 1.91054E+05
+
+   Most critical elements:
+    Element number   Rank    Time increment   Increment ratio
+    (Instance name)
+   ----------------------------------------------------------
+       11941          1       1.824608E-08      1.000000E+00
+    EULERIAN-1
+       11942          2       1.824608E-08      1.000000E+00
+    EULERIAN-1
+       11943          3       1.824608E-08      1.000000E+00
+    EULERIAN-1
+       11945          4       1.824608E-08      1.000000E+00
+    EULERIAN-1
+       11946          5       1.824608E-08      1.000000E+00
+    EULERIAN-1
+       11947          6       1.824608E-08      1.000000E+00
+    EULERIAN-1
+       11948          7       1.824608E-08      1.000000E+00
+    EULERIAN-1
+       11949          8       1.824608E-08      1.000000E+00
+    EULERIAN-1
+       11951          9       1.824608E-08      1.000000E+00
+    EULERIAN-1
+       11952         10       1.824608E-08      1.000000E+00
+    EULERIAN-1
+
+
+  Instance name for the most critical element will be printed if the critical
+  element changes or at the beginning of a new page.
+
+
+-------------------------------------------------------------------------------
+
+  INFORMATION REGARDING INITIAL CONTACT OVERCLOSURES FOR NEWLY DEFINED GENERAL
+  CONTACT INTERACTIONS IN STEP 1
+
+-------------------------------------------------------------------------------
+
+  No initial node-face overclosures found.
+
+
+  No nodal position adjustments have been made.
+
+
+  No unresolved initial node-face overclosures found.
+
+
+Abaqus/Explicit 2021                             DATE 16-Dec-2024  TIME 08:23:44
+
+The single precision Abaqus/Explicit executable will be used in this analysis.
+
+The model has been decomposed into 4 domains.
+Domain level parallelization will be used with 4 processors.
+
+-------------------------------------------------------------------------------
+ SOLUTION PROGRESS
+-------------------------------------------------------------------------------
+
+ STEP 1  ORIGIN 0.0000
+
+  Total memory used for step 1 is approximately 259.3 megabytes.
+  Element by element stable time estimation algorithm will be used.
+  Scaling factor:  1.0000
+  Variable mass scaling factor at zero increment: 1.0000
+              STEP     TOTAL      WALL      STABLE    CRITICAL    KINETIC      TOTAL
+INCREMENT     TIME      TIME      TIME   INCREMENT     ELEMENT     ENERGY     ENERGY
+        0  0.000E+00 0.000E+00  00:00:09 8.164E-09         893  9.710E-02  2.094E+00
+INSTANCE WITH CRITICAL ELEMENT: TOOL-1
+Output Field Frame Number      0 of     50 requested intervals at increment zero.
+    14494  8.000E-05 8.000E-05  00:05:28 5.322E-09         893  1.022E-01  2.158E+00
+INSTANCE WITH CRITICAL ELEMENT: TOOL-1
+Output Field Frame Number      1 of     50 requested intervals at  8.000136E-05
+    28486  1.600E-04 1.600E-04  00:10:07 5.965E-09         893  1.029E-01  2.223E+00
+INSTANCE WITH CRITICAL ELEMENT: TOOL-1
+Output Field Frame Number      2 of     50 requested intervals at  1.600008E-04
+    41582  2.400E-04 2.400E-04  00:14:35 6.242E-09         893  1.071E-01  2.287E+00
+INSTANCE WITH CRITICAL ELEMENT: TOOL-1
+Output Field Frame Number      3 of     50 requested intervals at  2.400007E-04
+    54153  3.200E-04 3.200E-04  00:19:19 6.455E-09         893  1.113E-01  2.351E+00
+INSTANCE WITH CRITICAL ELEMENT: TOOL-1
+Output Field Frame Number      4 of     50 requested intervals at  3.200003E-04
+    66447  4.000E-04 4.000E-04  00:23:55 6.566E-09         893  1.139E-01  2.415E+00
+INSTANCE WITH CRITICAL ELEMENT: TOOL-1
+Output Field Frame Number      5 of     50 requested intervals at  4.000038E-04
+    78553  4.800E-04 4.800E-04  00:28:34 6.660E-09         893  1.168E-01  2.480E+00
+INSTANCE WITH CRITICAL ELEMENT: TOOL-1
+Output Field Frame Number      6 of     50 requested intervals at  4.800036E-04
+    90524  5.600E-04 5.600E-04  00:33:09 6.709E-09         893  1.204E-01  2.544E+00
+INSTANCE WITH CRITICAL ELEMENT: TOOL-1
+Output Field Frame Number      7 of     50 requested intervals at  5.600050E-04
+   102404  6.400E-04 6.400E-04  00:37:47 6.763E-09         893  1.222E-01  2.608E+00
+INSTANCE WITH CRITICAL ELEMENT: TOOL-1
+Output Field Frame Number      8 of     50 requested intervals at  6.400016E-04
+   114203  7.200E-04 7.200E-04  00:42:26 6.804E-09         893  1.289E-01  2.673E+00
+INSTANCE WITH CRITICAL ELEMENT: TOOL-1
+Output Field Frame Number      9 of     50 requested intervals at  7.200009E-04
+   125939  8.000E-04 8.000E-04  00:47:15 6.851E-09         893  1.271E-01  2.737E+00
+INSTANCE WITH CRITICAL ELEMENT: TOOL-1
+Output Field Frame Number     10 of     50 requested intervals at  8.000064E-04
+   137586  8.800E-04 8.800E-04  00:52:04 6.874E-09         893  1.369E-01  2.801E+00
+INSTANCE WITH CRITICAL ELEMENT: TOOL-1
+Output Field Frame Number     11 of     50 requested intervals at  8.800039E-04
+   149229  9.600E-04 9.600E-04  00:56:56 6.891E-09         893  1.327E-01  2.866E+00
+INSTANCE WITH CRITICAL ELEMENT: TOOL-1
+Output Field Frame Number     12 of     50 requested intervals at  9.600053E-04
+   160868  1.040E-03 1.040E-03  01:01:57 6.921E-09         893  1.431E-01  2.930E+00
+INSTANCE WITH CRITICAL ELEMENT: TOOL-1
+Output Field Frame Number     13 of     50 requested intervals at  1.040004E-03

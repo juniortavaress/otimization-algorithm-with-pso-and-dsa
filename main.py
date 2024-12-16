@@ -78,8 +78,8 @@ class ScriptManager(QWidget):
         """
         Opens a dialog box for the user to select the directory with .inp files.
         """
-        self.inp_dir = easygui.diropenbox(title="Select the folder with the inp file")
-
+        # self.inp_dir = easygui.diropenbox(title="Select the folder with the inp file")
+        self.inp_dir = r"S:\Junior\abaqus-with-python\otimization-scripts\otimization-algorithm-with-pso-and-dsa"
 
     def generate_geometry_from_script(self):
         """

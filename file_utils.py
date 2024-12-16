@@ -92,6 +92,7 @@ class FileUtils():
         mainclass.odb_dir = os.path.join(mainclass.current_dir, "results\odb-files")
       
         mainclass.geometry_datas_dir = os.path.join(mainclass.geometry_dir, "data")
+        mainclass.compiled_files_dir = os.path.join(mainclass.geometry_dir, "compiled")
         mainclass.inp_dir = os.path.join(mainclass.inp_and_simulation_dir, "defaut\INPFiles")
         mainclass.cae_dir = os.path.join(mainclass.inp_and_simulation_dir, "defaut\CAE")
 
