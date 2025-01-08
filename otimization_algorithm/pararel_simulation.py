@@ -8,28 +8,36 @@ class PararelSimulation():
     def __init__(self):
         super(PararelSimulation, self).__init__()
 
-    def startSimulation(self, list_folder_path, number_of_cores, number_pararell_sim):
-        # (simulation, path_list_to_inp_folders, number_of_cores, number_pararell_sim)
+    def start_simulation(self, id, list_folder_path, number_of_cores, number_pararell_sim):  
+        """
+        Start the simulation process by retrieving input files 
+        and running simulations in parallel.
+
+        Args:
+            list_folder_path (list): List of folder paths containing .inp files.
+            number_of_cores (int): Number of CPU cores to use for each simulation.
+            number_parallel_sim (int): Number of parallel simulations to run.
+        """   
+
+        for i, file in enumerate(list_folder_path):
+            print(id, file)  
         
         self.path = list_folder_path
         self.number_of_cores = number_of_cores
         self.numberFiles = number_pararell_sim
 
-        # PararelSimulation.setup(self)
         PararelSimulation.getINPFile(self)
         PararelSimulation.runSimulations(self)
+        
 
-    # Defining list and paths. Changing directory.
-    def setup(self):
-        
-        pass
-        # self.path = os.path.join(self.path_to_save_files ,  'INPFiles')
-        
-    # Getting all the inp files in the folder
     def getINPFile(self):
+        """
+        Retrieve all .inp files from the provided directories.
+
+        This method scans each folder in the provided list of paths and 
+        collects the full paths of files with the `.inp` extension.
+        """
         self.inpFiles = []
-        
-        os.chdir(r"S:\Junior\abaqus-with-python\otimization-scripts\backup\results\inp-and-simulation") 
 
         for folder_path in self.path:
             if os.path.isdir(folder_path):
@@ -42,6 +50,13 @@ class PararelSimulation():
 
 
     def runSimulations(self):
+        """
+        Run the Abaqus simulations in parallel.
+
+        Each simulation command is constructed based on the input files, 
+        and simulations are executed concurrently using a thread pool executor.
+        """
+
         self.commands = []
 
         # Creating the run commands based on the inp files
@@ -55,12 +70,28 @@ class PararelSimulation():
         
 
         def runSimulationAux(inp_dir, command):
-            try:
-                os.chdir(inp_dir)
-                process = subprocess.Popen(command, shell=True)
-                process.wait()
-            except Exception as e:
-                return f"Failed: {command}. Error: {str(e)}"
+            retries = 3
+            job_name = command.split('job=')[1].split()[0]
+            output_file = os.path.join(inp_dir, f"{job_name}.odb")
+
+            for attempt in range(1, retries + 1):
+                try:
+                    print(attempt)
+                    if attempt != 1:
+                        if os.path.exists(output_file):
+                            print("Simulation completed successfully: {}".format(output_file))
+                            return "Success"
+                        else:
+                            print("Output file not found for {}. Retrying...".format(job_name))
+
+                    os.chdir(inp_dir)
+                    process = subprocess.Popen(command, shell=True)
+                    print("process")
+                    process.wait()
+
+
+                except Exception as e:
+                    return f"Failed: {command}. Error: {str(e)}"
 
         # Using ThreadPoolExecutor to manage the queue of simulations
         with concurrent.futures.ThreadPoolExecutor(max_workers=self.numberFiles) as executor:
@@ -75,3 +106,109 @@ class PararelSimulation():
                     result = future.result()
                 except Exception as e:
                     print(f"Simulation {command} generated an exception: {e}")
+
+# import os 
+# import re
+# import json
+# import subprocess
+# import concurrent.futures
+
+# class PararelSimulation():
+#     def __init__(self):
+#         super(PararelSimulation, self).__init__()
+
+#     def startSimulation(self, list_folder_path, number_of_cores, number_pararell_sim):
+#         """
+#         Start the simulation process by retrieving input files 
+#         and running simulations in parallel.
+
+#         Args:
+#             list_folder_path (list): List of folder paths containing .inp files.
+#             number_of_cores (int): Number of CPU cores to use for each simulation.
+#             number_parallel_sim (int): Number of parallel simulations to run.
+#         """
+#         self.path = list_folder_path
+#         self.number_of_cores = number_of_cores
+#         self.numberFiles = number_pararell_sim
+
+#         PararelSimulation.getINPFile(self)
+#         PararelSimulation.runSimulations(self)
+
+
+#     def getINPFile(self):
+#         """
+#         Retrieve all .inp files from the provided directories.
+
+#         This method scans each folder in the provided list of paths and 
+#         collects the full paths of files with the `.inp` extension.
+#         """
+#         self.inpFiles = []
+#         for folder_path in self.path:
+#             if os.path.isdir(folder_path):
+#                 for file in os.listdir(folder_path):
+#                     if file.endswith('.inp'):
+#                         filepath = os.path.join(folder_path, file)
+#                         self.inpFiles.append(filepath)
+
+
+#     def runSimulations(self):
+#         """
+#         Run the Abaqus simulations in parallel.
+
+#         Each simulation command is constructed based on the input files, 
+#         and simulations are executed concurrently using a thread pool executor.
+#         """
+#         self.commands = []
+#         for inp in self.inpFiles:
+#             inp_dir = os.path.dirname(inp)
+#             command = rf'call C:\SIMULIA\Commands\abq2023.bat job={os.path.basename(inp)[:-4]} cpus={self.number_of_cores} interactive'
+#             self.commands.append((inp_dir, command))
+        
+#         def runSimulationAux(inp_dir, command, retries=3):
+#             """
+#             Run a single simulation with a specified number of retries.
+
+#             Args:
+#                 inp_dir (str): Directory containing the input file.
+#                 command (str): Command to execute the simulation.
+#                 retries (int): Number of retries in case of failure.
+
+#             Returns:
+#                 str: Success or failure message after all attempts.
+#             """
+#             job_name = command.split('job=')[1].split()[0]
+#             output_file = os.path.join(inp_dir, f"{job_name}.odb")
+#             for attempt in range(1, retries + 1):
+#                 try:
+#                     if attempt != 1:
+#                         if os.path.exists(output_file):
+#                             print(f"Simulation completed successfully: {output_file}")
+#                             return "Success"
+#                         else:
+#                             print(f"Output file not found for {job_name}. Retrying...")
+
+#                     os.chdir(inp_dir)
+#                     print(f"Attempt {attempt}: Running simulation in {inp_dir}")
+#                     process = subprocess.Popen(command, shell=True)
+#                     process.wait()
+                
+#                 except Exception as e:
+#                     if attempt != 1:
+#                         print(f"Error on attempt {attempt} for {command}: {str(e)}")
+#                     else:
+#                         pass
+                    
+#             return f"Failed after {retries} attempts: {command}"
+
+
+#         # Using ThreadPoolExecutor to manage the queue of simulations
+#         with concurrent.futures.ThreadPoolExecutor(max_workers=self.numberFiles) as executor:
+#             futures = {executor.submit(runSimulationAux, inp_dir, command): command for inp_dir, command in self.commands}
+
+#             # Process as they complete
+#             for future in concurrent.futures.as_completed(futures):
+#                 command = futures[future]
+#                 try:                 
+#                     result = future.result()
+#                 except Exception as e:
+#                     print(f"Simulation {command} generated an exception: {e}")

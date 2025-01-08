@@ -10,22 +10,31 @@ from interaction import *
 from mesh import *
 from visualization import *
 from connectorBehavior import *
-import json
+
 
 class EulerianModel():
-    def __init__(self, data=None):
+    """
+    Class to define and build an Eulerian model in Abaqus, including geometry, partitions, sets, sections, and mesh.
+    """
+    def __init__(self, data):
+        """
+        Initialize the EulerianModel class and execute the workflow.
 
-        if not data:
-            with open(r"S:\Junior\abaqus-with-python\otimization-scripts\separeted-scripts\generate_cae\geometry\data\defautdatas.json", "r") as file:
-                data = json.load(file)
-
+        :param data: Dictionary containing input data for model creation. If no data is provided, default data is loaded.
+        """
         self.dataInput(data)
         self.createPart()
         self.createPartition()
         self.createSetsandSections()
         self.createMesh()
 
+
     def dataInput(self, data):
+        """
+        Extract input data and define model variables.
+
+        :param data: Dictionary containing model parameters.
+        """
         # Calling Model
         self.ModelName = str(data['generalInformation']['modelName'])
         self.m = mdb.models[self.ModelName]
@@ -37,7 +46,6 @@ class EulerianModel():
         self.SectionName = "EulerSection"
         self.WorkpieceDomain = "WorkpieceDomain"
         self.WorkpieceBottom = "WorkpieceBottom"
-
         self.PartName = str(data['eulerianData']['createPartInformation']['Name'])
         self.MaxWidth = data['eulerianData']['createPartInformation']['MaxWidth']
         self.MinWidth = data['eulerianData']['createPartInformation']['MinWidth']
@@ -53,8 +61,11 @@ class EulerianModel():
 
 
     def createPart(self):
+        """
+        Create the part geometry for the Eulerian model.
+        """
         # Creating Sketch
-        s = mdb.models['Model-1'].ConstrainedSketch(name='__profile__', sheetSize=200.0)
+        s = mdb.models[self.ModelName].ConstrainedSketch(name='__profile__', sheetSize=200.0)
         s.Line(point1=(0.0, 0.0), point2=(33.75, 0.0))
         s.HorizontalConstraint(addUndoState=False, entity=s.geometry[2])
         s.Line(point1=(33.75, 2.5), point2=(33.75, 10.0))
@@ -78,13 +89,16 @@ class EulerianModel():
         s.HorizontalDimension(textPoint=(3.8, 3.125), value=self.MinWidth, vertex1=s.vertices[9], vertex2=s.vertices[7])
         s.VerticalDimension(textPoint=(5.7988452911377, 0.750127792358398), value=self.MinHeight, vertex1=s.vertices[3], vertex2=s.vertices[1])
         # # Creating Body
-        self.p = mdb.models['Model-1'].Part(dimensionality=THREE_D, name=self.PartName, type=EULERIAN)
+        self.p = mdb.models[self.ModelName].Part(dimensionality=THREE_D, name=self.PartName, type=EULERIAN)
         self.p.BaseSolidExtrude(depth=self.Trickness, sketch=s)
         
 
     def createPartition(self):
+        """
+        Create the part geometry for the Eulerian model.
+        """
         # Creating Sketch Tool Particion
-        s = mdb.models['Model-1'].ConstrainedSketch(gridSpacing=0.22, name='__profile__', sheetSize=8.83, transform=self.p.MakeSketchTransform(sketchPlane=self.p.faces[6], sketchPlaneSide=SIDE1, sketchUpEdge=self.p.edges[4], sketchOrientation=RIGHT, origin=(1.41412, 1.016452, 0.02)))
+        s = mdb.models[self.ModelName].ConstrainedSketch(gridSpacing=0.22, name='__profile__', sheetSize=8.83, transform=self.p.MakeSketchTransform(sketchPlane=self.p.faces[6], sketchPlaneSide=SIDE1, sketchUpEdge=self.p.edges[4], sketchOrientation=RIGHT, origin=(1.41412, 1.016452, 0.02)))
         self.p.projectReferencesOntoSketch(filter=COPLANAR_EDGES, sketch=s)
         # Draw the first vertical line and add constraints
         s.Line(point1=(0.935, -0.605), point2=(0.935, -0.824999999976717))
@@ -183,6 +197,9 @@ class EulerianModel():
 
 
     def createSetsandSections(self):
+        """
+        Define sets and sections for the Eulerian model.
+        """
         # Creating WorkpieceBottom Set 
         self.p.Set(faces=self.p.faces.getSequenceFromMask(('[#0:2 #11000000 #5 #100 ]', ), ), name=self.WorkpieceBottom)
         # Creating EulerDomain Set 
@@ -195,6 +212,9 @@ class EulerianModel():
 
 
     def createMesh(self):
+        """
+        Generate the mesh for the Eulerian model.
+        """
         # Set the element types for the part
         self.p.setElementType(elemTypes=(ElemType(elemCode=EC3D8RT, elemLibrary=EXPLICIT, secondOrderAccuracy=OFF, hourglassControl=DEFAULT), ElemType(elemCode=UNKNOWN_WEDGE, elemLibrary=EXPLICIT), ElemType(elemCode=UNKNOWN_TET, elemLibrary=EXPLICIT)), regions=(self.p.cells.getSequenceFromMask(('[#ffffffff ]', ), ), ))
         # Seed the part with a global element size
@@ -218,5 +238,3 @@ class EulerianModel():
         # Generate the mesh for the part
         self.p.generateMesh()
 
-if __name__ == "__main__": 
-    EulerianModel() 

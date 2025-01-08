@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
-import inspect
-import os
-import json
 from abaqus import *
 from abaqusConstants import *
-import numpy as np
 from part import *
 from step import *
 from material import *
@@ -16,10 +12,15 @@ from visualization import *
 from connectorBehavior import *
 
 class ToolModel():
+    """
+    Class to create a tool model in Abaqus, including geometry, partitions, sets, sections, and mesh.
+    """
     def __init__(self, data):
+        """
+        Initialize the ToolModel class and execute the workflow.
 
-
-
+        :param data: Dictionary containing input data for model creation.
+        """
         self.dataInput(data)
         self.createPart()
         self.createPartition()
@@ -28,10 +29,14 @@ class ToolModel():
 
 
     def dataInput(self, data):
+        """
+        Extract input data and define model variables.
+
+        :param data: Dictionary containing model parameters.
+        """
         # Calling Model
         self.ModelName = str(data['generalInformation']['modelName'])
         self.m = mdb.models[self.ModelName]
-
         # Defining Variables
         self.SectionName = "ToolSection"
         self.Name = str(data['toolData']['createPartInformation']['Name'])
@@ -50,6 +55,9 @@ class ToolModel():
 
 
     def createPart(self):
+        """
+        Create the tool geometry based on provided parameters.
+        """
         # Creating Sketch
         s = self.m.ConstrainedSketch(name='SketchTool', sheetSize=200.0)
         # Creating "References lines"
@@ -90,8 +98,11 @@ class ToolModel():
 
 
     def createPartition(self):
+        """
+        Create partitions for the tool geometry to divide it into regions.
+        """
         # Creating Sketch Tool Particion     
-        s = mdb.models['Model-1'].ConstrainedSketch(gridSpacing=0.03, name='__profile__', sheetSize=1.41, transform=self.p.MakeSketchTransform(sketchPlane=self.p.faces[5], sketchPlaneSide=SIDE1, sketchUpEdge=self.p.edges[7], sketchOrientation=RIGHT, origin=(0.259921, 0.250539, 0.02)))
+        s = mdb.models[self.ModelName].ConstrainedSketch(gridSpacing=0.03, name='__profile__', sheetSize=1.41, transform=self.p.MakeSketchTransform(sketchPlane=self.p.faces[5], sketchPlaneSide=SIDE1, sketchUpEdge=self.p.edges[7], sketchOrientation=RIGHT, origin=(0.259921, 0.250539, 0.02)))
         self.p.projectReferencesOntoSketch(filter=COPLANAR_EDGES, sketch=s)
         s.Line(point1=(-0.1425, -0.225), point2=(0.135, -0.2025))
         s.Line(point1=(-0.2025, -0.165), point2=(-0.1725, -0.015))
@@ -117,6 +128,9 @@ class ToolModel():
 
 
     def createSetsandSections(self):
+        """
+        Create sets and sections for the tool geometry.
+        """
         # Defining the Reference Point
         self.p.ReferencePoint(point=self.p.InterestingPoint(self.p.edges[8], MIDDLE))
         # Creating RF Set
@@ -133,7 +147,9 @@ class ToolModel():
 
 
     def createMesh(self):
-        # Creating Mesh
+        """
+        Generate the mesh for the tool geometry.
+        """
         self.p.setMeshControls(algorithm=ADVANCING_FRONT, regions=self.p.cells.getSequenceFromMask(('[#f ]', ), ), technique=SWEEP)
         self.p.seedPart(deviationFactor=self.DeviationFactor, minSizeFactor=self.MinSizeFactor, size=self.GlobalSize)
         self.p.setElementType(elemTypes=(ElemType(elemCode=C3D8T, elemLibrary=EXPLICIT, secondOrderAccuracy=OFF, distortionControl=DEFAULT), ElemType(elemCode=C3D6T, elemLibrary=EXPLICIT), ElemType(elemCode=C3D4T, elemLibrary=EXPLICIT)), regions=(self.p.cells.getSequenceFromMask(('[#f ]', ), ), ))
@@ -142,9 +158,4 @@ class ToolModel():
         self.p.deleteMesh(regions=self.p.cells.getSequenceFromMask(('[#8 ]', ),))
         self.p.seedEdgeByNumber(constraint=FINER, edges=self.p.edges.getSequenceFromMask(('[#10000000 ]', ), ), number=4)
         self.p.generateMesh()
-
-# if __name__ == "__main__":
-#     ToolModel()
-
-
 

@@ -1,32 +1,30 @@
 # -*- coding: utf-8 -*-
-import os
-import json
 from abaqus import *
 from abaqusConstants import *
-import numpy as np
-from part import *
-from step import *
 from material import *
 from section import *
 from assembly import *
-from interaction import *
-from mesh import *
-from visualization import *
-from connectorBehavior import *
 
 
 class Materials():
+    """
+    Class to define materials and their properties in Abaqus.
+    """
     def __init__(self, data):
-        # if not data:
-        #     with open(r"S:\Junior\abaqus-with-python\otimization-scripts\separeted-scripts\generate_cae\geometry\data\defautdatas.json", "r") as file:
-        #         data = json.load(file)
+        """
+        Initialize the Materials class and create materials.
 
+        :param data: Dictionary containing the model name and material properties.
+        """
         self.ModelName = str(data['generalInformation']['modelName'])
         self.materialsPart()
 
-    def materialsPart(self):
-        # Inconel
 
+    def materialsPart(self):
+        """
+        Define materials and their properties, including Inconel718 and EMT210.
+        """
+        # Inconel datas
         table_specific_heat = ((440600.0, 20.0), (459700.0, 100.0), (486700.0, 300.0), (520900.0, 500.0), (559900.0, 600.0), (610900.0, 700.0), (662000.0, 800.0), (651000.0, 900.0), (673000.0, 1000.0), (710100.0, 1200.0), (710100.0, 1500.0))
         table_elastic = (202565, 0.29, 21.11), (201168, 0.29, 37.78), (198374, 0.29, 93.33), (195580, 0.28, 148.89), (192786, 0.28, 204.44), (189294, 0.28, 260), (186500, 0.27, 315.56), (183007, 0.27, 371.11), (180213, 0.27, 426.67), (176721, 0.27, 482.22), (173228, 0.27, 537.78), (169037, 0.28, 593.33), (165545, 0.28, 648.89), (160655, 0.29, 704.44), (155766, 0.31, 760), (148781, 0.32, 815.56), (141097, 0.33, 871.11), (131318, 0.33, 926.67), (121539, 0.34, 982.22), (111062, 0.37, 1037.78), (99885.5, 0.4, 1093.33)
         table_conductive = (11.39, 21.11), (12.55, 93.33), (14.42, 204.44), (16.15, 315.56), (17.88, 426.67), (19.62, 537.78), (21.35, 648.89), (23.22, 760), (24.95, 871.11), (26.83, 982.22), (28.7, 1093.33)
@@ -35,13 +33,13 @@ class Materials():
         mass_density = 8.22e-06
         inelastic_heat_fraction = 0.90
 
-        # EMT210
+        # EMT210 datas
         table_specific_heat_emt = ((222000.0, 87.0), (243000.0, 177.0), (259000.0, 277.0), (268000.0, 377.0), (293000.0, 477.0), (301000.0, 577.0), (314000.0, 687.0))
         table_elastic_emt = ((580000.0, 0.22), )
         table_conductive_emt = ((85.0, 20.0), (70.4, 500.0), (68.6, 550.0), (68.4, 600.0), (66.8, 650.0), (64.7, 700.0))
         mass_density_emt = ((1.445e-05, ), )
 
-        # Creating
+        # Creating Inconel Info
         m = mdb.models[self.ModelName]
         m.Material(name='Inconel718')
         m.materials['Inconel718'].SpecificHeat(dependencies=0, law=CONSTANTVOLUME, table=table_specific_heat, temperatureDependency=ON)
@@ -58,6 +56,7 @@ class Materials():
         m.materials['Inconel718'].Plastic(dataType=HALF_CYCLE, dependencies=0, hardening=USER, numBackstresses=1, rate=OFF, strainRangeDependency=OFF, table=((1.0, ), ), temperatureDependency=OFF)
         m.materials['Inconel718'].Depvar(n=5)
         
+        # Creating EMT210 Info
         m.Material(name='EMT210 - Extramet')
         m.materials['EMT210 - Extramet'].Elastic(dependencies=0, moduli=LONG_TERM, noCompression=OFF, noTension=OFF, table=table_elastic_emt, temperatureDependency=OFF, type=ISOTROPIC)
         m.materials['EMT210 - Extramet'].Density(dependencies=0, distributionType=UNIFORM, fieldName='', table=mass_density_emt, temperatureDependency=OFF)
@@ -66,4 +65,3 @@ class Materials():
         m.materials['EMT210 - Extramet'].setValues(materialIdentifier='')
         m.materials['EMT210 - Extramet'].Conductivity(dependencies=0, table=table_conductive_emt, temperatureDependency=ON, type=ISOTROPIC)
 
-# model = Materials()

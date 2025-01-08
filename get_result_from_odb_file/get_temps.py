@@ -39,11 +39,6 @@ class GetTemps:
             output_folder = os.path.join(self.json_dir, filename)
             output_json = os.path.join(output_folder, "temperature.json")
             
-            # if not os.path.exists(output_folder):
-            #     os.makedirs(output_folder)
-            
-            # print("\n---\nProcessing file to get temperatures: {}\n---\n".format(filename))
-
             try: 
                 # Extract information from the filename (e.g., gam and h values)
                 # gam_value_key, h_value_key = OdbUtils.extract_info_from_filename(filename)

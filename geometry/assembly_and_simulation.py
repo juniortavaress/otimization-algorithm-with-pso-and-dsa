@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import os
-import json
 from abaqus import *
 from abaqusConstants import *
 import numpy as np
@@ -13,11 +12,13 @@ from interaction import *
 from mesh import *
 from visualization import *
 from connectorBehavior import *
-import inspect
+
 
 class AssemblyModel():
+    """
+    Class to handle the assembly and simulation process in Abaqus.
+    """
     def __init__(self, data, path_INP, path_CAE, filename):
-        
         self.dataInput(data)
         self.assemblyPositions()
         self.stepsAndHistory()
@@ -28,6 +29,9 @@ class AssemblyModel():
 
 
     def dataInput(self, data):
+        """
+        Extract input data and set model-level parameters.
+        """
         # Calling Model
         self.ModelName = str(data['generalInformation']['modelName'])
         self.m = mdb.models[self.ModelName]
@@ -43,6 +47,9 @@ class AssemblyModel():
 
 
     def assemblyPositions(self):
+        """
+        Set positions for the assembly components in the simulation.
+        """
         # Setting the default coordinate system to Cartesian
         self.m.rootAssembly.DatumCsysByDefault(CARTESIAN)
         # Creating instances of parts in the assembly
@@ -62,6 +69,9 @@ class AssemblyModel():
     
 
     def stepsAndHistory(self):
+        """
+        Define simulation steps and history outputs.
+        """
         # Creating a new step for the simulation
         self.m.TempDisplacementDynamicsStep(improvedDtMethod=ON, name=self.StepName, previous='Initial', timePeriod=self.TimePeriod)
         # Defining field outputs for the new step
@@ -74,7 +84,9 @@ class AssemblyModel():
 
 
     def setInteractions(self):
-        # Define contact properties between different parts
+        """
+        Define contact interactions between parts.
+        """
         # Contact chip-plate-contact
         self.m.ContactProperty('chip-plate-contact')
         self.m.interactionProperties['chip-plate-contact'].TangentialBehavior(dependencies=0, directionality=ISOTROPIC, elasticSlipStiffness=None, formulation=PENALTY, fraction=0.005, maximumElasticSlip=FRACTION, pressureDependency=OFF, shearStressLimit=None, slipRateDependency=OFF, table=((0.01, ), ), temperatureDependency=OFF)
@@ -95,6 +107,9 @@ class AssemblyModel():
 
 
     def setContactAndConstraints(self):
+        """
+        Define constraints interactions between parts.
+        """
         # Assigning contact properties and setting up constraints between parts
         self.m.interactions['contact'].includedPairs.setValuesInStep(stepName='CuttingStep', useAllstar=ON)
         self.m.interactions['contact'].contactPropertyAssignments.appendInStep(assignments=((GLOBAL, SELF, 'tool-chip-contact'), (self.m.rootAssembly.instances['ChipPlate-1'].surfaces['ChipPlateSurface'], 'Eulerian-1.inconel718-1', 'chip-plate-contact')), stepName='CuttingStep')      
@@ -103,6 +118,9 @@ class AssemblyModel():
 
 
     def setBoundaryConditionsAndPredefinedFields(self):
+        """
+        Define boundary conditions interactions between parts.
+        """
         # Absolut zero
         self.m.setValues(absoluteZero=1.79769e+308)
         # Setting boundary conditions for the simulation
@@ -117,6 +135,9 @@ class AssemblyModel():
 
 
     def submitSimulation(self, path_INP, path_CAE, filename):
+        """
+        Submit the simulation job.
+        """
         # Creating and submitting the simulation job
         job = mdb.Job(activateLoadBalancing=False, atTime=None, contactPrint=OFF, 
         description='', echoPrint=OFF, explicitPrecision=SINGLE, historyPrint=OFF, 
@@ -130,5 +151,3 @@ class AssemblyModel():
         os.chdir(path_INP)
         job.writeInput(consistencyChecking=OFF)
 
-# if __name__ == "__main__":
-# AssemblyModel()

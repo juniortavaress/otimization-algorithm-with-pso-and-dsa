@@ -4,7 +4,6 @@ import sys
 import inspect
 import json
 from odbAccess import openOdb
-# from file_utils import FileUtils
 
 class GetForces():
     """
@@ -19,12 +18,6 @@ class GetForces():
         from file_utils import FileUtils
         self.file = FileUtils()
         self.file.create_folders(self, "temp-force")
-
-        # print(self.__dict__)
-        # print(self.file.__dict__)
-        # print(self.odb_dir)
-
-        # self.odb_dir = r"S:\Junior\abaqus-with-python\otimization-scripts\otimization-algorithm-with-pso-and-dsa\results\odb-files"
         
         # Process ODB files
         self._process_odb_files()
@@ -45,8 +38,6 @@ class GetForces():
 
             if not os.path.exists(output_folder):
                 os.makedirs(output_folder)
-
-            # print("\n---\nProcessing file to get forces: {}\n---\n".format(filename))
 
             try:
                 odb = openOdb(odb_file_path, readOnly=True)

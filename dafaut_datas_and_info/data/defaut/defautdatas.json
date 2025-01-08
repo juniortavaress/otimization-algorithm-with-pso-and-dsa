@@ -1,0 +1,88 @@
+{
+    "generalInformation": {
+        "modelName": "Model-1"
+    },
+    "eulerianData": {
+        "createPartInformation": {
+            "Name": "Eulerian",
+            "MaxWidth": 3.8,
+            "MinWidth": 2.35,
+            "Trickness": 0.02,
+            "MaxHeight": 2.25,
+            "MinHeight": 0.525,
+            "Material": "Inconel718"
+        },
+        "createParticionInformation": {
+            "x_points": [
+                1.75,
+                2.05,
+                2.25,
+                2.35
+            ],
+            "y_points": [
+                0.2,
+                0.35,
+                0.5,
+                0.525,
+                0.625,
+                1.0
+            ]
+        },
+        "createMeshInformation": {
+            "globalSize": 0.02,
+            "deviationFactor": 0.1,
+            "minSizeFactor": 0.1
+        }
+    },
+    "chipPlateData": {
+        "createPartInformation": {
+            "Name": "ChipPlate",
+            "Material": "Inconel718",
+            "Width": 2.15,
+            "Trickness": 0.02,
+            "Height": 0.01
+        },
+        "createMeshInformation": {
+            "globalSize": 0.02,
+            "deviationFactor": 0.1,
+            "minSizeFactor": 0.1
+        }
+    },
+    "toolData": {
+        "createPartInformation": {
+            "Name": "Tool",
+            "Trickness": 0.02,
+            "clearanceAngle": 6.0,
+            "rakeAngle": 6.0,
+            "clearanceFaceDimension": 0.5,
+            "rakeFaceDimension": 0.5,
+            "Radius": 0.01
+        },
+        "createMeshInformation": {
+            "globalSize": 0.02,
+            "deviationFactor": 0.1,
+            "minSizeFactor": 0.1,
+            "biasMinMeshTool": 0.01,
+            "biasMaxMeshTool": 0.03,
+            "sizeMeshFace": 0.003
+        }
+    },
+    "assemblyAndSimulationData": {
+        "chipPlatePosition": {
+            "clearanceOverWorkpiece": 0.01,
+            "distanceFromTool": 0.2
+        },
+        "toolPosition": {
+            "clearanceAfterWorkpiece": 0.019009,
+            "clearanceOverWorkpiece": 0,
+            "cuttingDepth": 0.025
+        },
+        "stepsAndHistoryInformation": {
+            "timePeriod": 0.004,
+            "cuttingVelocity": 1000
+        }
+    },
+    "paths": {
+        "pathOutputFiles": "S:/Junior/abaqus-with-python/otimization-scripts/separeted-scripts/generate_cae/results/inp-and-simulation/defaut"
+    }
+}

@@ -99,7 +99,7 @@ class DataConverter():
 
             combined_df = pd.merge(combined_forces_df_with_results, combined_temp_df_with_results, how="outer", on="Dummy")
             combined_df.drop(columns=["Dummy"], inplace=True)
-            sheet_name = os.path.basename(os.path.dirname(json_file_path_forces))
+            sheet_name = os.path.basename(os.path.dirname(json_file_path_forces))[:31]
             combined_df.to_excel(writer, sheet_name=sheet_name, index=False)
 
             # Flatten stats dictionary for easy insertion into the stats list

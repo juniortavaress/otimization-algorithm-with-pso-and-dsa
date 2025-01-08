@@ -1,0 +1,3 @@
+you need to put this command in the vscode terminal to install the necessary libraries
+
+pip install -r requirements.txt
