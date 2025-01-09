@@ -77,17 +77,23 @@ class PararelSimulation():
             for attempt in range(1, retries + 1):
                 try:
                     print(attempt)
-                    if attempt != 1:
-                        if os.path.exists(output_file):
-                            print("Simulation completed successfully: {}".format(output_file))
-                            return "Success"
-                        else:
-                            print("Output file not found for {}. Retrying...".format(job_name))
+                    # if attempt != 1:
+                    #     if os.path.exists(output_file):
+                    #         print("Simulation completed successfully: {}".format(output_file))
+                    #         return "Success"
+                    #     else:
+                    #         print("Output file not found for {}. Retrying...".format(job_name))
 
                     os.chdir(inp_dir)
                     process = subprocess.Popen(command, shell=True)
                     print("process")
                     process.wait()
+
+                    if os.path.exists(output_file):
+                        print("Simulation completed successfully: {}".format(output_file))
+                        return "Success"
+                    else:
+                        print("Output file not found for {}. Retrying...".format(job_name))
 
 
                 except Exception as e:

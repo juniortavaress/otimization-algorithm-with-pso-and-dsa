@@ -14,7 +14,7 @@ class PsoManager():
         self.call_count = 0
         lb, ub = PsoManager.get_boundry(self)
         objective_function_pso = lambda params: PsoManager.objective_function(self, params)
-        best_position, best_score = PsoManager.pso(self, objective_function_pso, lb, ub, swarmsize=3, omega=0.5, phip=2, phig=2, maxiter=20, minstep=1e-6, minfunc=1e-3)
+        best_position, best_score = PsoManager.pso(self, objective_function_pso, lb, ub, swarmsize=1, omega=0.5, phip=2, phig=2, maxiter=20, minstep=1e-6, minfunc=1e-3)
         return self.call_count, best_position, best_score
         
 
@@ -64,6 +64,10 @@ class PsoManager():
                 filename = data["Filename"]
                 simulated_forces = data["Forces"]
                 simulated_temperature = data["Temperatures"]
+                simulated_chip_compression_ratio = data["CCR"]
+                simulated_chip_segmentation_ratio = data["CSR"]
+
+                # print("++++++++++",  chip_compression_ratio, chip_segmentation_ratio)
 
                 info = filename.split("_p")
                 param_info = info[1].split("_")
@@ -73,22 +77,29 @@ class PsoManager():
                     target_cutting_force = datas_exp[filename.split("_p")[0]].get("cutting_force")
                     target_normal_force = datas_exp[filename.split("_p")[0]].get("normal_force")
                     target_temperature = datas_exp[filename.split("_p")[0]].get("temperature")
-                    targets = [target_cutting_force, target_normal_force, target_temperature]
+                    target_chip_compression_ratio = datas_exp[filename.split("_p")[0]].get("CCR")
+                    target_chip_segentatio_ratio = datas_exp[filename.split("_p")[0]].get("CSR")
+                    targets = [target_cutting_force, target_normal_force, target_temperature, target_chip_compression_ratio, target_chip_segentatio_ratio]
 
                 percentage_error_cutting_force = abs((target_cutting_force - simulated_forces[0])/target_cutting_force)
                 percentage_error_normal_force = abs((target_normal_force - simulated_forces[1])/target_normal_force)
                 percentage_error_temperature = abs((target_temperature - simulated_temperature)/target_temperature)
-                percentage_errors = [percentage_error_cutting_force, percentage_error_normal_force, percentage_error_temperature]
+                percentage_error_CCR = abs((target_chip_compression_ratio - simulated_chip_compression_ratio)/target_chip_compression_ratio)
+                percentage_error_CSR = abs((target_chip_segentatio_ratio - simulated_chip_segmentation_ratio)/target_chip_segentatio_ratio)
+                percentage_errors = [percentage_error_cutting_force, percentage_error_normal_force, percentage_error_temperature, percentage_error_CCR, percentage_error_CSR]
 
                 normalized_cutting_force_error = ((simulated_forces[0] - target_cutting_force)**2) / target_cutting_force**2
                 normalized_normal_force_error = ((simulated_forces[1] - target_normal_force)**2) / target_normal_force**2
                 normalized_temp_error = ((simulated_temperature - target_temperature)**2) / target_temperature**2
-
-                PsoManager.save_iteration_datas(self, info[0], params_set, simulated_forces, simulated_temperature, percentage_errors, targets)
+                normalized_CCR_error = ((simulated_chip_compression_ratio - target_chip_compression_ratio)**2) / target_chip_compression_ratio**2
+                normalized_CSR_error = ((simulated_chip_segmentation_ratio - target_chip_segentatio_ratio)**2) / target_chip_segentatio_ratio**2
 
                 if str(params_set) not in error_dict:
                     error_dict[str(params_set)] = {}
-                error_dict[str(params_set)][index] = (np.sqrt(0.4 * normalized_cutting_force_error + 0.3 * normalized_normal_force_error + 0.3 * normalized_temp_error))
+                normalized_total_error = (np.sqrt(0.5 * normalized_cutting_force_error + 0.1 * normalized_normal_force_error + 0.2 * normalized_CCR_error + 0.2 * normalized_CSR_error))
+                error_dict[str(params_set)][index] = normalized_total_error
+
+                PsoManager.save_iteration_datas(self, info[0], params_set, simulated_forces, simulated_temperature, simulated_chip_compression_ratio, simulated_chip_segmentation_ratio, percentage_errors, targets, normalized_total_error)
 
             for key, set in params_map.items():
                 if set in error_dict:
@@ -115,21 +126,26 @@ class PsoManager():
                 cutting_force = conditions[key]["cutting_force"]
                 normal_force = conditions[key]["normal_force"]
                 temperature = conditions[key]["temperature"]
+                CCR = conditions[key]["CCR"]
+                CSR = conditions[key]["CSR"]
                 filename = "sim_v{}_h{}".format(velocity, int(depth_of_cut*1000))
                 
-                datas_exp[filename] = {"cutting_force": cutting_force, "normal_force": normal_force, "temperature": temperature}
+                datas_exp[filename] = {"cutting_force": cutting_force, "normal_force": normal_force, "temperature": temperature, "CCR": CCR, "CSR": CSR}
         return datas_exp
 
 
-    def save_iteration_datas(self, condition, parameters, simulated_forces, simulated_temperature, percentage_errors, targets):
+    def save_iteration_datas(self, condition, parameters, simulated_forces, simulated_temperature, chip_compression_ratio, chip_segmentation_ratio, percentage_errors, targets, normalized_total_error):
         """
         Saves simulation iteration data to an Excel file.
         """
         data = {"Condition": condition,
                 "Parameter p": [parameters[0]], "Parameter D2": [parameters[1]], "Parameter Ts": [parameters[2]],
+                "Normalized Error": normalized_total_error,
                 "Experiment Cutting Force": targets[0], "Simulation Cutting Force": simulated_forces[0], "Error Fc": percentage_errors[0],
                 "Experiment Normal Force": targets[1], "Simulation Normal Force": simulated_forces[1], "Error Fn": percentage_errors[1],
-                "Experiment Temperature": targets[2], "Simulation Temperature": simulated_temperature, "Error T": percentage_errors[2]}
+                "Experiment Temperature": targets[2], "Simulation Temperature": simulated_temperature, "Error T": percentage_errors[2],
+                "Experiment CCR": targets[3], "Simulation CCR": chip_compression_ratio, "Error CCR": percentage_errors[3],
+                "Experiment CSR": targets[4], "Simulation CSR": chip_segmentation_ratio, "Error CSR": percentage_errors[4]}
         new_info = pd.DataFrame(data)
         
         data_path = os.path.join(self.excel_dir, "datas.xlsx")
@@ -140,7 +156,7 @@ class PsoManager():
         else:
             new_df = new_info
         
-        new_df.index.name = "Iteration"
+        new_df.index.name = "Simulation"
         new_df.to_excel(data_path, index=True, engine="openpyxl")
 
 

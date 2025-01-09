@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 import os
+import sys
 import json
 import easygui
 import subprocess
 import multiprocessing
 from get_result_from_odb_file.convert_json_to_excel import DataConverter
+from get_result_from_odb_file.convert_obj_to_excel import GetChipMeasure
+sys.dont_write_bytecode = True
 
 class getResults():
     """
@@ -19,10 +22,11 @@ class getResults():
         dir = os.path.join(self.current_dir, "get_result_from_odb_file")
         abaqus_command_temperatures = rf'C:\SIMULIA\Commands\abq2021.bat python {dir}\get_temps.py'
         abaqus_command_forces = rf'C:\SIMULIA\Commands\abq2021.bat python {dir}\get_forces.py'
-        commands = [abaqus_command_forces, abaqus_command_temperatures]
+        abaqus_command_chip_obj = rf'C:\SIMULIA\Commands\abq2021.bat cae script={dir}\get_chip_obj_file.py'
+        commands = [abaqus_command_forces, abaqus_command_temperatures, abaqus_command_chip_obj]
     
         processes = []
-        process_names = ["get_temps", "get_forces"]
+        process_names = ["get_temps", "get_forces", "get_chip"]
         for name, command in zip(process_names, commands):
             process_name = f"Process_{name}"
             process = multiprocessing.Process(target=getResults.get_data_from_odb, args=(command, ))
@@ -53,6 +57,6 @@ class getResults():
         """
         # input("coloca os json da temp ai")
         DataConverter.main_json_to_excel(self)
-
+        GetChipMeasure.main_to_chip_results(self)
 
 

@@ -1,8 +1,10 @@
+import sys
 import time
 import pandas as pd
 from otimization_algorithm.pso_algorithm import PsoManager
 from otimization_algorithm.simualtion_manager import *
 from file_utils import FileUtils
+sys.dont_write_bytecode = True
 
 class OtimizationManager():
     def main_otimization_manager(self):

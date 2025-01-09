@@ -30,6 +30,7 @@ class ScriptManager(QWidget):
         self.ui.setupUi(self)
 
         self.create_setup_and_folders()
+        self.clean_folder()
         self.create_message_area()
         self.generate_geometry_from_script()    
         # self.generate_geometry_from_input()  
@@ -92,6 +93,7 @@ class ScriptManager(QWidget):
             self.thread = QThread()
             self.thread.setObjectName("GeometryGenerationThread")
             self.thread.run = lambda: ScriptManager.generate_inp_files(self)  
+            self.thread.finished.connect(lambda: self.clean_folder())
             self.thread.finished.connect(lambda: self.call_pso_script())
             self.thread.start()
         except Exception as e:
@@ -149,7 +151,7 @@ class ScriptManager(QWidget):
         if not self.error_track:
             try:
                 for file in os.listdir(self.current_dir):
-                    if file.startswith("abaqus"):
+                    if file.startswith("abaqus") or file.startswith("save_abaqus"):
                         file_path = os.path.join(self.current_dir, file)
                         if os.path.isfile(file_path):  
                             os.remove(file_path)

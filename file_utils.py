@@ -4,6 +4,8 @@ import json
 import shutil
 import inspect 
 import numpy as np
+import sys
+sys.dont_write_bytecode = True
 
 class FileUtils():  
     def set_text(self, message):
@@ -106,6 +108,7 @@ class FileUtils():
         mainclass.json_dir = os.path.join(mainclass.current_dir, "results\json_files")
         mainclass.odb_processed_dir = os.path.join(mainclass.current_dir, 'results\odb-file-processed')
         mainclass.odb_dir = os.path.join(mainclass.current_dir, "results\odb-files")
+        mainclass.obj_dir = os.path.join(mainclass.current_dir, "results\obj-files")
         mainclass.geometry_datas_dir = os.path.join(mainclass.datas_dir, "data")
         mainclass.compiled_files_dir = os.path.join(mainclass.datas_dir, "compiled")
         mainclass.error_dir = os.path.join(mainclass.datas_dir, "error")
@@ -119,7 +122,7 @@ class FileUtils():
                 if os.path.exists(folder):
                     shutil.rmtree(folder)
 
-            folders_to_create = [mainclass.excel_dir, mainclass.json_dir, mainclass.odb_processed_dir, mainclass.odb_dir, mainclass.inp_dir, mainclass.cae_dir, mainclass.error_dir, mainclass.info]
+            folders_to_create = [mainclass.excel_dir, mainclass.json_dir, mainclass.odb_processed_dir, mainclass.odb_dir, mainclass.obj_dir, mainclass.inp_dir, mainclass.cae_dir, mainclass.error_dir, mainclass.info]
             for folder in folders_to_create:
                 if not os.path.exists(folder):
                     os.makedirs(folder)

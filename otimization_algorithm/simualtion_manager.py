@@ -72,7 +72,7 @@ class SimulationManager:
             else:
                 time.sleep(10)
 
-        print("passou")
+
         # Step 5: Transfer .odb files
         if not self.error_track:
             try:
@@ -178,6 +178,7 @@ class SimulationManager:
         number_pararell_sim = 3
         simulation = PararelSimulation
         simulation.start_simulation(simulation, id, path_list_to_inp_folders, number_of_cores, number_pararell_sim)
+        x = input("coloca as simulações ai meu bom!")
 
 
     def copy_file(self, type):
@@ -200,7 +201,7 @@ class SimulationManager:
         elif type == "CompiledFiles":
             for folder_name in os.listdir(self.inp_and_simulation_dir):
                 folder_path = os.path.join(self.inp_and_simulation_dir, folder_name)
-                if folder_name.lower() != "defaut":
+                if folder_name.lower() != "defaut" and folder_name.lower() != "info":
                     source_path_list = ["abaqus_v6.env", "explicitU-D.dll", "explicitU.dll"]
                     for file in source_path_list:
                         source_path = os.path.join(self.compiled_files_dir, file)
@@ -213,6 +214,7 @@ class SimulationManager:
         """
         results_dict = {}
         getResults.manage_abaqus_script(self)
+        # x = input("coloca a temp ai")
         getResults.convert_json_to_excel(self)
 
         for file in os.listdir(self.odb_dir):
@@ -225,16 +227,21 @@ class SimulationManager:
                     os.makedirs(odb_out_file)
                 shutil.move(odb_inp_path, odb_out_file)
             
-                df = pd.read_excel(os.path.join(self.excel_dir, "Results.xlsx"), header=1)
-                filtered_row = df[df["Filename"] == file[:31]]
+                df_temp_force = pd.read_excel(os.path.join(self.excel_dir, "Results.xlsx"), header=1)
+                filtered_row = df_temp_force[df_temp_force["Filename"] == file[:31]]
                 self.simulated_forces = [filtered_row.iloc[0,7], filtered_row.iloc[0,3]]
                 self.simulated_temperature = filtered_row.iloc[0,9]
+
+                df_chip = pd.read_excel(os.path.join(self.excel_dir, "Results_chip_analysis.xlsx"), header=0)
+                filtered_row = df_chip[df_chip["Filename"] == file[:-4]]
+                self.chip_compression_ratio = filtered_row.iloc[0,5]
+                self.chip_segmentation_ratio = filtered_row.iloc[0,6]
 
                 FileUtils.set_text(self, "message-id_13")
 
                 for index, filename in index_names.items():
                     if filename == file[:-4]:
-                        results_dict[index] = {"Filename": filename, "Forces": self.simulated_forces, "Temperatures": self.simulated_temperature}
+                        results_dict[index] = {"Filename": filename, "Forces": self.simulated_forces, "Temperatures": self.simulated_temperature, "CCR": self.chip_compression_ratio, "CSR": self.chip_segmentation_ratio}
         return results_dict
     
 

@@ -1,11 +1,11 @@
-# import os 
-# import re
-# import json
-# import subprocess
-# import concurrent.futures
-# command = rf'call C:\SIMULIA\Commands\abq2021.bat job=sim_v500_h75_p_109.18_D2_897.22_Ts_311.37 cpus=4 interactive'
 
-# # abaqus_command = rf'C:\SIMULIA\Commands\abq2021.bat cae noGUI={path_to_manager_geometry}'
-# result = subprocess.run(command, shell=True, capture_output=True, check=True, text=True)
-import numpy as np
-print(5)
+
+
+base_name = 'sim_v1000_h50_p_0.49_D2_0.93_Ts_714.42'
+# base_name = 'sim_v500_h75_p_0.49_D2_0.93_Ts_714.42'
+
+h = float(f"{base_name.split('h')[1].split('_p')[0]}")
+print(base_name.split('h')[1])
+print(base_name.split('h')[1].split('_p')[0])
+# print(base_name.split('h')[1].split('_p')[0])
+print(h)

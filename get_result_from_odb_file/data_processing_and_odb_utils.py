@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import re
+import sys
 import json
+sys.dont_write_bytecode = True
 
 class OdbUtils():
     @staticmethod
@@ -29,12 +31,12 @@ class OdbUtils():
             :param filename: Name of the ODB file
             :return: A tuple (gam, h)
         """
-        gam_match = re.search(r"_gam([+-]\d+)_", filename)
+        # gam_match = re.search(r"_gam([+-]\d+)_", filename)
         h_match = re.search(r"h(\d+)", filename)
         # Extrair os valores com segurança e formato adequado
-        gam = gam_match.group(1) if gam_match else None
+        # gam = gam_match.group(1) if gam_match else None
         h = "h{}".format(h_match.group(1)) if h_match else None
-        return gam, h
+        return "+6", h
 
     @staticmethod
     def generate_node_path(node_range_str):
