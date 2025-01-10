@@ -43,13 +43,14 @@ class SimulationManager:
             lis_dir_inp_comp01 = lis_dir_inp[:division]
             lis_dir_inp_comp02 = lis_dir_inp[division:]
 
-            info_pc02 = os.path.join(self.info, "simulation_paths_pc2.json")
-            info_json = {"status": True, "list_comp_02": lis_dir_inp_comp02}
-            
-            # Salvar o arquivo JSON
-            with open(info_pc02, "w") as file:
-                print("salvando json")
-                json.dump(info_json, file, indent=4)
+            status_file = os.path.join(self.status_dir, "status_file.json")
+            with open(status_file, 'r') as json_file:
+                existing_data = json.load(json_file)
+
+            existing_data["Simulation-list-pc2"] = {"status": True, "list_comp_02": lis_dir_inp_comp02}
+
+            with open(status_file, "w") as file:
+                json.dump(existing_data, file, indent=4)
 
         # Step 4: Run the simulation
         if not self.error_track:
@@ -64,10 +65,10 @@ class SimulationManager:
 
 
         while True:
-            with open(info_pc02, "r") as file:
+            with open(status_file, "r") as file:
                 data = json.load(file)
 
-            if data["status"] == False:    
+            if data["Simulation-list-pc2"]["status"] == False:    
                 break
             else:
                 time.sleep(10)
@@ -173,11 +174,11 @@ class SimulationManager:
         """
         Starts the Abaqus simulation using a parallel processing framework.
         """
-        from otimization_algorithm.pararel_simulation import PararelSimulation
-        number_of_cores = 4
-        number_pararell_sim = 3
-        simulation = PararelSimulation
-        simulation.start_simulation(simulation, id, path_list_to_inp_folders, number_of_cores, number_pararell_sim)
+        # from otimization_algorithm.pararel_simulation import PararelSimulation
+        # number_of_cores = 4
+        # number_pararell_sim = 3
+        # simulation = PararelSimulation
+        # simulation.start_simulation(simulation, id, path_list_to_inp_folders, number_of_cores, number_pararell_sim)
         x = input("coloca as simulações ai meu bom!")
 
 
@@ -245,15 +246,13 @@ class SimulationManager:
         return results_dict
     
 
-    def except_function(self, stage, e, path='defaut'):
+    def except_function(self, stage, e):
         """
         Handles exceptions by saving error data to a log file and re-raising the exception.
         """
         self.e = e
-        json_file = os.path.join(self.error_dir, "error_log_otimization.json")
-        error_data = {"id": stage, "error": str(e), "error_type": str(type(e)), "traceback": traceback.format_exc(),"path": path}
-        with open(json_file, "w") as file:
-            json.dump(error_data, file, indent=4)
+        self.stage = stage
+        FileUtils.code_status(self, "iteration-error")
         FileUtils.set_text(self, "message-ide_07")
     
 

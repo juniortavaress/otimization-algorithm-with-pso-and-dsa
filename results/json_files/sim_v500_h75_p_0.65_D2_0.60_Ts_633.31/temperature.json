@@ -1,0 +1,772 @@
+{
+    "Temperature Profile - Path (Max Temp at 1st Node)": [
+        {
+            "Node": 840, 
+            "Distance [mm]": 0.0, 
+            "Temperature [C]": 101.16666412353516
+        }, 
+        {
+            "Node": 10656, 
+            "Distance [mm]": 0.9484855736610447, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10655, 
+            "Distance [mm]": 0.9534855763432537, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10654, 
+            "Distance [mm]": 0.9584855715748821, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10653, 
+            "Distance [mm]": 0.9634855817076717, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10652, 
+            "Distance [mm]": 0.9684855769393002, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10651, 
+            "Distance [mm]": 0.9734855721709286, 
+            "Temperature [C]": 0.0
+        }, 
+        {
+            "Node": 10650, 
+            "Distance [mm]": 1.0640394186485405, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10649, 
+            "Distance [mm]": 1.0690394176054592, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10648, 
+            "Distance [mm]": 1.074039416562378, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10647, 
+            "Distance [mm]": 1.079039419244587, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10646, 
+            "Distance [mm]": 1.084039421926796, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10645, 
+            "Distance [mm]": 1.0890394171584243, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10644, 
+            "Distance [mm]": 1.0940394198406334, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10643, 
+            "Distance [mm]": 1.0990394225228424, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10642, 
+            "Distance [mm]": 1.1040394177544708, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10641, 
+            "Distance [mm]": 1.1090394204366798, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10640, 
+            "Distance [mm]": 1.1140394156683082, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10639, 
+            "Distance [mm]": 1.1190394183505172, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10638, 
+            "Distance [mm]": 1.1240394210327262, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10637, 
+            "Distance [mm]": 1.1290394162643547, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10636, 
+            "Distance [mm]": 1.1340394189465637, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10635, 
+            "Distance [mm]": 1.139039414178192, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10634, 
+            "Distance [mm]": 1.1440394243109817, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10633, 
+            "Distance [mm]": 1.1490394195426101, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10632, 
+            "Distance [mm]": 1.1540394147742385, 
+            "Temperature [C]": 0.0
+        }, 
+        {
+            "Node": 10631, 
+            "Distance [mm]": 1.2445932612518504, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10630, 
+            "Distance [mm]": 1.2495932602087692, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10629, 
+            "Distance [mm]": 1.2545932591656879, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10628, 
+            "Distance [mm]": 1.2595932618478969, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 148, 
+            "Distance [mm]": 2.2227260894848353, 
+            "Temperature [C]": 0.0
+        }, 
+        {
+            "Node": 6594, 
+            "Distance [mm]": 6.116879639703222, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 6593, 
+            "Distance [mm]": 6.135952053147741, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 6592, 
+            "Distance [mm]": 6.154796776849218, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 6591, 
+            "Distance [mm]": 6.173416552621313, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 6590, 
+            "Distance [mm]": 6.19181406267304, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 6589, 
+            "Distance [mm]": 6.20999192960877, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 6588, 
+            "Distance [mm]": 6.227952835637518, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 6587, 
+            "Distance [mm]": 6.245699284154363, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 6586, 
+            "Distance [mm]": 6.263233897763677, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 6585, 
+            "Distance [mm]": 6.28055917986054, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 6584, 
+            "Distance [mm]": 6.297677633840032, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 6583, 
+            "Distance [mm]": 6.31459170349259, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 6582, 
+            "Distance [mm]": 6.33130386241097, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 6581, 
+            "Distance [mm]": 6.347816524583288, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 433, 
+            "Distance [mm]": 8.992769193782689, 
+            "Temperature [C]": 252.89602661132812
+        }, 
+        {
+            "Node": 93117, 
+            "Distance [mm]": 10.866819653449745, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 93118, 
+            "Distance [mm]": 10.884106706617565, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 93119, 
+            "Distance [mm]": 10.901230994401665, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 93120, 
+            "Distance [mm]": 10.918194032995196, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 93121, 
+            "Distance [mm]": 10.93499734976718, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 93122, 
+            "Distance [mm]": 10.951642451597543, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 93123, 
+            "Distance [mm]": 10.96813082301447, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 93124, 
+            "Distance [mm]": 10.984463941095562, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 93125, 
+            "Distance [mm]": 11.000643268017264, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 6244, 
+            "Distance [mm]": 11.775398751071066, 
+            "Temperature [C]": 20.0
+        }
+    ], 
+    "Temperature Profile - Path (Last Frame)": [
+        {
+            "Node": 840, 
+            "Distance [mm]": 0.0, 
+            "Temperature [C]": 99.22230529785156
+        }, 
+        {
+            "Node": 10656, 
+            "Distance [mm]": 0.9484855736610447, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10655, 
+            "Distance [mm]": 0.9534855763432537, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10654, 
+            "Distance [mm]": 0.9584855715748821, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10653, 
+            "Distance [mm]": 0.9634855817076717, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10652, 
+            "Distance [mm]": 0.9684855769393002, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10651, 
+            "Distance [mm]": 0.9734855721709286, 
+            "Temperature [C]": 0.0
+        }, 
+        {
+            "Node": 10650, 
+            "Distance [mm]": 1.0640394186485405, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10649, 
+            "Distance [mm]": 1.0690394176054592, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10648, 
+            "Distance [mm]": 1.074039416562378, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10647, 
+            "Distance [mm]": 1.079039419244587, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10646, 
+            "Distance [mm]": 1.084039421926796, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10645, 
+            "Distance [mm]": 1.0890394171584243, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10644, 
+            "Distance [mm]": 1.0940394198406334, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10643, 
+            "Distance [mm]": 1.0990394225228424, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10642, 
+            "Distance [mm]": 1.1040394177544708, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10641, 
+            "Distance [mm]": 1.1090394204366798, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10640, 
+            "Distance [mm]": 1.1140394156683082, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10639, 
+            "Distance [mm]": 1.1190394183505172, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10638, 
+            "Distance [mm]": 1.1240394210327262, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10637, 
+            "Distance [mm]": 1.1290394162643547, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10636, 
+            "Distance [mm]": 1.1340394189465637, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10635, 
+            "Distance [mm]": 1.139039414178192, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10634, 
+            "Distance [mm]": 1.1440394243109817, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10633, 
+            "Distance [mm]": 1.1490394195426101, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10632, 
+            "Distance [mm]": 1.1540394147742385, 
+            "Temperature [C]": 0.0
+        }, 
+        {
+            "Node": 10631, 
+            "Distance [mm]": 1.2445932612518504, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10630, 
+            "Distance [mm]": 1.2495932602087692, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10629, 
+            "Distance [mm]": 1.2545932591656879, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 10628, 
+            "Distance [mm]": 1.2595932618478969, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 148, 
+            "Distance [mm]": 2.2227260894848353, 
+            "Temperature [C]": 0.0
+        }, 
+        {
+            "Node": 6594, 
+            "Distance [mm]": 6.116879639703222, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 6593, 
+            "Distance [mm]": 6.135952053147741, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 6592, 
+            "Distance [mm]": 6.154796776849218, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 6591, 
+            "Distance [mm]": 6.173416552621313, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 6590, 
+            "Distance [mm]": 6.19181406267304, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 6589, 
+            "Distance [mm]": 6.20999192960877, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 6588, 
+            "Distance [mm]": 6.227952835637518, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 6587, 
+            "Distance [mm]": 6.245699284154363, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 6586, 
+            "Distance [mm]": 6.263233897763677, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 6585, 
+            "Distance [mm]": 6.28055917986054, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 6584, 
+            "Distance [mm]": 6.297677633840032, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 6583, 
+            "Distance [mm]": 6.31459170349259, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 6582, 
+            "Distance [mm]": 6.33130386241097, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 6581, 
+            "Distance [mm]": 6.347816524583288, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 433, 
+            "Distance [mm]": 8.992769193782689, 
+            "Temperature [C]": 255.7460479736328
+        }, 
+        {
+            "Node": 93117, 
+            "Distance [mm]": 10.866819653449745, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 93118, 
+            "Distance [mm]": 10.884106706617565, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 93119, 
+            "Distance [mm]": 10.901230994401665, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 93120, 
+            "Distance [mm]": 10.918194032995196, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 93121, 
+            "Distance [mm]": 10.93499734976718, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 93122, 
+            "Distance [mm]": 10.951642451597543, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 93123, 
+            "Distance [mm]": 10.96813082301447, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 93124, 
+            "Distance [mm]": 10.984463941095562, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 93125, 
+            "Distance [mm]": 11.000643268017264, 
+            "Temperature [C]": 20.0
+        }, 
+        {
+            "Node": 6244, 
+            "Distance [mm]": 11.775398751071066, 
+            "Temperature [C]": 20.0
+        }
+    ], 
+    "Temperature Profile - Time (1st Node)": [
+        {
+            "Tempo [s]": 0.0, 
+            "NT11 (Temperatura) [C]": 20.0
+        }, 
+        {
+            "Tempo [s]": 8.000005618669093e-05, 
+            "NT11 (Temperatura) [C]": 20.0
+        }, 
+        {
+            "Tempo [s]": 0.0001600026444066316, 
+            "NT11 (Temperatura) [C]": 20.0
+        }, 
+        {
+            "Tempo [s]": 0.00024000142002478242, 
+            "NT11 (Temperatura) [C]": 20.0
+        }, 
+        {
+            "Tempo [s]": 0.00032000307692214847, 
+            "NT11 (Temperatura) [C]": 20.0
+        }, 
+        {
+            "Tempo [s]": 0.000400002725655213, 
+            "NT11 (Temperatura) [C]": 20.0
+        }, 
+        {
+            "Tempo [s]": 0.0004800005699507892, 
+            "NT11 (Temperatura) [C]": 20.0
+        }, 
+        {
+            "Tempo [s]": 0.0005600021686404943, 
+            "NT11 (Temperatura) [C]": 20.0
+        }, 
+        {
+            "Tempo [s]": 0.000640005455352366, 
+            "NT11 (Temperatura) [C]": 20.0
+        }, 
+        {
+            "Tempo [s]": 0.0007200054824352264, 
+            "NT11 (Temperatura) [C]": 20.0
+        }, 
+        {
+            "Tempo [s]": 0.0008000017842277884, 
+            "NT11 (Temperatura) [C]": 20.0
+        }, 
+        {
+            "Tempo [s]": 0.0008800053037703037, 
+            "NT11 (Temperatura) [C]": 20.0
+        }, 
+        {
+            "Tempo [s]": 0.0009600030607543886, 
+            "NT11 (Temperatura) [C]": 20.0
+        }, 
+        {
+            "Tempo [s]": 0.001040000468492508, 
+            "NT11 (Temperatura) [C]": 20.0
+        }, 
+        {
+            "Tempo [s]": 0.001120004802942276, 
+            "NT11 (Temperatura) [C]": 20.0
+        }, 
+        {
+            "Tempo [s]": 0.001200003083795309, 
+            "NT11 (Temperatura) [C]": 20.0
+        }, 
+        {
+            "Tempo [s]": 0.0012800026452168822, 
+            "NT11 (Temperatura) [C]": 20.0
+        }, 
+        {
+            "Tempo [s]": 0.0013600009260699153, 
+            "NT11 (Temperatura) [C]": 20.0
+        }, 
+        {
+            "Tempo [s]": 0.0014400024665519595, 
+            "NT11 (Temperatura) [C]": 20.0
+        }, 
+        {
+            "Tempo [s]": 0.0015200028428807855, 
+            "NT11 (Temperatura) [C]": 20.0
+        }, 
+        {
+            "Tempo [s]": 0.0016000044997781515, 
+            "NT11 (Temperatura) [C]": 64.06423950195312
+        }, 
+        {
+            "Tempo [s]": 0.0016800048761069775, 
+            "NT11 (Temperatura) [C]": 75.34002685546875
+        }, 
+        {
+            "Tempo [s]": 0.0017600039718672633, 
+            "NT11 (Temperatura) [C]": 86.09376525878906
+        }, 
+        {
+            "Tempo [s]": 0.0018400003900751472, 
+            "NT11 (Temperatura) [C]": 92.50357818603516
+        }, 
+        {
+            "Tempo [s]": 0.001920003560371697, 
+            "NT11 (Temperatura) [C]": 95.81352996826172
+        }, 
+        {
+            "Tempo [s]": 0.0020000021904706955, 
+            "NT11 (Temperatura) [C]": 97.5665283203125
+        }, 
+        {
+            "Tempo [s]": 0.0020800032652914524, 
+            "NT11 (Temperatura) [C]": 98.43753814697266
+        }, 
+        {
+            "Tempo [s]": 0.0021600043401122093, 
+            "NT11 (Temperatura) [C]": 98.8587417602539
+        }, 
+        {
+            "Tempo [s]": 0.0022400054149329662, 
+            "NT11 (Temperatura) [C]": 99.10010528564453
+        }, 
+        {
+            "Tempo [s]": 0.0023200002033263445, 
+            "NT11 (Temperatura) [C]": 99.31079864501953
+        }, 
+        {
+            "Tempo [s]": 0.0024000012781471014, 
+            "NT11 (Temperatura) [C]": 99.62300872802734
+        }, 
+        {
+            "Tempo [s]": 0.0024800023529678583, 
+            "NT11 (Temperatura) [C]": 99.94194030761719
+        }, 
+        {
+            "Tempo [s]": 0.0025600034277886152, 
+            "NT11 (Temperatura) [C]": 100.07247924804688
+        }, 
+        {
+            "Tempo [s]": 0.0026400021743029356, 
+            "NT11 (Temperatura) [C]": 100.2374267578125
+        }, 
+        {
+            "Tempo [s]": 0.0027200032491236925, 
+            "NT11 (Temperatura) [C]": 100.39639282226562
+        }, 
+        {
+            "Tempo [s]": 0.0028000043239444494, 
+            "NT11 (Temperatura) [C]": 100.66857147216797
+        }, 
+        {
+            "Tempo [s]": 0.0028800053987652063, 
+            "NT11 (Temperatura) [C]": 100.98090362548828
+        }, 
+        {
+            "Tempo [s]": 0.0029600001871585846, 
+            "NT11 (Temperatura) [C]": 101.15951538085938
+        }, 
+        {
+            "Tempo [s]": 0.0030400012619793415, 
+            "NT11 (Temperatura) [C]": 101.17164611816406
+        }, 
+        {
+            "Tempo [s]": 0.003120001871138811, 
+            "NT11 (Temperatura) [C]": 101.16767120361328
+        }, 
+        {
+            "Tempo [s]": 0.003200002945959568, 
+            "NT11 (Temperatura) [C]": 101.10994720458984
+        }, 
+        {
+            "Tempo [s]": 0.003280005883425474, 
+            "NT11 (Temperatura) [C]": 101.06002044677734
+        }, 
+        {
+            "Tempo [s]": 0.0033600006718188524, 
+            "NT11 (Temperatura) [C]": 101.1208267211914
+        }, 
+        {
+            "Tempo [s]": 0.0034400031436234713, 
+            "NT11 (Temperatura) [C]": 101.16666412353516
+        }, 
+        {
+            "Tempo [s]": 0.0035200032871216536, 
+            "NT11 (Temperatura) [C]": 101.11784362792969
+        }, 
+        {
+            "Tempo [s]": 0.003600005991756916, 
+            "NT11 (Temperatura) [C]": 101.0054931640625
+        }, 
+        {
+            "Tempo [s]": 0.00368000497110188, 
+            "NT11 (Temperatura) [C]": 100.86292266845703
+        }, 
+        {
+            "Tempo [s]": 0.003760000690817833, 
+            "NT11 (Temperatura) [C]": 100.70299530029297
+        }, 
+        {
+            "Tempo [s]": 0.0038400061894208193, 
+            "NT11 (Temperatura) [C]": 100.40605926513672
+        }, 
+        {
+            "Tempo [s]": 0.0039200009778141975, 
+            "NT11 (Temperatura) [C]": 99.88485717773438
+        }, 
+        {
+            "Tempo [s]": 0.004000000189989805, 
+            "NT11 (Temperatura) [C]": 99.22230529785156
+        }
+    ]
+}

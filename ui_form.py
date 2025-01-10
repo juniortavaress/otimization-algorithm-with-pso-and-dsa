@@ -158,6 +158,6 @@ class Ui_Widget(object):
         Widget.setWindowTitle(QCoreApplication.translate("Widget", u"Reader", None))
         self.icon_interface.setText("")
         self.interface_name.setText(QCoreApplication.translate("Widget", u"CODE TRACKING", None))
-        self.label.setText(QCoreApplication.translate("Widget", u"Developed by Junior Tavares", None))
+        self.label.setText(QCoreApplication.translate("Widget", u"Developed by Junior Tavares, Severin Groh and Pascal Behrens", None))
     # retranslateUi
 

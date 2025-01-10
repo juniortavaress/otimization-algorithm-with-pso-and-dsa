@@ -19,7 +19,7 @@ class Computer02():
         file.create_folders(self)
 
         while True:
-            info_pc02 = os.path.join(self.info, "simulation_paths_pc2.json")
+            info_pc02 = os.path.join(self.status_dir, "simulation_paths_pc2.json")
 
             with open(info_pc02, "r") as file:
                 data = json.load(file)

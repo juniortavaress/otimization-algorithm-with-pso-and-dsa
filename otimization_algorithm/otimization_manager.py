@@ -21,7 +21,7 @@ class OtimizationManager():
         OtimizationManager.start_pso(self)
         # Finalize the optimization process
         OtimizationManager.finish_otimization(self, initial_time)
-        time.sleep(5)
+        time.sleep(2)
 
 
     def start_pso(self):
@@ -50,8 +50,11 @@ class OtimizationManager():
                 days, hours, minutes, seconds = self.duration // (24 * 3600), (self.duration % (24 * 3600)) // 3600, (self.duration % 3600) // 60, self.duration % 60       
                 self.formatted_duration = f"{int(days)} dias, {int(hours)}h, {int(minutes)}m e {int(seconds)}s"
                 FileUtils.set_text(self, "message-id_08")
+                FileUtils.code_status(self, "otimization-fisished")
             except Exception as e:
                 self.e = e
                 self.error_track = True
                 FileUtils.set_text(self, "message-ide_06")
                 
+        else:
+            FileUtils.code_status(self, "otimization-error")

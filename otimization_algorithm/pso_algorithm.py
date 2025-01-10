@@ -12,9 +12,10 @@ class PsoManager():
         Runs the Particle Swarm Optimization (PSO) algorithm to minimize the objective function.
         """
         self.call_count = 0
+        self.call_count_interation = 0
         lb, ub = PsoManager.get_boundry(self)
         objective_function_pso = lambda params: PsoManager.objective_function(self, params)
-        best_position, best_score = PsoManager.pso(self, objective_function_pso, lb, ub, swarmsize=1, omega=0.5, phip=2, phig=2, maxiter=20, minstep=1e-6, minfunc=1e-3)
+        best_position, best_score = PsoManager.pso(self, objective_function_pso, lb, ub, swarmsize=1, omega=0.5, phip=2, phig=2, maxiter=2, minstep=1e-6, minfunc=1e-3)
         return self.call_count, best_position, best_score
         
 
@@ -173,6 +174,7 @@ class PsoManager():
         # Inicialização das melhores posições e melhores scores
         personal_best_positions = np.copy(positions) # contem todas posições iniciais, mesmo numero de elementos que o particle swarm
         personal_best_scores = np.array(objective_function_pso(positions))  # contem o erro de cada particula
+        self.call_count_interation += 1
 
         # Melhor global
         # Aqui pega o menor erro e a particula com menor erro 
@@ -180,20 +182,18 @@ class PsoManager():
         global_best_score = min(personal_best_scores) # pega o menor erro
         global_best_scores_history = [global_best_score] # copia o menor erro
 
-        PsoManager.show_results(self, global_best_position)
+        PsoManager.show_results(self, global_best_position, global_best_score)
 
         # PSO Optimization
         for iteration in range(maxiter-1):
             for i in range(num_particles):
                 r1, r2 = np.random.rand(), np.random.rand()
-                velocities[i] = (omega * velocities[i] +
-                                phip * r1 * (personal_best_positions[i] - positions[i]) +
-                                phig * r2 * (global_best_position - positions[i]))
-                
+                velocities[i] = (omega * velocities[i] + phip * r1 * (personal_best_positions[i] - positions[i]) + phig * r2 * (global_best_position - positions[i]))
                 positions[i] += velocities[i] # conjunto de novas particulas 
                 positions[i] = np.clip(positions[i], lb, ub) # ajusta os valores fora do limite, tem que ver se isso faz sentido
                 
             score = objective_function_pso(positions) # erro de cada iteração feita pelo for
+            self.call_count_interation += 1
 
             for i in range(num_particles):
                 if score[i] < personal_best_scores[i]:
@@ -204,9 +204,13 @@ class PsoManager():
                     global_best_score = score[i]
                     global_best_position = positions[i]
         
-            PsoManager.show_results(self, global_best_position)
+            PsoManager.show_results(self, global_best_position, global_best_score)
+            self.call_count_interation += 1
             global_best_scores_history.append(global_best_score) # melhor resultado de cada iteração
             
+            print("global_best_score", global_best_score)
+            print("global_best_scores_history", global_best_scores_history)
+
             # Verificar critério de parada
             if global_best_score < minfunc:
                 print(f"Critério de parada atingido na iteração {iteration+1}")
@@ -214,10 +218,13 @@ class PsoManager():
         return global_best_position, global_best_score
 
 
-    def show_results(self, global_best_position):
+    def show_results(self, global_best_position, global_best_score):
         """
         Displays the results of the best particle from PSO.
         """
+        self.global_best_position = global_best_position
+        self.global_best_score = global_best_score
+
         df = pd.read_excel(os.path.join(self.excel_dir, 'datas.xlsx'))
         mat_row = df[(df['Parameter p'] == np.round(global_best_position[0], 2)) & (df['Parameter D2'] == np.round(global_best_position[1], 2)) & (df['Parameter Ts'] == np.round(global_best_position[2], 2))]
         if not mat_row.empty:
@@ -233,7 +240,16 @@ class PsoManager():
             self.sim_temp = mat_row['Simulation Temperature'].values[0]
             self.error_temp = mat_row['Error T'].values[0]
 
+            self.exp_CCR = mat_row['Experiment CCR'].values[0]
+            self.sim_CCR = mat_row['Simulation CCR'].values[0]
+            self.error_CCR = mat_row['Error CCR'].values[0]
+
+            self.exp_CSR = mat_row['Experiment CSR'].values[0]
+            self.sim_CSR = mat_row['Simulation CSR'].values[0]
+            self.error_CSR = mat_row['Error CSR'].values[0]
+
             FileUtils.set_text(self, "message-5")
+            FileUtils.code_status(self, "iteration")
         else:
             print("Linha não encontrada.")
 

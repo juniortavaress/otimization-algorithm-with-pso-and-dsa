@@ -2,6 +2,8 @@ import os
 import sys
 import inspect
 import subprocess
+import traceback
+import json
 from PySide6.QtCore import Qt, QThread
 from PySide6.QtWidgets import QApplication, QWidget, QLabel, QVBoxLayout
 from file_utils import FileUtils
@@ -14,6 +16,7 @@ optimization_algorithm_path = os.path.join(current_dir, "otimization_algorithm")
 get_results_from_odb_path = os.path.join(current_dir, "get_result_from_odb_file")
 
 # Add paths to the system path
+sys.dont_write_bytecode = True
 sys.path.append(current_dir)
 sys.path.append(optimization_algorithm_path)
 sys.path.append(get_results_from_odb_path)
@@ -29,10 +32,16 @@ class ScriptManager(QWidget):
         self.ui = Ui_Widget()
         self.ui.setupUi(self)
 
-        self.create_setup_and_folders()
-        self.clean_folder()
+        process = self.create_setup_and_folders()
         self.create_message_area()
-        self.generate_geometry_from_script()    
+        print(process)
+        if process == "done":
+            self.clean_folder()
+            self.generate_geometry_from_script()    
+
+        else:
+            FileUtils.set_text(self, "message-id_14")
+            print("To aqui fio")
         # self.generate_geometry_from_input()  
 
 
@@ -42,7 +51,9 @@ class ScriptManager(QWidget):
         """
         self.error_track = False
         file = FileUtils() 
-        file.create_folders(self, "main")
+        process = file.create_folders(self, "main")
+        FileUtils.code_status(self, "main") if process == "done" else None
+        return process
 
 
     def create_message_area(self):
@@ -99,6 +110,7 @@ class ScriptManager(QWidget):
         except Exception as e:
             self.e = e
             self.error_track = True
+            FileUtils.code_status(self, "geometry-error-main.py")
             FileUtils.set_text(self, "message-ide_01")
 
 
@@ -112,6 +124,7 @@ class ScriptManager(QWidget):
 
         if "Error" in result.stdout or "Error" in result.stderr:
             self.error_track = True
+            self.e = "Error creating geometry"
             print(result.stdout)
             print(result.stderr)
             FileUtils.set_text(self, "message-ide_04")
@@ -125,21 +138,26 @@ class ScriptManager(QWidget):
         """
         if not self.error_track:
             try:
+                FileUtils.code_status(self, "geometry")
                 self.thread = QThread()
                 self.thread.run = lambda: ScriptManager.thread_to_pso(self)  
                 self.thread.finished.connect(lambda: self.clean_folder())
+                self.thread.finished.connect(lambda: FileUtils.code_status(self, "finished"))
                 self.thread.start()
                 # self.thread.wait()
             except Exception as e:
                 self.e = e
                 self.error_track = True
                 FileUtils.set_text(self, "message-ide_02")
-           
+        else:
+            FileUtils.code_status(self, "geometry-error-main.py")
+          
 
     def thread_to_pso(self):
         """
         Manages the optimization process by calling the main optimization manager.
         """
+        FileUtils.code_status(self, "otimization")
         OtimizationManager.main_otimization_manager(self)
         FileUtils.set_text(self, "message-id_04")
         

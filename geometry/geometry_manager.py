@@ -14,7 +14,7 @@ from mesh import *
 from visualization import *
 from connectorBehavior import *
 import traceback
-
+from file_utils import FileUtils
 
 class Main():
     def __init__(self):
@@ -23,7 +23,6 @@ class Main():
         model setup, and geometry and assembly creation.
         If an error occurs, it is captured and logged to a file.
         """
-        self.error_track = False
         try:
             sys.dont_write_bytecode = True
             self.create_setup_and_folders()
@@ -32,14 +31,7 @@ class Main():
             self.createGeometryAndAssembly()
 
         except Exception as e:
-            error_data = {  "id": "__init__",
-                            "error": str(e),  
-                            "error_type": str(type(e)),  
-                            "traceback": traceback.format_exc()}
-
-            json_file = os.path.join(self.error_dir, "error_log_geometry_manager_id01.json")
-            with open(json_file, "w") as file:
-                json.dump(error_data, file, indent=4)
+            FileUtils.code_status(self, "geometry-error-geometry_manager.py")
             sys.exit(1)
 
 
@@ -47,7 +39,6 @@ class Main():
         """
         Creates the folders and sets up the environment for the model simulation.
         """
-        from file_utils import FileUtils
         file = FileUtils() 
         file.create_folders(self)
     
@@ -74,7 +65,7 @@ class Main():
                 time_period = conditions[key]["timePeriod"]
                 
                 filename = "sim_v{}_h{}.json".format(velocity, int(depth_of_cut*1000))
-                json_file = os.path.join(self.geometry_datas_dir, filename)
+                json_file = os.path.join(self.info, filename)
 
                 defaut_datas["generalInformation"]["modelName"] = filename[:-5]
                 defaut_datas["assemblyAndSimulationData"]["toolPosition"]["cuttingDepth"] = depth_of_cut
@@ -112,9 +103,9 @@ class Main():
         from assembly_and_simulation import AssemblyModel
 
         try: 
-            for files in os.listdir(self.geometry_datas_dir):
+            for files in os.listdir(self.info):
                 if files.endswith(".json"):
-                    with open(os.path.join(self.geometry_datas_dir, files), 'r') as file:
+                    with open(os.path.join(self.info, files), 'r') as file:
                         data = json.load(file)
 
                     file_base_name = os.path.splitext(files)[0]
@@ -132,15 +123,7 @@ class Main():
             mdb.saveAs(pathName='simulation_cae')
 
         except Exception as e:  
-            self.error_track = True
-            error_data = {  "id": "createGeometryAndAssembly",
-                            "error": str(e),  
-                            "error_type": str(type(e)),  
-                            "traceback": traceback.format_exc()}
-
-            json_file = os.path.join(self.error_dir, "error_log_geometry_manager_id02.json")
-            with open(json_file, "w") as file:
-                json.dump(error_data, file, indent=4)
+            FileUtils.code_status(self, "geometry-error-geometry_manager.py")
             sys.exit(1)
 
 

@@ -38,10 +38,10 @@ class AssemblyModel():
         # Defining Variables
         self.StepName = "CuttingStep"
         self.xToolPosition = data['eulerianData']['createParticionInformation']['x_points'][2] + data['assemblyAndSimulationData']['toolPosition']['clearanceAfterWorkpiece']
-        self.yToolPosition = data['eulerianData']['createParticionInformation']['y_points'][3] + data['assemblyAndSimulationData']['toolPosition']['clearanceOverWorkpiece']
+        self.yToolPosition = data['eulerianData']['createParticionInformation']['y_points'][3] - data['assemblyAndSimulationData']['toolPosition']['cuttingDepth']
         self.xChipPlatePosition = 0
-        self.yChipPlatePosition = self.yToolPosition + data['assemblyAndSimulationData']['chipPlatePosition']['clearanceOverWorkpiece']
-        self.CuttingDepth = -data['assemblyAndSimulationData']['toolPosition']['cuttingDepth']
+        self.yChipPlatePosition = data['eulerianData']['createParticionInformation']['y_points'][3] + data['assemblyAndSimulationData']['chipPlatePosition']['clearanceOverWorkpiece']
+        # self.CuttingDepth = -data['assemblyAndSimulationData']['toolPosition']['cuttingDepth']
         self.TimePeriod = data['assemblyAndSimulationData']['stepsAndHistoryInformation']['timePeriod']
         self.CuttingVelocity = data['assemblyAndSimulationData']['stepsAndHistoryInformation']['cuttingVelocity']
 
@@ -61,7 +61,7 @@ class AssemblyModel():
         # Positioning the Tool
         self.m.rootAssembly.translate(instanceList=('Tool-1', ), vector=(self.xToolPosition, self.yToolPosition, 0.0))
         # Applying the Feed to the Tool
-        self.m.rootAssembly.translate(instanceList=('Tool-1', ), vector=(0.0, self.CuttingDepth, 0.0))
+        # self.m.rootAssembly.translate(instanceList=('Tool-1', ), vector=(0.0, self.CuttingDepth, 0.0))
         # Creating an assembly set that includes multiple parts
         self.m.rootAssembly.Set(cells=self.m.rootAssembly.instances['ChipPlate-1'].cells.getSequenceFromMask(mask=('[#1 ]', ), )+\
             self.m.rootAssembly.instances['Eulerian-1'].cells.getSequenceFromMask(mask=('[#ffffffff ]', ), )+\

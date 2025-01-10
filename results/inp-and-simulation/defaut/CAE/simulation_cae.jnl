@@ -333,7 +333,7 @@ mdb.models['sim_v1000_h50'].sketches['__profile__'].DistanceDimension(entity1=
 mdb.models['sim_v1000_h50'].sketches['__profile__'].DistanceDimension(entity1=
     mdb.models['sim_v1000_h50'].sketches['__profile__'].geometry[15], entity2=
     mdb.models['sim_v1000_h50'].sketches['__profile__'].geometry[6], textPoint=
-    (-2.13980893432617, -0.922546789505005), value=0.5)
+    (-2.13980893432617, -0.922546789505005), value=0.475)
 mdb.models['sim_v1000_h50'].sketches['__profile__'].DistanceDimension(entity1=
     mdb.models['sim_v1000_h50'].sketches['__profile__'].geometry[17], entity2=
     mdb.models['sim_v1000_h50'].sketches['__profile__'].geometry[6], textPoint=
@@ -349,7 +349,7 @@ mdb.models['sim_v1000_h50'].sketches['__profile__'].DistanceDimension(entity1=
 mdb.models['sim_v1000_h50'].sketches['__profile__'].DistanceDimension(entity1=
     mdb.models['sim_v1000_h50'].sketches['__profile__'].geometry[7], entity2=
     mdb.models['sim_v1000_h50'].sketches['__profile__'].geometry[10], 
-    textPoint=(-0.478982728118897, 1.47714264645386), value=2.05)
+    textPoint=(-0.478982728118897, 1.47714264645386), value=1.9)
 mdb.models['sim_v1000_h50'].sketches['__profile__'].DistanceDimension(entity1=
     mdb.models['sim_v1000_h50'].sketches['__profile__'].geometry[11], entity2=
     mdb.models['sim_v1000_h50'].sketches['__profile__'].geometry[7], textPoint=
@@ -543,6 +543,9 @@ mdb.models['sim_v1000_h50'].parts['Eulerian'].Set(cells=
 mdb.models['sim_v1000_h50'].parts['Eulerian'].Set(cells=
     mdb.models['sim_v1000_h50'].parts['Eulerian'].cells.getSequenceFromMask((
     '[#e0fc0e00 ]', ), ), name='WorkpieceDomain')
+mdb.models['sim_v1000_h50'].parts['Eulerian'].Set(cells=
+    mdb.models['sim_v1000_h50'].parts['Eulerian'].cells.getSequenceFromMask((
+    '[#30c0 ]', ), ), name='ChipSet')
 mdb.models['sim_v1000_h50'].EulerianSection(data={'inconel718-1': 'Inconel718'}
     , name='EulerSection')
 mdb.models['sim_v1000_h50'].parts['Eulerian'].SectionAssignment(offset=0.0, 
@@ -812,9 +815,7 @@ mdb.models['sim_v1000_h50'].rootAssembly.Instance(dependent=ON, name='Tool-1',
 mdb.models['sim_v1000_h50'].rootAssembly.translate(instanceList=('ChipPlate-1', 
     ), vector=(0, 0.535, 0.0))
 mdb.models['sim_v1000_h50'].rootAssembly.translate(instanceList=('Tool-1', ), 
-    vector=(2.269009, 0.525, 0.0))
-mdb.models['sim_v1000_h50'].rootAssembly.translate(instanceList=('Tool-1', ), 
-    vector=(0.0, -0.05, 0.0))
+    vector=(2.269009, 0.475, 0.0))
 mdb.models['sim_v1000_h50'].rootAssembly.Set(cells=
     mdb.models['sim_v1000_h50'].rootAssembly.instances['ChipPlate-1'].cells.getSequenceFromMask(
     mask=('[#1 ]', ), )+\
@@ -1268,7 +1269,7 @@ mdb.models['sim_v500_h75'].sketches['__profile__'].DistanceDimension(entity1=
 mdb.models['sim_v500_h75'].sketches['__profile__'].DistanceDimension(entity1=
     mdb.models['sim_v500_h75'].sketches['__profile__'].geometry[15], entity2=
     mdb.models['sim_v500_h75'].sketches['__profile__'].geometry[6], textPoint=(
-    -2.13980893432617, -0.922546789505005), value=0.5)
+    -2.13980893432617, -0.922546789505005), value=0.45)
 mdb.models['sim_v500_h75'].sketches['__profile__'].DistanceDimension(entity1=
     mdb.models['sim_v500_h75'].sketches['__profile__'].geometry[17], entity2=
     mdb.models['sim_v500_h75'].sketches['__profile__'].geometry[6], textPoint=(
@@ -1284,7 +1285,7 @@ mdb.models['sim_v500_h75'].sketches['__profile__'].DistanceDimension(entity1=
 mdb.models['sim_v500_h75'].sketches['__profile__'].DistanceDimension(entity1=
     mdb.models['sim_v500_h75'].sketches['__profile__'].geometry[7], entity2=
     mdb.models['sim_v500_h75'].sketches['__profile__'].geometry[10], textPoint=
-    (-0.478982728118897, 1.47714264645386), value=2.05)
+    (-0.478982728118897, 1.47714264645386), value=1.9)
 mdb.models['sim_v500_h75'].sketches['__profile__'].DistanceDimension(entity1=
     mdb.models['sim_v500_h75'].sketches['__profile__'].geometry[11], entity2=
     mdb.models['sim_v500_h75'].sketches['__profile__'].geometry[7], textPoint=(
@@ -1478,6 +1479,9 @@ mdb.models['sim_v500_h75'].parts['Eulerian'].Set(cells=
 mdb.models['sim_v500_h75'].parts['Eulerian'].Set(cells=
     mdb.models['sim_v500_h75'].parts['Eulerian'].cells.getSequenceFromMask((
     '[#e0fc0e00 ]', ), ), name='WorkpieceDomain')
+mdb.models['sim_v500_h75'].parts['Eulerian'].Set(cells=
+    mdb.models['sim_v500_h75'].parts['Eulerian'].cells.getSequenceFromMask((
+    '[#30c0 ]', ), ), name='ChipSet')
 mdb.models['sim_v500_h75'].EulerianSection(data={'inconel718-1': 'Inconel718'}, 
     name='EulerSection')
 mdb.models['sim_v500_h75'].parts['Eulerian'].SectionAssignment(offset=0.0, 
@@ -1747,9 +1751,7 @@ mdb.models['sim_v500_h75'].rootAssembly.Instance(dependent=ON, name='Tool-1',
 mdb.models['sim_v500_h75'].rootAssembly.translate(instanceList=('ChipPlate-1', 
     ), vector=(0, 0.535, 0.0))
 mdb.models['sim_v500_h75'].rootAssembly.translate(instanceList=('Tool-1', ), 
-    vector=(2.269009, 0.525, 0.0))
-mdb.models['sim_v500_h75'].rootAssembly.translate(instanceList=('Tool-1', ), 
-    vector=(0.0, -0.075, 0.0))
+    vector=(2.269009, 0.45, 0.0))
 mdb.models['sim_v500_h75'].rootAssembly.Set(cells=
     mdb.models['sim_v500_h75'].rootAssembly.instances['ChipPlate-1'].cells.getSequenceFromMask(
     mask=('[#1 ]', ), )+\
@@ -1880,4 +1882,4 @@ mdb.Job(activateLoadBalancing=False, atTime=None, contactPrint=OFF,
     SINGLE, numCpus=6, numDomains=6, queue=None, resultsFormat=ODB, scratch='', 
     type=ANALYSIS, userSubroutine='', waitHours=0, waitMinutes=0)
 del mdb.models['restartMode']
-# Save by adam-ua769pu3t3n7k4o on 2025_01_09-10.41.17; build 2021 2020_03_06-15.50.37 167380
+# Save by adam-ua769pu3t3n7k4o on 2025_01_10-14.15.01; build 2021 2020_03_06-15.50.37 167380

@@ -24,6 +24,7 @@ class getResults():
         abaqus_command_forces = rf'C:\SIMULIA\Commands\abq2021.bat python {dir}\get_forces.py'
         abaqus_command_chip_obj = rf'C:\SIMULIA\Commands\abq2021.bat cae script={dir}\get_chip_obj_file.py'
         commands = [abaqus_command_forces, abaqus_command_temperatures, abaqus_command_chip_obj]
+        # commands = [abaqus_command_forces, abaqus_command_chip_obj]
     
         processes = []
         process_names = ["get_temps", "get_forces", "get_chip"]

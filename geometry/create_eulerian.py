@@ -55,9 +55,11 @@ class EulerianModel():
         self.Material = str(data['eulerianData']['createPartInformation']['Material'])
         self.x_partition_points = data['eulerianData']['createParticionInformation']['x_points']
         self.y_partition_points = data['eulerianData']['createParticionInformation']['y_points']
+        self.y_partition_points_tool = data['eulerianData']['createParticionInformation']['y_points'][3] - data['assemblyAndSimulationData']['toolPosition']['cuttingDepth']
         self.GlobalSize = data['eulerianData']['createMeshInformation']['globalSize']
         self.DeviationFactor = data['eulerianData']['createMeshInformation']['deviationFactor']
         self.MinSizeFactor = data['eulerianData']['createMeshInformation']['minSizeFactor']
+        self.CuttingDepth = -data['assemblyAndSimulationData']['toolPosition']['cuttingDepth']
 
 
     def createPart(self):
@@ -154,7 +156,7 @@ class EulerianModel():
         # Defining the horizontal partition positions
         s.DistanceDimension(entity1=s.geometry[14], entity2=s.geometry[6], textPoint=(-1.68507532417297, -0.90773503527832), value=self.y_partition_points[0])
         s.DistanceDimension(entity1=s.geometry[13], entity2=s.geometry[6], textPoint=(-1.90749935447693, -0.912672207214355), value=self.y_partition_points[1])
-        s.DistanceDimension(entity1=s.geometry[15], entity2=s.geometry[6], textPoint=(-2.13980893432617, -0.922546789505005), value=self.y_partition_points[2])
+        s.DistanceDimension(entity1=s.geometry[15], entity2=s.geometry[6], textPoint=(-2.13980893432617, -0.922546789505005), value=self.y_partition_points_tool)
         s.DistanceDimension(entity1=s.geometry[17], entity2=s.geometry[6], textPoint=(-2.41166071235657, -1.01141731486511), value=self.y_partition_points[4])
         s.DistanceDimension(entity1=s.geometry[16], entity2=s.geometry[6], textPoint=(-2.64878467857361, -0.829298302986145), value=self.y_partition_points[5])
         # Defining the vertical partition positions
@@ -204,8 +206,10 @@ class EulerianModel():
         self.p.Set(faces=self.p.faces.getSequenceFromMask(('[#0:2 #11000000 #5 #100 ]', ), ), name=self.WorkpieceBottom)
         # Creating EulerDomain Set 
         self.p.Set(cells=self.p.cells.getSequenceFromMask(('[#ffffffff ]', ), ), name=self.EulerDomain)
-        # # Creating WorkpieceDomain Set 
+        # Creating WorkpieceDomain Set 
         self.p.Set(cells=self.p.cells.getSequenceFromMask(('[#e0fc0e00 ]', ), ), name=self.WorkpieceDomain)
+        # Creating Chip Set
+        self.p.Set(cells=self.p.cells.getSequenceFromMask(('[#30c0 ]', ), ), name='ChipSet')
         # # Creating Sections
         self.m.EulerianSection(data={'inconel718-1': self.Material}, name=self.SectionName)
         self.p.SectionAssignment(offset=0.0, offsetField='', offsetType=MIDDLE_SURFACE, region=self.p.sets[self.EulerDomain], sectionName=self.SectionName, thicknessAssignment=FROM_SECTION)
