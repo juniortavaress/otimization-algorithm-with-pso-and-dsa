@@ -58,6 +58,6 @@ class getResults():
         """
         # input("coloca os json da temp ai")
         DataConverter.main_json_to_excel(self)
-        GetChipMeasure.main_to_chip_results(self)
+        # GetChipMeasure.main_to_chip_results(self)
 
 

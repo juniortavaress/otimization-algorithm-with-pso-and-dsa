@@ -2,11 +2,10 @@ import os
 from abaqus import *
 from abaqusConstants import *
 from odbAccess import *
-from step import *
 import displayGroupOdbToolset as dgo
 import sys
 import inspect
-from odbAccess import openOdb
+
 
 class GetChipMeasure():
     """
@@ -23,8 +22,8 @@ class GetChipMeasure():
         self.file.create_folders(self)
         
         # Process ODB files
-        step_name, file_directory, obj_directory = self.get_parameters_and_dir()
-        self.process_odb(file_directory, step_name, obj_directory)
+        file_directory, obj_directory = self.get_parameters_and_dir()
+        self.process_odb(file_directory, obj_directory)
 
         
     def get_parameters_and_dir(self):
@@ -34,14 +33,12 @@ class GetChipMeasure():
         Returns:
             tuple: Step name, directory for ODB files, and directory for OBJ files.
         """
-        step_name = 'Cutting Step'
-        # file_directory = self.odb_dir
         file_directory = self.odb_dir
         obj_directory = self.obj_dir
-        return step_name, file_directory, obj_directory
+        return file_directory, obj_directory
 
 
-    def process_odb(self, file_directory, step_name, obj_directory):
+    def process_odb(self, file_directory, obj_directory):
         """
         Process each ODB file to extract chip data and generate OBJ files.
 
@@ -56,10 +53,6 @@ class GetChipMeasure():
         for odb_file in odb_files:
             odb_file_path = os.path.join(file_directory, odb_file)
 
-            # odb = openOdb(odb_file_path, readOnly=True)
-            # step_names = odb.steps.keys()
-            # step_name = odb.steps[step_names[-1]]
-
             # Open ODB
             try:
                 view = session.Viewport(name='Viewport: 1', origin=(0.0, 0.0), width=200, height=100)
@@ -72,6 +65,8 @@ class GetChipMeasure():
             try:
                 # Get the step and the total number of frames
                 odb = session.odbs[odb_file_path]
+                step_names = list(odb.steps.keys())
+                step_name = step_names[-1]
                 step = odb.steps[step_name]
                 total_frames = len(step.frames)
 
@@ -86,24 +81,29 @@ class GetChipMeasure():
                     # Activate section view
                     view.odbDisplay.setFrame(step=step_name, frame=frame_index)
                     view.odbDisplay.setValues(viewCutNames=('EVF_VOID',), viewCut=ON)
-                    print("Section view set for frame {0}.".format(frame_index))
+                    # print("Section view set for frame {0}.".format(frame_index))
+
+                    part_instances = list(odb.rootAssembly.instances.keys())
 
                     # Remove CHIPPLATE-1, TOOL-1 and EULERIAN-1
                     try:
-                        leaf_chipplate = dgo.LeafFromPartInstance(partInstanceName=('CHIPPLATE-1',))
+                        leaf_chipplate = dgo.LeafFromPartInstance(partInstanceName=(str(part_instances[0]),))
                         view.odbDisplay.displayGroup.remove(leaf=leaf_chipplate)
 
-                        leaf_tool = dgo.LeafFromPartInstance(partInstanceName=('TOOL-1',))
+                        leaf_tool = dgo.LeafFromPartInstance(partInstanceName=(str(part_instances[2]),))
                         view.odbDisplay.displayGroup.remove(leaf=leaf_tool)
 
-                        leaf_eulerian = dgo.LeafFromPartInstance(partInstanceName=('EULERIANPART-1', ))
+                        leaf_eulerian = dgo.LeafFromPartInstance(partInstanceName=(str(part_instances[1]), ))
                         view.odbDisplay.displayGroup.remove(leaf=leaf_eulerian)
                     except Exception as e:
                         continue
 
                     # Add Chip Set, set Front View, and create OBJ
                     try:
-                        leaf_chipset = dgo.LeafFromElementSets(elementSets=('EULERIANPART-1.CHIPSET', ))
+                        eulerian_instance = odb.rootAssembly.instances.items()
+                        chip_set = list(eulerian_instance[1][1].elementSets.keys())[0]
+                        element_set = '{0}.{1}'.format(eulerian_instance[1][0], chip_set)
+                        leaf_chipset = dgo.LeafFromElementSets(elementSets=(element_set, ))
                         view.odbDisplay.displayGroup.add(leaf=leaf_chipset)
                         view.view.setValues(session.views['Front'])
                         session.writeOBJFile(fileName=obj_file_path, canvasObjects=(view, ))

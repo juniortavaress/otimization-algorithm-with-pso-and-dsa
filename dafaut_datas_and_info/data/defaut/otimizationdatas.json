@@ -8,20 +8,11 @@
                     "normal_force": 1034.16,
                     "temperature": 106.29,
                     "CCR": 2.18,
-                    "CSR": 1.29},
-
-                "condition03": {
-                    "velocity": 1000,
-                    "depth_of_cut": 0.050,
-                    "timePeriod": 0.004,
-                    "cutting_force": 523.74,
-                    "normal_force": 747.13,
-                    "temperature": 95.83,
-                    "CCR": 2.14,
-                    "CSR": 1.45}
+                    "CSR": 1.29}
                 },
 
 "parameters_limits": {"p": {"max": 0.40, "min": 0.84},
                       "D2": {"max": 0.50, "min": 1.50},
                       "Ts": {"max": 556, "min": 834}}
 }
+

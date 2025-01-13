@@ -5,31 +5,18 @@
         "error": null
     },
     "Otimization": {
-        "status": "done",
-        "error": null,
-        "iteration 1": {
-            "best position": "[0.6500, 0.6040, 633.3097]",
-            "otimized-error": "1.0548391916626432",
-            "error": null
-        },
-        "iteration 2": {
-            "best position": "[0.6500, 0.6040, 633.3097]",
-            "otimized-error": "1.0548391916626432",
-            "error": null
+        "status": "pending",
+        "error": {
+            "id": "otimization-error",
+            "error": "attempt to get argmin of an empty sequence",
+            "error_type": "<class 'ValueError'>",
+            "traceback": "NoneType: None\n"
         }
     },
     "Simulation-list-pc2": {
         "status": false,
         "list_comp_02": [
-            "s:\\Junior\\abaqus-with-python\\otimization-scripts\\otimization-algorithm-with-pso-and-dsa\\results\\inp-and-simulation\\sim_v500_h75_p_0.40_D2_0.50_Ts_556.00"
+            "s:\\Junior\\abaqus-with-python\\otimization-scripts\\otimization-algorithm-with-pso-and-dsa\\results\\inp-and-simulation\\sim_v500_h75_p_0.80_D2_1.02_Ts_778.39"
         ]
     }
 }
-
-
-
-
-
-
-
-

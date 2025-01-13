@@ -15,7 +15,7 @@ class PsoManager():
         self.call_count_interation = 0
         lb, ub = PsoManager.get_boundry(self)
         objective_function_pso = lambda params: PsoManager.objective_function(self, params)
-        best_position, best_score = PsoManager.pso(self, objective_function_pso, lb, ub, swarmsize=1, omega=0.5, phip=2, phig=2, maxiter=2, minstep=1e-6, minfunc=1e-3)
+        best_position, best_score = PsoManager.pso(self, objective_function_pso, lb, ub, swarmsize=1, omega=0.5, phip=2, phig=2, maxiter=1, minstep=1e-6, minfunc=1e-3)
         return self.call_count, best_position, best_score
         
 

@@ -233,10 +233,12 @@ class SimulationManager:
                 self.simulated_forces = [filtered_row.iloc[0,7], filtered_row.iloc[0,3]]
                 self.simulated_temperature = filtered_row.iloc[0,9]
 
-                df_chip = pd.read_excel(os.path.join(self.excel_dir, "Results_chip_analysis.xlsx"), header=0)
-                filtered_row = df_chip[df_chip["Filename"] == file[:-4]]
-                self.chip_compression_ratio = filtered_row.iloc[0,5]
-                self.chip_segmentation_ratio = filtered_row.iloc[0,6]
+                # df_chip = pd.read_excel(os.path.join(self.excel_dir, "Results_chip_analysis.xlsx"), header=0)
+                # filtered_row = df_chip[df_chip["Filename"] == file[:-4]]
+                # self.chip_compression_ratio = filtered_row.iloc[0,5]
+                # self.chip_segmentation_ratio = filtered_row.iloc[0,6]
+
+                self.chip_compression_ratio, self.chip_segmentation_ratio = 1, 1
 
                 FileUtils.set_text(self, "message-id_13")
 

@@ -118,7 +118,7 @@ class GetChipMeasure():
         """
         arc = np.loadtxt(file_path, skiprows=2, max_rows=num_lines - 2, usecols=(1, 2, 3))
         points = arc[arc[:, 2] == 0.02]
-        points = points[(points[:, 1] >= -0.03) & (points[:, 1] <= 0.3)]
+        points = points[(points[:, 1] >= 0.53) & (points[:, 1] <= 0.75)]
         return np.delete(points, 2, axis=1) 
 
 
