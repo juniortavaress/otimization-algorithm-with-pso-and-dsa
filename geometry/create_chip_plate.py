@@ -52,6 +52,16 @@ class ChipPlateModel():
         self.MinSizeFactor = data['chipPlateData']['createMeshInformation']['minSizeFactor']       
         self.DeviationFactor = data['chipPlateData']['createMeshInformation']['deviationFactor']
         
+        
+        cutting_depth = data['assemblyAndSimulationData']['toolPosition']['cuttingDepth']
+        if cutting_depth == 0.025:
+            self.Width = 2.15
+        elif cutting_depth == 0.050:
+            self.Width = 2.10
+        elif cutting_depth == 0.075:
+            self.Width = 2.05
+        elif cutting_depth == 0.100:
+            self.Width = 1.98
 
     def createPart(self):
         """

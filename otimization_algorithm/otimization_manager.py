@@ -56,5 +56,5 @@ class OtimizationManager():
                 self.error_track = True
                 FileUtils.set_text(self, "message-ide_06")
                 
-        else:
-            FileUtils.code_status(self, "otimization-error")
+        # else:
+        #     FileUtils.code_status(self, "otimization-error")

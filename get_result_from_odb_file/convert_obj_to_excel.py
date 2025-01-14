@@ -100,9 +100,9 @@ class GetChipMeasure():
         min_distances = GetChipMeasure.calculate_min_distances(left_segmented_chip_side, right_smooth_chip_side)
         peaks, _ = find_peaks(min_distances)
         valleys, _ = find_peaks(-min_distances)
-        average_maximum = np.mean(min_distances[peaks]) * 1000
-        average_minimum = np.mean(min_distances[valleys]) * 1000
-        return average_minimum, average_maximum
+        absolute_maximum = np.max(min_distances[peaks]) * 1000
+        absolut_minimum = np.min(min_distances[valleys]) * 1000
+        return absolut_minimum, absolute_maximum
 
 
     def load_obj_points(file_path, num_lines):

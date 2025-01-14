@@ -15,7 +15,7 @@ class PsoManager():
         self.call_count_interation = 0
         lb, ub = PsoManager.get_boundry(self)
         objective_function_pso = lambda params: PsoManager.objective_function(self, params)
-        best_position, best_score = PsoManager.pso(self, objective_function_pso, lb, ub, swarmsize=1, omega=0.5, phip=2, phig=2, maxiter=1, minstep=1e-6, minfunc=1e-3)
+        best_position, best_score = PsoManager.pso(self, objective_function_pso, lb, ub, swarmsize=2, omega=0.5, phip=2, phig=2, maxiter=6, minstep=1e-6, minfunc=1e-3)
         return self.call_count, best_position, best_score
         
 
@@ -45,7 +45,7 @@ class PsoManager():
         Returns:
             list: Errors for each parameter set.
         """
-            
+        print("param_obj", parameters)
         # Dicionário para armazenar os erros calculados
         error_dict = {}
         error_list = []
@@ -165,7 +165,10 @@ class PsoManager():
         """
         Particle Swarm Optimization algorithm.
         """
+        print("PSO FUNCTION (process):", self.process)
+        # if self.process == "done":
         # Inicialização das partículas
+        num_int = maxiter-1
         num_particles = swarmsize
         num_dimensions = len(lb)
         positions = np.random.uniform(low=lb, high=ub, size=(num_particles, num_dimensions))
@@ -182,12 +185,13 @@ class PsoManager():
         global_best_score = min(personal_best_scores) # pega o menor erro
         global_best_scores_history = [global_best_score] # copia o menor erro
 
-        PsoManager.show_results(self, global_best_position, global_best_score)
+        PsoManager.show_results(self, velocities, personal_best_positions, positions, global_best_position, global_best_score)
 
         # PSO Optimization
-        for iteration in range(maxiter-1):
+        for iteration in range(num_int):
             for i in range(num_particles):
                 r1, r2 = np.random.rand(), np.random.rand()
+
                 velocities[i] = (omega * velocities[i] + phip * r1 * (personal_best_positions[i] - positions[i]) + phig * r2 * (global_best_position - positions[i]))
                 positions[i] += velocities[i] # conjunto de novas particulas 
                 positions[i] = np.clip(positions[i], lb, ub) # ajusta os valores fora do limite, tem que ver se isso faz sentido
@@ -204,7 +208,8 @@ class PsoManager():
                     global_best_score = score[i]
                     global_best_position = positions[i]
         
-            PsoManager.show_results(self, global_best_position, global_best_score)
+            PsoManager.show_results(self, velocities, personal_best_positions, positions, global_best_position, global_best_score)
+
             self.call_count_interation += 1
             global_best_scores_history.append(global_best_score) # melhor resultado de cada iteração
             
@@ -215,13 +220,17 @@ class PsoManager():
             if global_best_score < minfunc:
                 print(f"Critério de parada atingido na iteração {iteration+1}")
                 break
+
         return global_best_position, global_best_score
 
 
-    def show_results(self, global_best_position, global_best_score):
+    def show_results(self, velocities, personal_best_positions, positions, global_best_position, global_best_score):
         """
         Displays the results of the best particle from PSO.
         """
+        self.velocities = velocities
+        self.personal_best_positions = personal_best_positions
+        self.position = positions
         self.global_best_position = global_best_position
         self.global_best_score = global_best_score
 

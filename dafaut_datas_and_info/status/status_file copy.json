@@ -1,22 +1,36 @@
 {
-    "Execution-status": "done",
+    "Execution-status": "running",
     "Geometry": {
         "status": "done",
         "error": null
     },
     "Otimization": {
-        "status": "done",
+        "status": "pending",
         "error": null,
         "iteration 1": {
-            "best position": "[0.6531, 1.4911, 630.8849]",
-            "otimized-error": "1.0548391916626432",
+            "best position": "[0.7142, 0.8074, 805.7453]",
+            "personal_best_positions": "[[7.14177206e-01 8.07429371e-01 8.05745282e+02]]",
+            "positions": "[[7.14177206e-01 8.07429371e-01 8.05745282e+02]]",
+            "otimized-error": "0.3092738130774232",
+            "velocities": "[[ 0.34650749  0.25303678 -0.78511221]]",
             "error": null
+        },
+        "iteration 2": {
+            "best position": "[0.7142, 0.8074, 805.7453]",
+            "personal_best_positions": "[[7.14177206e-01 8.07429371e-01 8.05745282e+02]]",
+            "positions": "[[4.00e-01 5.00e-01 5.56e+02]]",
+            "otimized-error": "0.3092738130774232",
+            "velocities": "[[ 0.17325374  0.12651839 -0.3925561 ]]",
+            "error": null
+        },
+        "iteration 3": {
+            "error": "error"
         }
     },
     "Simulation-list-pc2": {
         "status": false,
         "list_comp_02": [
-            "s:\\Junior\\abaqus-with-python\\otimization-scripts\\otimization-algorithm-with-pso-and-dsa\\results\\inp-and-simulation\\sim_v500_h75_p_0.65_D2_1.49_Ts_630.88"
+            "s:\\Junior\\abaqus-with-python\\otimization-scripts\\otimization-algorithm-with-pso-and-dsa\\results\\inp-and-simulation\\sim_v500_h75_p_0.40_D2_0.50_Ts_556.00again"
         ]
     }
 }

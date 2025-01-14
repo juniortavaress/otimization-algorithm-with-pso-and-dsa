@@ -32,16 +32,17 @@ class ScriptManager(QWidget):
         self.ui = Ui_Widget()
         self.ui.setupUi(self)
 
-        process = self.create_setup_and_folders()
+        self.process = self.create_setup_and_folders()
         self.create_message_area()
-        print(process)
-        if process == "done":
-            self.clean_folder()
-            self.generate_geometry_from_script()    
+        print("process", self.process)
+        # if self.process == "done":
+        self.clean_folder()
+        self.generate_geometry_from_script()    
 
-        else:
-            FileUtils.set_text(self, "message-id_14")
-            print("To aqui fio")
+        # # else:
+        #     FileUtils.set_text(self, "message-id_14")
+        #     # self.call_pso_script()
+        #     print("To aqui fio")
         # self.generate_geometry_from_input()  
 
 
@@ -159,7 +160,8 @@ class ScriptManager(QWidget):
         """
         FileUtils.code_status(self, "otimization")
         OtimizationManager.main_otimization_manager(self)
-        FileUtils.set_text(self, "message-id_04")
+        if not self.error_track:
+            FileUtils.set_text(self, "message-id_04")
         
 
     def clean_folder(self):

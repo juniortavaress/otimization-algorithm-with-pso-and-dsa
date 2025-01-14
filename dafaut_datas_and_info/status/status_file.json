@@ -1,22 +1,20 @@
 {
-    "Execution-status": "done",
+    "Execution-status": "running",
     "Geometry": {
         "status": "done",
         "error": null
     },
     "Otimization": {
         "status": "pending",
-        "error": {
-            "id": "otimization-error",
-            "error": "attempt to get argmin of an empty sequence",
-            "error_type": "<class 'ValueError'>",
-            "traceback": "NoneType: None\n"
-        }
+        "error": null
     },
     "Simulation-list-pc2": {
-        "status": false,
+        "status": true,
         "list_comp_02": [
-            "s:\\Junior\\abaqus-with-python\\otimization-scripts\\otimization-algorithm-with-pso-and-dsa\\results\\inp-and-simulation\\sim_v500_h75_p_0.80_D2_1.02_Ts_778.39"
+            "s:\\Junior\\abaqus-with-python\\otimization-scripts\\otimization-algorithm-with-pso-and-dsa\\results\\inp-and-simulation\\sim_v500_h50_p_0.52_D2_0.64_Ts_774.08",
+            "s:\\Junior\\abaqus-with-python\\otimization-scripts\\otimization-algorithm-with-pso-and-dsa\\results\\inp-and-simulation\\sim_v500_h50_p_0.46_D2_0.79_Ts_715.25",
+            "s:\\Junior\\abaqus-with-python\\otimization-scripts\\otimization-algorithm-with-pso-and-dsa\\results\\inp-and-simulation\\sim_v500_h75_p_0.52_D2_0.64_Ts_774.08",
+            "s:\\Junior\\abaqus-with-python\\otimization-scripts\\otimization-algorithm-with-pso-and-dsa\\results\\inp-and-simulation\\sim_v500_h75_p_0.46_D2_0.79_Ts_715.25"
         ]
     }
 }

@@ -183,12 +183,21 @@ class FileUtils():
 
             elif command == "otimization-error":
                 error_data = {  "id": "otimization-error", "error": str(self.e),   "error_type": str(type(self.e)),   "traceback": traceback.format_exc()}
-                status_dict = {"Otimization": {"status": "pending", "error": error_data}}
+                status_dict = {"Otimization-error": {"status": "pending", "error": error_data}}
                 existing_data.update(status_dict)
 
             elif command == "iteration":
-                position = "[" + ", ".join("{:.4f}".format(x) for x in self.global_best_position) + "]"
-                existing_data["Otimization"]["iteration {}".format(self.call_count_interation)] = {"best position": position, "otimized-error": str(self.global_best_score), "error": None}
+                global_best_position = "[" + ", ".join("{:.4f}".format(x) for x in self.global_best_position) + "]"
+                # personal_best_positions = "[" + ", ".join("{:.4f}".format(x) for x in self.personal_best_positions) + "]"
+                # position = "[" + ", ".join("{:.4f}".format(x) for x in self.position) + "]"
+                # velocities = "[" + ", ".join("{:.4f}".format(x) for x in self.velocities) + "]"
+
+                # global_best_position = self.global_best_position
+                personal_best_positions = self.personal_best_positions
+                position = self.position
+                velocities = self.velocities
+
+                existing_data["Otimization"]["iteration {}".format(self.call_count_interation)] = {"best position": str(global_best_position),  "personal_best_positions": str(personal_best_positions), "positions": str(position), "otimized-error": str(self.global_best_score), "velocities": str(velocities),"error": None}
 
             elif command == "iteration-error":
                 error_data = {"id": self.stage, "error": str(self.e), "error_type": str(type(self.e)), "traceback": traceback.format_exc()}
@@ -198,9 +207,11 @@ class FileUtils():
                 existing_data["Otimization"]["status"] = "done"
 
             elif command == "finished":
-                existing_data["Execution-status"] = "done"
+                if not self.error_track:
+                    existing_data["Execution-status"] = "done"
             else:
                 print("command does not exist")
+
             with open(os.path.join(self.status_dir, "status_file.json"), 'w') as json_file:
                 json.dump(existing_data, json_file, indent=4)
 

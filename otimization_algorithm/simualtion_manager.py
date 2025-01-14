@@ -8,6 +8,7 @@ import numpy as np
 import pandas as pd
 from file_utils import FileUtils
 from get_result_from_odb_file.main_results import getResults
+import uuid
 
 class SimulationManager:
     def __init__(self):
@@ -104,6 +105,7 @@ class SimulationManager:
         index_names = {}
         global_index = 0
         
+        print("\n\n=======================================\n\nPARAMETROS", parameters, "\n\n=======================================\n\n")
         for file in os.listdir(self.inp_dir):
             file_path = os.path.join(self.inp_dir, file)
             filename = os.path.basename(file_path)[:-4]
@@ -162,6 +164,11 @@ class SimulationManager:
                     lis_dir_inp.append(dir_inp)
 
                 else:
+                    dir_inp = os.path.join(self.inp_and_simulation_dir, params[:-4] + '_' + str(uuid.uuid4()))
+                    os.makedirs(dir_inp)
+                    with open(os.path.join(dir_inp, params), 'w') as file:
+                        file.writelines(lines)
+                    lis_dir_inp.append(dir_inp)
                     print("\n\n\n\n============================= O CODIGO MANDOU PARAMETROS REPETIDOS =============================\n\n\n\n")
 
                 index_names[global_index] = params[:-4]
@@ -233,12 +240,12 @@ class SimulationManager:
                 self.simulated_forces = [filtered_row.iloc[0,7], filtered_row.iloc[0,3]]
                 self.simulated_temperature = filtered_row.iloc[0,9]
 
-                # df_chip = pd.read_excel(os.path.join(self.excel_dir, "Results_chip_analysis.xlsx"), header=0)
-                # filtered_row = df_chip[df_chip["Filename"] == file[:-4]]
-                # self.chip_compression_ratio = filtered_row.iloc[0,5]
-                # self.chip_segmentation_ratio = filtered_row.iloc[0,6]
+                df_chip = pd.read_excel(os.path.join(self.excel_dir, "Results_chip_analysis.xlsx"), header=0)
+                filtered_row = df_chip[df_chip["Filename"] == file[:-4]]
+                self.chip_compression_ratio = filtered_row.iloc[0,5]
+                self.chip_segmentation_ratio = filtered_row.iloc[0,6]
 
-                self.chip_compression_ratio, self.chip_segmentation_ratio = 1, 1
+                # self.chip_compression_ratio, self.chip_segmentation_ratio = 1, 1
 
                 FileUtils.set_text(self, "message-id_13")
 
