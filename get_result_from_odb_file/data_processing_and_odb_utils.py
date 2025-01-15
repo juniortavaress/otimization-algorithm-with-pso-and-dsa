@@ -11,14 +11,14 @@ class OdbUtils():
         Initializes the temperature ranges and tool node mappings.
         """
         node_range_strs = {
-            "h0025": "840, 10800:10772:-1, 148, 6738:6725:-1, 433, 96597:96605:1, 6328",
-            "h0050": "820, 10790:10767:-1, 148, 6738:6725:-1, 433, 95597:95605:1, 6308",
-            "h0075": "800, 10780:10762:-1, 148, 6738:6725:-1, 433, 94597:94605:1, 6288",
-            "h0100": "780, 10770:10757:-1, 148, 6738:6725:-1, 433, 93597:93605:1, 6268"
+            "h25": "840, 10800:10772:-1, 148, 6738:6725:-1, 433, 96597:96605:1, 6328",
+            "h50": "820, 10790:10767:-1, 148, 6738:6725:-1, 433, 95597:95605:1, 6308",
+            "h75": "800, 10780:10762:-1, 148, 6738:6725:-1, 433, 94597:94605:1, 6288",
+            "h100": "780, 10770:10757:-1, 148, 6738:6725:-1, 433, 93597:93605:1, 6268"
         }
 
         spanwinkel_nodes = {
-            "+6": 2878,  # Spanwinkel +6° → Knoten 2878
+            "6": 2878,  # Spanwinkel +6° → Knoten 2878
             "-6": 1795   # Spanwinkel -6° → Knoten 1795
         }
         return node_range_strs, spanwinkel_nodes
@@ -31,12 +31,11 @@ class OdbUtils():
             :param filename: Name of the ODB file
             :return: A tuple (gam, h)
         """
-        # gam_match = re.search(r"_gam([+-]\d+)_", filename)
+        gam_match = re.search(r"_gam(-?\d+)_", filename)
         h_match = re.search(r"h(\d+)", filename)
-        # Extrair os valores com segurança e formato adequado
-        # gam = gam_match.group(1) if gam_match else None
+        gam = gam_match.group(1) if gam_match else None
         h = "h{}".format(h_match.group(1)) if h_match else None
-        return "+6", h
+        return gam, h
 
     @staticmethod
     def generate_node_path(node_range_str):

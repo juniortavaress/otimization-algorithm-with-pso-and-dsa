@@ -15,6 +15,7 @@ from visualization import *
 from connectorBehavior import *
 import traceback
 from file_utils import FileUtils
+sys.dont_write_bytecode = True
 
 class Main():
     def __init__(self):
@@ -63,14 +64,16 @@ class Main():
                 velocity = conditions[key]["velocity"]
                 depth_of_cut = conditions[key]["depth_of_cut"]
                 time_period = conditions[key]["timePeriod"]
+                rake_angle = conditions[key]["rake_angle"]
                 
-                filename = "sim_v{}_h{}.json".format(velocity, int(depth_of_cut*1000))
+                filename = "sim_v{}_h{}_gam{}.json".format(int(velocity), int(depth_of_cut*1000), rake_angle)
                 json_file = os.path.join(self.info, filename)
 
                 defaut_datas["generalInformation"]["modelName"] = filename[:-5]
                 defaut_datas["assemblyAndSimulationData"]["toolPosition"]["cuttingDepth"] = depth_of_cut
                 defaut_datas["assemblyAndSimulationData"]["stepsAndHistoryInformation"]["timePeriod"] = time_period
                 defaut_datas["assemblyAndSimulationData"]["stepsAndHistoryInformation"]["cuttingVelocity"] = velocity
+                defaut_datas["toolData"]["createPartInformation"]["rakeAngle"] = rake_angle
 
                 with open(json_file, "w") as file:
                     json.dump(defaut_datas, file, indent=4)

@@ -15,7 +15,7 @@ class PsoManager():
         self.call_count_interation = 0
         lb, ub = PsoManager.get_boundry(self)
         objective_function_pso = lambda params: PsoManager.objective_function(self, params)
-        best_position, best_score = PsoManager.pso(self, objective_function_pso, lb, ub, swarmsize=2, omega=0.5, phip=2, phig=2, maxiter=6, minstep=1e-6, minfunc=1e-3)
+        best_position, best_score = PsoManager.pso(self, objective_function_pso, lb, ub, swarmsize=3, omega=0.5, phip=2, phig=2, maxiter=20, minstep=1e-6, minfunc=1e-3)
         return self.call_count, best_position, best_score
         
 
@@ -45,7 +45,7 @@ class PsoManager():
         Returns:
             list: Errors for each parameter set.
         """
-        print("param_obj", parameters)
+        # print("param_obj", parameters)
         # Dicionário para armazenar os erros calculados
         error_dict = {}
         error_list = []
@@ -55,12 +55,23 @@ class PsoManager():
             formatted_coords = '[' + ', '.join(map(lambda x: str(np.round(x, 2)), param)) + ']'
             params_map[index] = formatted_coords
 
+        # print('params_map', params_map)
+
         datas_exp = PsoManager.get_experimental_datas(self)
+        # print('datas_exp', datas_exp)
+
         results_dict = SimulationManager.simulation_manager(self, parameters)
+        # print('results_dict', results_dict)
+
+        # print('error status', self.error_track)
         
         if not self.error_track:
+            # print('aqui')       
             sorted_indices = sorted(results_dict.keys())
+            # print('sorted_indices', sorted_indices)
+
             for index in sorted_indices:
+                print(index)
                 data = results_dict[index]
                 filename = data["Filename"]
                 simulated_forces = data["Forces"]
@@ -68,7 +79,13 @@ class PsoManager():
                 simulated_chip_compression_ratio = data["CCR"]
                 simulated_chip_segmentation_ratio = data["CSR"]
 
-                # print("++++++++++",  chip_compression_ratio, chip_segmentation_ratio)
+
+                # print("++++++++++",  data, "\n")
+                # print("++++++++++",  filename, "\n")
+                # print("++++++++++",  simulated_forces, "\n")
+                # print("++++++++++",  simulated_temperature, "\n")
+                # print("++++++++++",  simulated_chip_compression_ratio, "\n")
+                # print("++++++++++",  simulated_chip_segmentation_ratio, "\n")
 
                 info = filename.split("_p")
                 param_info = info[1].split("_")
@@ -81,6 +98,13 @@ class PsoManager():
                     target_chip_compression_ratio = datas_exp[filename.split("_p")[0]].get("CCR")
                     target_chip_segentatio_ratio = datas_exp[filename.split("_p")[0]].get("CSR")
                     targets = [target_cutting_force, target_normal_force, target_temperature, target_chip_compression_ratio, target_chip_segentatio_ratio]
+
+                    # print("target_cutting_force",  target_cutting_force, "\n")
+                    # print("target_normal_force+",  target_normal_force, "\n")
+                    # print("target_temperature+",  target_temperature, "\n")
+                    # print("+target_chip_compression_ratio+++",  target_chip_compression_ratio, "\n")
+                    # print("++++target_chip_segentatio_ratio++",  target_chip_segentatio_ratio, "\n")
+                    # print("++++++++++",  targets, "\n")
 
                 percentage_error_cutting_force = abs((target_cutting_force - simulated_forces[0])/target_cutting_force)
                 percentage_error_normal_force = abs((target_normal_force - simulated_forces[1])/target_normal_force)
@@ -97,6 +121,7 @@ class PsoManager():
 
                 if str(params_set) not in error_dict:
                     error_dict[str(params_set)] = {}
+
                 normalized_total_error = (np.sqrt(0.5 * normalized_cutting_force_error + 0.1 * normalized_normal_force_error + 0.2 * normalized_CCR_error + 0.2 * normalized_CSR_error))
                 error_dict[str(params_set)][index] = normalized_total_error
 
@@ -127,9 +152,10 @@ class PsoManager():
                 cutting_force = conditions[key]["cutting_force"]
                 normal_force = conditions[key]["normal_force"]
                 temperature = conditions[key]["temperature"]
+                rake_angle = conditions[key]["rake_angle"]
                 CCR = conditions[key]["CCR"]
                 CSR = conditions[key]["CSR"]
-                filename = "sim_v{}_h{}".format(velocity, int(depth_of_cut*1000))
+                filename = "sim_v{}_h{}_gam{}".format(int(velocity), int(depth_of_cut*1000), rake_angle)
                 
                 datas_exp[filename] = {"cutting_force": cutting_force, "normal_force": normal_force, "temperature": temperature, "CCR": CCR, "CSR": CSR}
         return datas_exp
@@ -139,6 +165,7 @@ class PsoManager():
         """
         Saves simulation iteration data to an Excel file.
         """
+        print('save_iteration_datas')
         data = {"Condition": condition,
                 "Parameter p": [parameters[0]], "Parameter D2": [parameters[1]], "Parameter Ts": [parameters[2]],
                 "Normalized Error": normalized_total_error,
@@ -157,6 +184,7 @@ class PsoManager():
         else:
             new_df = new_info
         
+        print(new_df)
         new_df.index.name = "Simulation"
         new_df.to_excel(data_path, index=True, engine="openpyxl")
 

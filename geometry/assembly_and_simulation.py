@@ -41,9 +41,8 @@ class AssemblyModel():
         self.yToolPosition = data['eulerianData']['createParticionInformation']['y_points'][3] - data['assemblyAndSimulationData']['toolPosition']['cuttingDepth']
         self.xChipPlatePosition = 0
         self.yChipPlatePosition = data['eulerianData']['createParticionInformation']['y_points'][3] + data['assemblyAndSimulationData']['chipPlatePosition']['clearanceOverWorkpiece']
-        # self.CuttingDepth = -data['assemblyAndSimulationData']['toolPosition']['cuttingDepth']
         self.TimePeriod = data['assemblyAndSimulationData']['stepsAndHistoryInformation']['timePeriod']
-        self.CuttingVelocity = data['assemblyAndSimulationData']['stepsAndHistoryInformation']['cuttingVelocity']
+        self.CuttingVelocity = float(data['assemblyAndSimulationData']['stepsAndHistoryInformation']['cuttingVelocity'])
 
 
     def assemblyPositions(self):

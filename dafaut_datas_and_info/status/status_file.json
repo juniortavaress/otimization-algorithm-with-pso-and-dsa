@@ -1,20 +1,25 @@
 {
-    "Execution-status": "running",
+    "Execution-status": "done",
     "Geometry": {
         "status": "done",
         "error": null
     },
     "Otimization": {
         "status": "pending",
-        "error": null
+        "error": null,
+        "iteration 1": {
+            "error": {
+                "id": "Collecting results",
+                "error": "'GeometryCollection' object has no attribute 'exterior'",
+                "error_type": "<class 'AttributeError'>",
+                "traceback": "Traceback (most recent call last):\n  File \"s:\\Junior\\abaqus-with-python\\otimization-scripts\\otimization-algorithm-with-pso-and-dsa\\otimization_algorithm\\simualtion_manager.py\", line 92, in simulation_manager\n    results = SimulationManager.get_results(self, index_names)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"s:\\Junior\\abaqus-with-python\\otimization-scripts\\otimization-algorithm-with-pso-and-dsa\\otimization_algorithm\\simualtion_manager.py\", line 227, in get_results\n    getResults.convert_json_to_excel(self)\n  File \"s:\\Junior\\abaqus-with-python\\otimization-scripts\\otimization-algorithm-with-pso-and-dsa\\get_result_from_odb_file\\main_results.py\", line 61, in convert_json_to_excel\n    GetChipMeasure.main_to_chip_results(self)\n  File \"s:\\Junior\\abaqus-with-python\\otimization-scripts\\otimization-algorithm-with-pso-and-dsa\\get_result_from_odb_file\\convert_obj_to_excel.py\", line 20, in main_to_chip_results\n    GetChipMeasure.process_datas(file_directory, file_groups)\n  File \"s:\\Junior\\abaqus-with-python\\otimization-scripts\\otimization-algorithm-with-pso-and-dsa\\get_result_from_odb_file\\convert_obj_to_excel.py\", line 52, in process_datas\n    average_minimum, average_maximum = GetChipMeasure.process_obj_file(file_path, num_lines)\n                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"s:\\Junior\\abaqus-with-python\\otimization-scripts\\otimization-algorithm-with-pso-and-dsa\\get_result_from_odb_file\\convert_obj_to_excel.py\", line 93, in process_obj_file\n    contour_points, ymin, ymax = GetChipMeasure.sort_contour_points(alpha_shape)\n                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"s:\\Junior\\abaqus-with-python\\otimization-scripts\\otimization-algorithm-with-pso-and-dsa\\get_result_from_odb_file\\convert_obj_to_excel.py\", line 137, in sort_contour_points\n    contour_x, contour_y = alpha_shape.exterior.xy\n                           ^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'GeometryCollection' object has no attribute 'exterior'\n"
+            }
+        }
     },
     "Simulation-list-pc2": {
-        "status": true,
+        "status": false,
         "list_comp_02": [
-            "s:\\Junior\\abaqus-with-python\\otimization-scripts\\otimization-algorithm-with-pso-and-dsa\\results\\inp-and-simulation\\sim_v500_h50_p_0.52_D2_0.64_Ts_774.08",
-            "s:\\Junior\\abaqus-with-python\\otimization-scripts\\otimization-algorithm-with-pso-and-dsa\\results\\inp-and-simulation\\sim_v500_h50_p_0.46_D2_0.79_Ts_715.25",
-            "s:\\Junior\\abaqus-with-python\\otimization-scripts\\otimization-algorithm-with-pso-and-dsa\\results\\inp-and-simulation\\sim_v500_h75_p_0.52_D2_0.64_Ts_774.08",
-            "s:\\Junior\\abaqus-with-python\\otimization-scripts\\otimization-algorithm-with-pso-and-dsa\\results\\inp-and-simulation\\sim_v500_h75_p_0.46_D2_0.79_Ts_715.25"
+            "s:\\Junior\\abaqus-with-python\\otimization-scripts\\otimization-algorithm-with-pso-and-dsa\\results\\inp-and-simulation\\sim_v166_h75_gam6_p_0.42_D2_1.46_Ts_639.35"
         ]
     }
 }

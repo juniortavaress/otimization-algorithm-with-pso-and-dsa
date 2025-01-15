@@ -150,7 +150,8 @@ class SimulationManager:
                 for i, line in enumerate(lines):
                     if re.match(pattern, line):
                         lines[i] = "*Plastic, hardening=USER, properties=9\n"
-                        lines[i+1] = f"1200., 800., 0.4, 0.0121, 0.0002, 0.005, 0.002, 0.0088, \n{Ts}\n"
+                        # A, B, n,  C1, C2, C3, EQPLAS_Zero, k, Ts
+                        lines[i+1] = f"1200., 1284., 0.54, 0.0121, 0.0002, 0.005, 0.002, 0.0088, \n{Ts}\n"
                         break
 
                 # Saving

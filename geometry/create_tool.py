@@ -21,6 +21,12 @@ class ToolModel():
 
         :param data: Dictionary containing input data for model creation.
         """
+        # import json
+        # defaut_data = os.path.join(r"S:\Junior\abaqus-with-python\otimization-scripts\otimization-algorithm-with-pso-and-dsa\dafaut_datas_and_info\data\defaut\defautdatas.json")
+        # with open(defaut_data, "r") as info:
+        #     defaut_datas = json.load(info)
+        # data = defaut_datas
+
         self.dataInput(data)
         self.createPart()
         self.createPartition()
@@ -83,12 +89,12 @@ class ToolModel():
         # Defining Dimension and Angle of the Clearance Face
         s.AngularDimension(line1=s.geometry[4], line2=s.geometry[2], textPoint=(18.2371864318848, 2.41468572616577), value=self.ReliefAngle)
         s.ObliqueDimension(textPoint=(10.5507974624634, -1.29030799865723), value=self.clearanceFaceDimension, vertex1=s.vertices[0], vertex2=s.vertices[5])
-        # Defining Dimension and Angle of the Rake Face
-        s.AngularDimension(line1=s.geometry[7], line2=s.geometry[3], textPoint=(0.31717586517334, 7.36955785751343), value=self.RakeAngle)
-        s.ObliqueDimension(textPoint=(0.0, 8.75), value=self.rakeFaceDimension, vertex1=s.vertices[9], vertex2=s.vertices[0])
         # Defining tool radius
         self.Radius = 0.0001 if self.Radius == 0 else self.Radius
         s.FilletByRadius(curve1=s.geometry[4], curve2=s.geometry[7], nearPoint1=(3.86042213439941, 1.10268461704254), nearPoint2=(4.32205963134766, 0.249606490135193), radius=self.Radius)
+        # Defining Dimension and Angle of the Rake Face
+        s.AngularDimension(line1=s.geometry[7], line2=s.geometry[2], textPoint=(1.05, 0.93), value=90 - self.RakeAngle)
+        s.ObliqueDimension(textPoint=(0.0, 8.75), value=self.rakeFaceDimension, vertex1=s.vertices[9], vertex2=s.vertices[0])
         # Align Tool with the coordinate system
         s.CoincidentConstraint(entity1=s.vertices[4], entity2=s.geometry[2])
         s.CoincidentConstraint(entity1=s.vertices[11], entity2=s.geometry[3])
@@ -159,3 +165,4 @@ class ToolModel():
         self.p.seedEdgeByNumber(constraint=FINER, edges=self.p.edges.getSequenceFromMask(('[#10000000 ]', ), ), number=4)
         self.p.generateMesh()
 
+# ToolModel()

@@ -355,7 +355,7 @@ class GetChipMeasure():
         """
         for base_name, group_results in file_groups.items():
             group_results.sort(key=lambda x: int(x[0].split('_')[-1].replace('Frame', '').replace('.obj', '')))
-            h = float(f"{base_name.split('h')[1].split('_p')[0]}")
+            h = float(f"{base_name.split('h')[1].split('_g')[0]}")
             means_min = [r[1] for r in group_results]
             means_max = [r[2] for r in group_results]
             results.append([base_name, np.mean(means_min), np.std(means_min), np.mean(means_max), np.std(means_max), np.mean(means_max)/h, np.mean(means_max)/np.mean(means_min)])

@@ -4,6 +4,7 @@ import sys
 import inspect
 from odbAccess import openOdb
 from data_processing_and_odb_utils import OdbUtils
+sys.dont_write_bytecode = True
 
 class GetTemps:
     """Class to process ODB files and extract temperature data."""
@@ -41,8 +42,8 @@ class GetTemps:
             
             try: 
                 # Extract information from the filename (e.g., gam and h values)
-                # gam_value_key, h_value_key = OdbUtils.extract_info_from_filename(filename)
-                gam_value_key, h_value_key = "+6", "h0025"
+                gam_value_key, h_value_key = OdbUtils.extract_info_from_filename(filename)
+                # gam_value_key, h_value_key = "h75"
 
                 # Check if extracted parameters match the predefined mappings
                 if h_value_key in node_range_strs and gam_value_key in spanwinkel_nodes:

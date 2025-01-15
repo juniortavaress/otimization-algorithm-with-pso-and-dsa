@@ -103,7 +103,7 @@ class GetChipMeasure():
                         eulerian_instance = odb.rootAssembly.instances.items()
                         chip_set = list(eulerian_instance[1][1].elementSets.keys())[0]
                         element_set = '{0}.{1}'.format(eulerian_instance[1][0], chip_set)
-                        leaf_chipset = dgo.LeafFromElementSets(elementSets=(, ))
+                        leaf_chipset = dgo.LeafFromElementSets(elementSets=(element_set, ))
                         view.odbDisplay.displayGroup.add(leaf=leaf_chipset)
                         view.view.setValues(session.views['Front'])
                         session.writeOBJFile(fileName=obj_file_path, canvasObjects=(view, ))

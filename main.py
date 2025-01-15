@@ -35,9 +35,9 @@ class ScriptManager(QWidget):
         self.process = self.create_setup_and_folders()
         self.create_message_area()
         print("process", self.process)
-        # if self.process == "done":
-        self.clean_folder()
-        self.generate_geometry_from_script()    
+        if self.process == "done": 
+            self.clean_folder()
+            self.generate_geometry_from_script()    
 
         # # else:
         #     FileUtils.set_text(self, "message-id_14")
