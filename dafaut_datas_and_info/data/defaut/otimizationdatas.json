@@ -1,19 +1,31 @@
 {
-"conditions": {
-                "condition01": {
-                    "velocity": 166.67,
-                    "depth_of_cut": 0.075,
-                    "rake_angle": 6,
-                    "timePeriod": 0.012,
-                    "cutting_force": 1565.50,
-                    "normal_force": 1065.04,
-                    "temperature": 130.06,
-                    "CCR": 2.56,
-                    "CSR": 1.23}
-                },
-
-"parameters_limits": {"p": {"min": 0.40, "max": 0.90},
-                      "D2": {"min": 0.50, "max": 1.50},
-                      "Ts": {"min": 600, "max": 700}}
-}
-
+    "conditions": {
+                    "condition01": {
+                        "velocity": 166.67,
+                        "depth_of_cut": 0.100,
+                        "rake_angle": 6,
+                        "timePeriod": 0.012,
+                        "cutting_force": 1565.50,
+                        "normal_force": 1065.04,
+                        "temperature": 130.06,
+                        "CCR": 2.56,
+                        "CSR": 1.23},
+    
+                    "condition02": {
+                        "velocity": 166.67,
+                        "depth_of_cut": 0.100,
+                        "rake_angle": -6,
+                        "timePeriod": 0.012,
+                        "cutting_force": 1906.20,
+                        "normal_force": 1753.38,
+                        "temperature": 144.05,
+                        "CCR": 3.12,
+                        "CSR": 1.19}
+                    },
+    
+    "parameters_limits": {"p": {"min": 0.40, "max": 0.90},
+                          "D2": {"min": 0.50, "max": 1.50},
+                          "Ts": {"min": 600, "max": 700}}
+    }
+    
+    

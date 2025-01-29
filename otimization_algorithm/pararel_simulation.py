@@ -21,8 +21,8 @@ class PararelSimulation():
             number_parallel_sim (int): Number of parallel simulations to run.
         """   
 
-        for i, file in enumerate(list_folder_path):
-            print(id, file)  
+        # for i, file in enumerate(list_folder_path):
+        #     print(id, file)  
         
         self.path = list_folder_path
         self.number_of_cores = number_of_cores

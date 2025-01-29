@@ -105,7 +105,7 @@ class SimulationManager:
         index_names = {}
         global_index = 0
         
-        print("\n\n=======================================\n\nPARAMETROS", parameters, "\n\n=======================================\n\n")
+        # print("\n\n=======================================\n\nPARAMETROS", parameters, "\n\n=======================================\n\n")
         for file in os.listdir(self.inp_dir):
             file_path = os.path.join(self.inp_dir, file)
             filename = os.path.basename(file_path)[:-4]
@@ -170,7 +170,7 @@ class SimulationManager:
                     with open(os.path.join(dir_inp, params), 'w') as file:
                         file.writelines(lines)
                     lis_dir_inp.append(dir_inp)
-                    print("\n\n\n\n============================= O CODIGO MANDOU PARAMETROS REPETIDOS =============================\n\n\n\n")
+                    # print("\n\n\n\n============================= O CODIGO MANDOU PARAMETROS REPETIDOS =============================\n\n\n\n")
 
                 index_names[global_index] = params[:-4]
                 global_index += 1
@@ -236,12 +236,15 @@ class SimulationManager:
                     os.makedirs(odb_out_file)
                 shutil.move(odb_inp_path, odb_out_file)
             
-                df_temp_force = pd.read_excel(os.path.join(self.excel_dir, "Results.xlsx"), header=1)
-                filtered_row = df_temp_force[df_temp_force["Filename"] == file[:31]]
+                df_temp_force = pd.read_excel(os.path.join(self.excel_dir, "results_temp_and_forces.xlsx"), header=1)
+                # print("df_temp_force", df_temp_force)
+                # print("file", file[:-4])
+                filtered_row = df_temp_force[df_temp_force["Filename"] == file[:-4]]
+                # print("filtered_row", filtered_row)
                 self.simulated_forces = [filtered_row.iloc[0,7], filtered_row.iloc[0,3]]
                 self.simulated_temperature = filtered_row.iloc[0,9]
 
-                df_chip = pd.read_excel(os.path.join(self.excel_dir, "Results_chip_analysis.xlsx"), header=0)
+                df_chip = pd.read_excel(os.path.join(self.excel_dir, "results_chip_analysis.xlsx"), header=0)
                 filtered_row = df_chip[df_chip["Filename"] == file[:-4]]
                 self.chip_compression_ratio = filtered_row.iloc[0,5]
                 self.chip_segmentation_ratio = filtered_row.iloc[0,6]

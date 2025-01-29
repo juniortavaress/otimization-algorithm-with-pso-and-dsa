@@ -36,6 +36,7 @@ class OtimizationManager():
         except Exception as e:
             self.e = e
             self.error_track = True
+            FileUtils.code_status(self, "start_pso")
             FileUtils.set_text(self, "message-ide_05")
 
 

@@ -5,21 +5,74 @@
         "error": null
     },
     "Otimization": {
-        "status": "pending",
+        "status": "done",
         "error": null,
+        "latest_info": {
+            "iteration": 4,
+            "global_best_position": "[0.4456, 0.9674, 689.5728]",
+            "personal_best_positions": "[[0.44560624405106714, 0.9674103689919695, 689.5727628200115]]",
+            "positions": "[[0.40715858289724927, 1.0592975918505916, 689.5979847028162]]",
+            "global_best_score": "0.14670279434830796",
+            "velocities": "[[-0.1082029849267091, 0.192949486710701, 0.05296219854786567]]",
+            "personal_best_scores": "[0.14670279]",
+            "global_best_scores_history": "[0.14670279434830796, 0.14670279434830796, 0.14670279434830796, 0.14670279434830796, 0.14670279434830796]",
+            "error": null
+        },
+        "iteration 0": {
+            "iteration": 0,
+            "global_best_position": "[0.4456, 0.9674, 689.5728]",
+            "personal_best_positions": "[[4.45606244e-01 9.67410369e-01 6.89572763e+02]]",
+            "positions": "[[4.45606244e-01 9.67410369e-01 6.89572763e+02]]",
+            "global_best_score": "0.14670279434830796",
+            "velocities": "[[-0.43051034  0.44062672  0.12094647]]",
+            "personal_best_scores": "[0.14670279]",
+            "error": null
+        },
         "iteration 1": {
-            "error": {
-                "id": "Collecting results",
-                "error": "'GeometryCollection' object has no attribute 'exterior'",
-                "error_type": "<class 'AttributeError'>",
-                "traceback": "Traceback (most recent call last):\n  File \"s:\\Junior\\abaqus-with-python\\otimization-scripts\\otimization-algorithm-with-pso-and-dsa\\otimization_algorithm\\simualtion_manager.py\", line 92, in simulation_manager\n    results = SimulationManager.get_results(self, index_names)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"s:\\Junior\\abaqus-with-python\\otimization-scripts\\otimization-algorithm-with-pso-and-dsa\\otimization_algorithm\\simualtion_manager.py\", line 227, in get_results\n    getResults.convert_json_to_excel(self)\n  File \"s:\\Junior\\abaqus-with-python\\otimization-scripts\\otimization-algorithm-with-pso-and-dsa\\get_result_from_odb_file\\main_results.py\", line 61, in convert_json_to_excel\n    GetChipMeasure.main_to_chip_results(self)\n  File \"s:\\Junior\\abaqus-with-python\\otimization-scripts\\otimization-algorithm-with-pso-and-dsa\\get_result_from_odb_file\\convert_obj_to_excel.py\", line 20, in main_to_chip_results\n    GetChipMeasure.process_datas(file_directory, file_groups)\n  File \"s:\\Junior\\abaqus-with-python\\otimization-scripts\\otimization-algorithm-with-pso-and-dsa\\get_result_from_odb_file\\convert_obj_to_excel.py\", line 52, in process_datas\n    average_minimum, average_maximum = GetChipMeasure.process_obj_file(file_path, num_lines)\n                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"s:\\Junior\\abaqus-with-python\\otimization-scripts\\otimization-algorithm-with-pso-and-dsa\\get_result_from_odb_file\\convert_obj_to_excel.py\", line 93, in process_obj_file\n    contour_points, ymin, ymax = GetChipMeasure.sort_contour_points(alpha_shape)\n                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"s:\\Junior\\abaqus-with-python\\otimization-scripts\\otimization-algorithm-with-pso-and-dsa\\get_result_from_odb_file\\convert_obj_to_excel.py\", line 137, in sort_contour_points\n    contour_x, contour_y = alpha_shape.exterior.xy\n                           ^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'GeometryCollection' object has no attribute 'exterior'\n"
-            }
+            "iteration": 1,
+            "global_best_position": "[0.4456, 0.9674, 689.5728]",
+            "personal_best_positions": "[[4.45606244e-01 9.67410369e-01 6.89572763e+02]]",
+            "positions": "[[4.00000000e-01 1.18772373e+00 6.89633236e+02]]",
+            "global_best_score": "0.14670279434830796",
+            "velocities": "[[-0.21525517  0.22031336  0.06047324]]",
+            "personal_best_scores": "[0.14670279]",
+            "error": null
+        },
+        "iteration 2": {
+            "iteration": 2,
+            "global_best_position": "[0.4456, 0.9674, 689.5728]",
+            "personal_best_positions": "[[4.45606244e-01 9.67410369e-01 6.89572763e+02]]",
+            "positions": "[[4.00000000e-01 9.61117511e-01 6.89571036e+02]]",
+            "global_best_score": "0.14670279434830796",
+            "velocities": "[[-0.03791556 -0.22660622 -0.06220055]]",
+            "personal_best_scores": "[0.14670279]",
+            "error": null
+        },
+        "iteration 3": {
+            "iteration": 3,
+            "global_best_position": "[0.4456, 0.9674, 689.5728]",
+            "personal_best_positions": "[[4.45606244e-01 9.67410369e-01 6.89572763e+02]]",
+            "positions": "[[5.15361568e-01 8.66348105e-01 6.89545023e+02]]",
+            "global_best_score": "0.14670279434830796",
+            "velocities": "[[ 0.11536157 -0.09476941 -0.02601301]]",
+            "personal_best_scores": "[0.14670279]",
+            "error": null
+        },
+        "iteration 4": {
+            "iteration": 4,
+            "global_best_position": "[0.4456, 0.9674, 689.5728]",
+            "personal_best_positions": "[[4.45606244e-01 9.67410369e-01 6.89572763e+02]]",
+            "positions": "[[4.07158583e-01 1.05929759e+00 6.89597985e+02]]",
+            "global_best_score": "0.14670279434830796",
+            "velocities": "[[-0.10820298  0.19294949  0.0529622 ]]",
+            "personal_best_scores": "[0.14670279]",
+            "error": null
         }
     },
     "Simulation-list-pc2": {
         "status": false,
         "list_comp_02": [
-            "s:\\Junior\\abaqus-with-python\\otimization-scripts\\otimization-algorithm-with-pso-and-dsa\\results\\inp-and-simulation\\sim_v166_h75_gam6_p_0.42_D2_1.46_Ts_639.35"
+            "s:\\Junior\\abaqus-with-python\\otimization-scripts\\backup\\results\\inp-and-simulation\\sim_v166_h100_gam6_p_0.41_D2_1.06_Ts_689.60"
         ]
     }
 }

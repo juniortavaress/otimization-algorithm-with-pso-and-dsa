@@ -10,7 +10,7 @@ class DataConverter():
         """
         Main function to process JSON files and generate an Excel file with results.
         """
-        excel_output_file = os.path.join(self.excel_dir, "Results.xlsx")
+        excel_output_file = os.path.join(self.excel_dir, "results_temp_and_forces.xlsx")
 
         # Constants
         WORKPIECE_WIDTH_EXPERIMENT = 4
@@ -99,12 +99,13 @@ class DataConverter():
 
             combined_df = pd.merge(combined_forces_df_with_results, combined_temp_df_with_results, how="outer", on="Dummy")
             combined_df.drop(columns=["Dummy"], inplace=True)
+            file_name = os.path.basename(os.path.dirname(json_file_path_forces))
             sheet_name = os.path.basename(os.path.dirname(json_file_path_forces))[:31]
             combined_df.to_excel(writer, sheet_name=sheet_name, index=False)
 
             # Flatten stats dictionary for easy insertion into the stats list
             stats_flat = {
-                "Filename": sheet_name,
+                "Filename": file_name,
                 "Normal Force [N].min": round(forces_stats["Cutting Normal Force FcN [N]"]["min"], 2),
                 "Normal Force [N].max": round(forces_stats["Cutting Normal Force FcN [N]"]["max"], 2),
                 "Normal Force [N].mean": round(forces_stats["Cutting Normal Force FcN [N]"]["mean"], 2),
@@ -114,9 +115,9 @@ class DataConverter():
                 "Cutting Force [N].mean": round(forces_stats["Cutting Force Fc [N]"]["mean"], 2),
                 "Cutting Force [N].std": round(forces_stats["Cutting Force Fc [N]"]["std"], 2),
                 "Maximum Temperature at Last Frame [°C]": round(temp_stats["Max Temperature Last Frame [°C]"], 2),
-                f"Penetration Depth for Last Frame < {temperature_threshold}°C [µm]": round(temp_stats[f"Penetration Depth for Last Frame < {temperature_threshold}°C [µm]"], 2),
+                f"Penetration Depth for Last Frame < {temperature_threshold}°C [µm]": round(temp_stats[f"Penetration Depth for Last Frame < {temperature_threshold}°C [µm]"], 2) if temp_stats[f"Penetration Depth for Last Frame < {temperature_threshold}°C [µm]"] else None,
                 "Temperature at Maximum Temperature at 1st Node [°C]": round(temp_stats["Temperature at Maximum Temperature at 1st Node [°C]"], 2),
-                f"Penetration Depth for Frame with Tmax [µm]": round(temp_stats[f"Penetration Depth at Max Node < {temperature_threshold}°C [µm]"], 2)
+                f"Penetration Depth for Frame with Tmax [µm]": round(temp_stats[f"Penetration Depth at Max Node < {temperature_threshold}°C [µm]"], 2) if temp_stats[f"Penetration Depth at Max Node < {temperature_threshold}°C [µm]"] else None
                 }
 
             stats_list.append(stats_flat)
