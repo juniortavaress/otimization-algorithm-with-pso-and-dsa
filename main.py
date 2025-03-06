@@ -4,6 +4,7 @@ import inspect
 import subprocess
 import traceback
 import json
+import shutil
 from PySide6.QtCore import Qt, QThread
 from PySide6.QtWidgets import QApplication, QWidget, QLabel, QVBoxLayout
 from file_utils import FileUtils
@@ -34,22 +35,23 @@ class ScriptManager(QWidget):
 
         self.process = self.create_setup_and_folders()
         self.create_message_area()
-        print("process", self.process)
         if self.process == "done": 
+            # print(self.process)
             self.clean_folder()
             self.generate_geometry_from_script()    
 
-        # # else:
-        #     FileUtils.set_text(self, "message-id_14")
-        #     # self.call_pso_script()
-        #     print("To aqui fio")
-        # self.generate_geometry_from_input()  
+        else:
+            FileUtils.set_text(self, "message-id_14")
+            self.reload = True
+            # print("To aqui fio")
+            self.call_pso_script()
 
 
     def create_setup_and_folders(self):
         """
         Creates required directories for the script's workflow.
         """
+        self.reload = False
         self.error_track = False
         file = FileUtils() 
         process = file.create_folders(self, "main")
@@ -126,8 +128,8 @@ class ScriptManager(QWidget):
         if "Error" in result.stdout or "Error" in result.stderr:
             self.error_track = True
             self.e = "Error creating geometry"
-            print(result.stdout)
-            print(result.stderr)
+            # print(result.stdout)
+            # print(result.stderr)
             FileUtils.set_text(self, "message-ide_04")
         else:
             FileUtils.set_text(self, "message-id_03")
@@ -171,10 +173,16 @@ class ScriptManager(QWidget):
         if not self.error_track:
             try:
                 for file in os.listdir(self.current_dir):
-                    if file.startswith("abaqus") or file.startswith("save_abaqus"):
+                    if file.startswith("abaqus") or file.startswith("save_abaqus") or file.endswith(".pyc"):
                         file_path = os.path.join(self.current_dir, file)
                         if os.path.isfile(file_path):  
                             os.remove(file_path)
+
+                for folder in os.listdir(self.current_dir):
+                    if folder == "__pycache__":
+                        folder_path = os.path.join(self.current_dir, folder)
+                        shutil.rmtree(folder_path)
+
             except Exception as e:
                 self.e = e
                 raise FileUtils.set_text(self, "message-ide_01")

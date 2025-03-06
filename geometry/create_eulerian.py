@@ -22,6 +22,12 @@ class EulerianModel():
 
         :param data: Dictionary containing input data for model creation. If no data is provided, default data is loaded.
         """
+
+        # import json
+        # data = r"S:\Junior\abaqus-with-python\otimization-scripts\backup\results\inp-and-simulation\info\sim_v166_h75_gam-6.json"
+        # with open(data, "r") as info:
+        #     data = json.load(info)
+
         self.dataInput(data)
         self.createPart()
         self.createPartition()
@@ -35,6 +41,8 @@ class EulerianModel():
 
         :param data: Dictionary containing model parameters.
         """
+
+
         # Calling Model
         self.ModelName = str(data['generalInformation']['modelName'])
         self.m = mdb.models[self.ModelName]
@@ -50,12 +58,12 @@ class EulerianModel():
         self.MaxWidth = data['eulerianData']['createPartInformation']['MaxWidth']
         self.MinWidth = data['eulerianData']['createPartInformation']['MinWidth']
         self.MaxHeight = data['eulerianData']['createPartInformation']['MaxHeight']
-        self.MinHeight = data['eulerianData']['createPartInformation']['MinHeight']
+        self.MinHeight = data['eulerianData']['createParticionInformation']['y_points'][3] 
         self.Trickness = data['eulerianData']['createPartInformation']['Trickness']
         self.Material = str(data['eulerianData']['createPartInformation']['Material'])
         self.x_partition_points = data['eulerianData']['createParticionInformation']['x_points']
         self.y_partition_points = data['eulerianData']['createParticionInformation']['y_points']
-        self.y_partition_points_tool = data['eulerianData']['createParticionInformation']['y_points'][3] - data['assemblyAndSimulationData']['toolPosition']['cuttingDepth']
+        self.y_partition_points_tool = data['eulerianData']['createParticionInformation']['y_points'][2] 
         self.GlobalSize = data['eulerianData']['createMeshInformation']['globalSize']
         self.DeviationFactor = data['eulerianData']['createMeshInformation']['deviationFactor']
         self.MinSizeFactor = data['eulerianData']['createMeshInformation']['minSizeFactor']
@@ -242,3 +250,4 @@ class EulerianModel():
         # Generate the mesh for the part
         self.p.generateMesh()
 
+# EulerianModel()

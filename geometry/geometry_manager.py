@@ -75,6 +75,10 @@ class Main():
                 defaut_datas["assemblyAndSimulationData"]["stepsAndHistoryInformation"]["cuttingVelocity"] = velocity
                 defaut_datas["toolData"]["createPartInformation"]["rakeAngle"] = rake_angle
 
+                defaut_datas["eulerianData"]["createParticionInformation"]["y_points"][3] = defaut_datas["eulerianData"]["createParticionInformation"]["y_points"][2] + depth_of_cut
+                defaut_datas["eulerianData"]["createParticionInformation"]["y_points"][4] = defaut_datas["eulerianData"]["createParticionInformation"]["y_points"][3] + 0.100
+
+
                 with open(json_file, "w") as file:
                     json.dump(defaut_datas, file, indent=4)
   

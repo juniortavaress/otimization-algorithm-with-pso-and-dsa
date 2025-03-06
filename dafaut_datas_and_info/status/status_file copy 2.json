@@ -1,0 +1,48 @@
+{
+    "Execution-status": "running",
+    "Geometry": {
+        "status": "done",
+        "error": null
+    },
+    "Otimization": {
+        "status": "pending",
+        "error": null,
+        "latest_info": {
+            "iteration": 1,
+            "global_best_position": "[0.6863, 0.7421, 615.9775]",
+            "personal_best_positions": "[[0.686326914283772, 0.7420529986700135, 615.9774761987685]]",
+            "positions": "[[0.9, 0.5365114363754864, 616.3829571652054]]",
+            "global_best_score": "0.5392900845250642",
+            "velocities": "[[0.24781008188538733, -0.20554156229452714, 0.40548096643696097]]",
+            "personal_best_scores": "[0.53929008]",
+            "global_best_scores_history": "[0.5392900845250642, 0.5392900845250642]",
+            "error": null
+        },
+        "iteration 0": {
+            "iteration": 0,
+            "global_best_position": "[0.6863, 0.7421, 615.9775]",
+            "personal_best_positions": "[[  0.68632691   0.742053   615.9774762 ]]",
+            "positions": "[[  0.68632691   0.742053   615.9774762 ]]",
+            "global_best_score": "0.5392900845250642",
+            "velocities": "[[ 0.49562016 -0.41108312  0.81096193]]",
+            "personal_best_scores": "[0.53929008]",
+            "error": null
+        },
+        "iteration 1": {
+            "iteration": 1,
+            "global_best_position": "[0.6863, 0.7421, 615.9775]",
+            "personal_best_positions": "[[  0.68632691   0.742053   615.9774762 ]]",
+            "positions": "[[9.00000000e-01 5.36511436e-01 6.16382957e+02]]",
+            "global_best_score": "0.5392900845250642",
+            "velocities": "[[ 0.24781008 -0.20554156  0.40548097]]",
+            "personal_best_scores": "[0.53929008]",
+            "error": null
+        }
+    },
+    "Simulation-list-pc2": {
+        "status": true,
+        "list_comp_02": [
+            "s:\\Junior\\abaqus-with-python\\otimization-scripts\\backup\\results\\inp-and-simulation\\sim_v166_h75_gam6_p_0.40_D2_1.03_Ts_615.40"
+        ]
+    }
+}

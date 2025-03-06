@@ -59,9 +59,9 @@ class ChipPlateModel():
         elif cutting_depth == 0.050:
             self.Width = 2.10
         elif cutting_depth == 0.075:
-            self.Width = 2.05
+            self.Width = 2.00
         elif cutting_depth == 0.100:
-            self.Width = 1.98
+            self.Width = 1.87
 
     def createPart(self):
         """

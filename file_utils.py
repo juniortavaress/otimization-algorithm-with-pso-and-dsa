@@ -58,8 +58,8 @@ class FileUtils():
 
         # simulation_manager.py - message
         elif message == "message-id_09":
-            messages = ["<br>---"]
-            messages.extend(["<br><b>ITERATION {0}</b>".format(self.call_count_interation)])
+            messages = ["<br>=========================================="]
+            messages.extend(["<br><br><b>ITERATION {0}</b>".format(self.call_count_iteration)])
             messages.extend(["<br>Editing .inp file"])
         elif message == "message-id_10":
             messages = ["<br>Running simulation"]
@@ -77,29 +77,29 @@ class FileUtils():
         # pso_algorithm.py - message
         elif message == "message-5":
             messages = ["<br><b> BEST RESULT </b><br>"]
-            messages.extend(["Cutting Force from Simulation: {0}<br>".format(self.sim_cutting_force)])
-            messages.extend(["Cutting Force from Experiment: {0}<br>".format(self.exp_cutting_force)])
-            messages.extend(["Error: {0:.1f}%<br>".format(self.error_cutting_force * 100)])
-            messages.extend(["---<br>"])
-            messages.extend(["Normal Force from Simulation: {0}<br>".format(self.sim_normal_force)])
-            messages.extend(["Normal Force from Experiment: {0}<br>".format(self.exp_normal_force)])
-            messages.extend(["Error: {0:.1f}%<br>".format(self.error_normal_force * 100)])
-            messages.extend(["---<br>"])
-            messages.extend(["Temperature from Simulation: {0}<br>".format(self.sim_temp)])
-            messages.extend(["Temperature from Experiment: {0}<br>".format(self.exp_temp)])
-            messages.extend(["Error: {0:.1f}%<br>".format(self.error_temp * 100)])
-            messages.extend(["---<br>"])
-            messages.extend(["Chip Compression Ratio from Simulation: {0}<br>".format(self.sim_CCR)])
-            messages.extend(["Chip Compression Ratio from Experiment: {0}<br>".format(self.exp_CCR)])
-            messages.extend(["Error: {0:.1f}%<br>".format(self.error_CCR * 100)])
-            messages.extend(["---<br>"])
-            messages.extend(["Chip Segmentation Ratio from Simulation: {0}<br>".format(self.sim_CSR)])
-            messages.extend(["Chip Segmentation Ratio from Experiment: {0}<br>".format(self.exp_CSR)])
-            messages.extend(["Error: {0:.1f}%<br>".format(self.error_CSR * 100)])
+            # messages.extend(["Cutting Force from Simulation: {0}<br>".format(self.sim_cutting_force)])
+            # messages.extend(["Cutting Force from Experiment: {0}<br>".format(self.exp_cutting_force)])
+            messages.extend(["Average Error Cutting Force: {0:.1f}%<br>".format(self.error_cutting_force * 100)])
+            # messages.extend(["---<br>"])
+            # messages.extend(["Normal Force from Simulation: {0}<br>".format(self.sim_normal_force)])
+            # messages.extend(["Normal Force from Experiment: {0}<br>".format(self.exp_normal_force)])
+            messages.extend(["Average Error Normal Force: {0:.1f}%<br>".format(self.error_normal_force * 100)])
+            # messages.extend(["---<br>"])
+            # messages.extend(["Temperature from Simulation: {0}<br>".format(self.sim_temp)])
+            # messages.extend(["Temperature from Experiment: {0}<br>".format(self.exp_temp)])
+            messages.extend(["Average Error Temperature: {0:.1f}%<br>".format(self.error_temp * 100)])
+            # messages.extend(["---<br>"])
+            # messages.extend(["Chip Compression Ratio from Simulation: {0}<br>".format(self.sim_CCR)])
+            # messages.extend(["Chip Compression Ratio from Experiment: {0}<br>".format(self.exp_CCR)])
+            messages.extend(["Average Error Chip Compression Ratio: {0:.1f}%<br>".format(self.error_CCR * 100)])
+            # messages.extend(["---<br>"])
+            # messages.extend(["Chip Segmentation Ratio from Simulation: {0}<br>".format(self.sim_CSR)])
+            # messages.extend(["Chip Segmentation Ratio from Experiment: {0}<br>".format(self.exp_CSR)])
+            messages.extend(["Average Error Chip Segmentation Ratio: {0:.1f}%<br>".format(self.error_CSR * 100)])
         elif message == "message-id_14":
             messages = ["<br><br>==========================================<br><br>"]
             messages.extend(["<b>Continuing optimization from previous attempt</b>"])
-            messages.extend(["<br><br>==========================================<br><br>"])
+            messages.extend(["<br><br>=========================================="])
         else:
             print(message)
             print("MENSAGE NOT FINDED")
@@ -130,6 +130,7 @@ class FileUtils():
         mainclass.inp_dir = os.path.join(mainclass.inp_and_simulation_dir, "defaut\INPFiles")
         mainclass.cae_dir = os.path.join(mainclass.inp_and_simulation_dir, "defaut\CAE")
         mainclass.info = os.path.join(mainclass.inp_and_simulation_dir, "info")
+        mainclass.plot_dir = os.path.join(mainclass.results_dir, "plot_dir")
 
         if call == "main":
             with open(os.path.join(mainclass.status_dir, "status_file.json"), 'r') as json_file:
@@ -142,7 +143,7 @@ class FileUtils():
                     if os.path.exists(folder):
                         shutil.rmtree(folder)
 
-                folders_to_create = [mainclass.excel_dir, mainclass.json_dir, mainclass.odb_processed_dir, mainclass.odb_dir, mainclass.obj_dir, mainclass.inp_dir, mainclass.cae_dir, mainclass.status_dir, mainclass.info]
+                folders_to_create = [mainclass.excel_dir, mainclass.json_dir, mainclass.odb_processed_dir, mainclass.odb_dir, mainclass.obj_dir, mainclass.inp_dir, mainclass.cae_dir, mainclass.status_dir, mainclass.info, mainclass.plot_dir]
                 for folder in folders_to_create:
                     if not os.path.exists(folder):
                         os.makedirs(folder)
@@ -160,13 +161,15 @@ class FileUtils():
     def code_status(self, command):
         sys.dont_write_bytecode = True
         if command == "main":
-            status_dict = {"Execution-status": "running"}
+            status_dict = {"Execution-status": "running", "Geometry": {"status": "pending", "error": None}, "Otimization": {"status": "pending", "error": None}}
             with open(os.path.join(self.status_dir, "status_file.json"), 'w') as json_file:
                 json.dump(status_dict, json_file, indent=4)
         
         if command != "main":
+            # print("\n\n\n", command, "\n\n\n")
             with open(os.path.join(self.status_dir, "status_file.json"), 'r') as json_file:
                 existing_data = json.load(json_file)
+                # print("\n\n\n", existing_data, "\n\n\n")
 
             if command == "geometry":
                 status_dict = {"Geometry": {"status": "done", "error": None}}
@@ -178,8 +181,8 @@ class FileUtils():
                 existing_data.update(status_dict)
 
             elif command == "otimization":
-                status_dict = {"Otimization": {"status": "pending", "error": None}}
-                existing_data.update(status_dict)
+                existing_data["Otimization"]["status"] = "pending"
+                existing_data["Otimization"]["error"] = None
 
             elif command == "otimization-error":
                 error_data = {  "id": "otimization-error", "error": str(self.e),   "error_type": str(type(self.e)),   "traceback": traceback.format_exc()}
@@ -196,12 +199,25 @@ class FileUtils():
                 personal_best_positions = self.personal_best_positions
                 position = self.position
                 velocities = self.velocities
-
-                existing_data["Otimization"]["iteration {}".format(self.call_count_interation)] = {"best position": str(global_best_position),  "personal_best_positions": str(personal_best_positions), "positions": str(position), "otimized-error": str(self.global_best_score), "velocities": str(velocities),"error": None}
+                
+                existing_data["Otimization"]["latest_info"] = {"iteration": self.call_count_iteration, 
+                                                               "global_best_position": str(global_best_position),  
+                                                               "personal_best_positions": str(personal_best_positions.tolist()), 
+                                                               "positions": str(position.tolist()), 
+                                                               "global_best_score": str(self.global_best_score), 
+                                                               "velocities": str(velocities.tolist()), 
+                                                               "personal_best_scores": str(self.personal_best_scores),
+                                                               "global_best_scores_history": str(self.global_best_scores_history),
+                                                               "error": None}
+                existing_data["Otimization"]["iteration {}".format(self.call_count_iteration)] = {"iteration": self.call_count_iteration, "global_best_position": str(global_best_position),  "personal_best_positions": str(personal_best_positions), "positions": str(position), "global_best_score": str(self.global_best_score), "velocities": str(velocities), "personal_best_scores": str(self.personal_best_scores),"error": None}
 
             elif command == "iteration-error":
                 error_data = {"id": self.stage, "error": str(self.e), "error_type": str(type(self.e)), "traceback": traceback.format_exc()}
-                existing_data["Otimization"]["iteration {}".format(self.call_count_interation)] = {"error": error_data}
+                existing_data["Otimization"]["iteration {}".format(self.call_count_iteration)] = {"error": error_data}
+            
+            elif command == "start_pso":
+                error_data = {"id": "start_pso", "error": str(self.e), "error_type": str(type(self.e)), "traceback": traceback.format_exc()}
+                existing_data["Otimization"]["iteration {}".format(self.call_count_iteration)] = {"error": error_data}
 
             elif command == "otimization-fisished":
                 existing_data["Otimization"]["status"] = "done"
@@ -212,6 +228,7 @@ class FileUtils():
             else:
                 print("command does not exist")
 
+            # print("\n\n\n", existing_data, "\n\n\n")
             with open(os.path.join(self.status_dir, "status_file.json"), 'w') as json_file:
                 json.dump(existing_data, json_file, indent=4)
 

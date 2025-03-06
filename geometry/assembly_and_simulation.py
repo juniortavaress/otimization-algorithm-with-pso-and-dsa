@@ -38,7 +38,7 @@ class AssemblyModel():
         # Defining Variables
         self.StepName = "CuttingStep"
         self.xToolPosition = data['eulerianData']['createParticionInformation']['x_points'][2] + data['assemblyAndSimulationData']['toolPosition']['clearanceAfterWorkpiece']
-        self.yToolPosition = data['eulerianData']['createParticionInformation']['y_points'][3] - data['assemblyAndSimulationData']['toolPosition']['cuttingDepth']
+        self.yToolPosition = data['eulerianData']['createParticionInformation']['y_points'][2] 
         self.xChipPlatePosition = 0
         self.yChipPlatePosition = data['eulerianData']['createParticionInformation']['y_points'][3] + data['assemblyAndSimulationData']['chipPlatePosition']['clearanceOverWorkpiece']
         self.TimePeriod = data['assemblyAndSimulationData']['stepsAndHistoryInformation']['timePeriod']
@@ -123,12 +123,12 @@ class AssemblyModel():
         # Absolut zero
         self.m.setValues(absoluteZero=1.79769e+308)
         # Setting boundary conditions for the simulation
-        self.m.VelocityBC(amplitude=UNSET, createStepName='CuttingStep', distributionType=UNIFORM, fieldName='', localCsys=None, name='BC-WorkpieceBottom', region=self.m.rootAssembly.instances['Eulerian-1'].sets['WorkpieceBottom'], v1=self.CuttingVelocity, v2=0.0, v3=0.0, vr1=0.0, vr2=0.0, vr3=0.0)
+        self.m.VelocityBC(amplitude=UNSET, createStepName='CuttingStep', distributionType=UNIFORM, fieldName='', localCsys=None, name='BC-WorkpieceBottom', region=self.m.rootAssembly.instances['Eulerian-1'].sets['WorkpieceBottom'], v1=self.CuttingVelocity, v2=0.0, v3=0.0)
         self.m.VelocityBC(amplitude=UNSET, createStepName='CuttingStep', distributionType=UNIFORM, fieldName='', localCsys=None, name='BC-zLock', region=self.m.rootAssembly.instances['Eulerian-1'].sets['EulerDomain'], v1=UNSET, v2=UNSET, v3=0.0, vr1=UNSET, vr2=UNSET, vr3=UNSET)
         self.m.EncastreBC(createStepName='CuttingStep', localCsys=None, name='ToolFix', region=self.m.rootAssembly.instances['Tool-1'].sets['ToolRP'])
         self.m.EncastreBC(createStepName='CuttingStep', localCsys=None, name='ChipPlateFix', region=self.m.rootAssembly.instances['ChipPlate-1'].sets['PlateRP'])
         # Defining the initial velocity and temperature for the simulation
-        self.m.Velocity(distributionType=MAGNITUDE, field='', name='cuttingMove', omega=0.0, region=self.m.rootAssembly.instances['Eulerian-1'].sets['WorkpieceDomain'], velocity1=self.CuttingVelocity)
+        self.m.Velocity(distributionType=MAGNITUDE, field='', name='cuttingMove', omega=0.0, region=self.m.rootAssembly.instances['Eulerian-1'].sets['WorkpieceDomain'], velocity1=self.CuttingVelocity, velocity2=0, velocity3=0)
         self.m.Temperature(createStepName='Initial', crossSectionDistribution=CONSTANT_THROUGH_THICKNESS, distributionType=UNIFORM, magnitudes=(20.0, ), name='InitialTemperature', region=self.m.rootAssembly.sets['AssembleSet'])
         self.m.MaterialAssignment(assignmentList=((self.m.rootAssembly.instances['Eulerian-1'].sets['EulerDomain'], (0, )), (self.m.rootAssembly.instances['Eulerian-1'].sets['WorkpieceDomain'], (1, ))), instanceList=(self.m.rootAssembly.instances['Eulerian-1'], ), name='MaterialAssignment', useFields=False)
 

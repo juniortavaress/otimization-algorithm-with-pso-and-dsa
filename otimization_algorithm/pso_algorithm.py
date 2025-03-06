@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import ast
 import json
 import numpy as np
 import pandas as pd
@@ -12,7 +13,7 @@ class PsoManager():
         Runs the Particle Swarm Optimization (PSO) algorithm to minimize the objective function.
         """
         self.call_count = 0
-        self.call_count_interation = 0
+        self.call_count_iteration = 0
         lb, ub = PsoManager.get_boundry(self)
         objective_function_pso = lambda params: PsoManager.objective_function(self, params)
         best_position, best_score = PsoManager.pso(self, objective_function_pso, lb, ub, swarmsize=3, omega=0.5, phip=2, phig=2, maxiter=20, minstep=1e-6, minfunc=1e-3)
@@ -71,7 +72,7 @@ class PsoManager():
             # print('sorted_indices', sorted_indices)
 
             for index in sorted_indices:
-                print(index)
+                # print(index)
                 data = results_dict[index]
                 filename = data["Filename"]
                 simulated_forces = data["Forces"]
@@ -115,7 +116,7 @@ class PsoManager():
 
                 normalized_cutting_force_error = ((simulated_forces[0] - target_cutting_force)**2) / target_cutting_force**2
                 normalized_normal_force_error = ((simulated_forces[1] - target_normal_force)**2) / target_normal_force**2
-                normalized_temp_error = ((simulated_temperature - target_temperature)**2) / target_temperature**2
+                # normalized_temp_error = ((simulated_temperature - target_temperature)**2) / target_temperature**2
                 normalized_CCR_error = ((simulated_chip_compression_ratio - target_chip_compression_ratio)**2) / target_chip_compression_ratio**2
                 normalized_CSR_error = ((simulated_chip_segmentation_ratio - target_chip_segentatio_ratio)**2) / target_chip_segentatio_ratio**2
 
@@ -165,7 +166,7 @@ class PsoManager():
         """
         Saves simulation iteration data to an Excel file.
         """
-        print('save_iteration_datas')
+        # print('save_iteration_datas')
         data = {"Condition": condition,
                 "Parameter p": [parameters[0]], "Parameter D2": [parameters[1]], "Parameter Ts": [parameters[2]],
                 "Normalized Error": normalized_total_error,
@@ -184,7 +185,7 @@ class PsoManager():
         else:
             new_df = new_info
         
-        print(new_df)
+        # print(new_df)
         new_df.index.name = "Simulation"
         new_df.to_excel(data_path, index=True, engine="openpyxl")
 
@@ -193,39 +194,83 @@ class PsoManager():
         """
         Particle Swarm Optimization algorithm.
         """
-        print("PSO FUNCTION (process):", self.process)
-        # if self.process == "done":
-        # Inicialização das partículas
-        num_int = maxiter-1
+        # print("PSO FUNCTION (process):", self.process)
         num_particles = swarmsize
         num_dimensions = len(lb)
-        positions = np.random.uniform(low=lb, high=ub, size=(num_particles, num_dimensions))
-        velocities = np.random.uniform(low=-1, high=1, size=(num_particles, num_dimensions))
+        
+        if not self.reload:
+            print("NOT RELOAD")
+            # Initialization of particles
+            num_int = maxiter-1
 
-        # Inicialização das melhores posições e melhores scores
-        personal_best_positions = np.copy(positions) # contem todas posições iniciais, mesmo numero de elementos que o particle swarm
-        personal_best_scores = np.array(objective_function_pso(positions))  # contem o erro de cada particula
-        self.call_count_interation += 1
+            positions = np.random.uniform(low=lb, high=ub, size=(num_particles, num_dimensions))
+            velocities = np.random.uniform(low=-1, high=1, size=(num_particles, num_dimensions))
 
-        # Melhor global
-        # Aqui pega o menor erro e a particula com menor erro 
-        global_best_position = personal_best_positions[np.argmin(personal_best_scores)] # Pega a particula de menor erro
-        global_best_score = min(personal_best_scores) # pega o menor erro
-        global_best_scores_history = [global_best_score] # copia o menor erro
+            # Initialize the best positions and scores
+            # Contains the initial positions, same number of elements as the particle swarm
+            personal_best_positions = np.copy(positions) 
+            # Contains the error of each particle
+            personal_best_scores = np.array(objective_function_pso(positions)) 
+            
+            print("\n\n personal best scores: ", personal_best_scores)
+            
+            # Global best
+            # Getting the particle with the lowest error and its value
+            global_best_position = personal_best_positions[np.argmin(personal_best_scores)]
+            # Lowest error value
+            global_best_score = min(personal_best_scores) 
+            # History of the best score
+            global_best_scores_history = [global_best_score] 
 
-        PsoManager.show_results(self, velocities, personal_best_positions, positions, global_best_position, global_best_score)
+            PsoManager.show_results(self, velocities, personal_best_positions, positions, global_best_position, personal_best_scores, global_best_score, global_best_scores_history)
+            self.call_count_iteration += 1
+
+        if self.reload == True:
+            print("RELOAD", self.reload)
+            with open(os.path.join(self.status_dir, "status_file.json"), 'r') as json_file:
+                status_info = json.load(json_file)
+
+            self.call_count_iteration = status_info["Otimization"]["latest_info"]["iteration"] + 1
+            num_int = maxiter - self.call_count_iteration
+            num_int
+            # Converter strings para arrays NumPy ou listas
+            velocities = np.array(ast.literal_eval(status_info["Otimization"]["latest_info"]["velocities"]))
+            personal_best_positions = np.array(ast.literal_eval(status_info["Otimization"]["latest_info"]["personal_best_positions"]))
+            # personal_best_positions = np.array(status_info["Otimization"]["latest_info"]["personal_best_positions"])
+            positions = np.array(ast.literal_eval(status_info["Otimization"]["latest_info"]["positions"]))
+            global_best_position = np.array(ast.literal_eval(status_info["Otimization"]["latest_info"]["global_best_position"]))
+
+            # Converter valores numéricos
+            global_best_score = float(status_info["Otimization"]["latest_info"]["global_best_score"])
+            personal_best_scores = np.array(ast.literal_eval(status_info["Otimization"]["latest_info"]["personal_best_scores"]))
+            global_best_scores_history = list(np.array(ast.literal_eval(status_info["Otimization"]["latest_info"]["global_best_scores_history"])))
+
+            # print("\n\n=====================\n\n")
+            # print("num_int:", num_int, "Tipo:", type(num_int))
+            # print("velocities:", velocities, "Tipo:", type(velocities))
+            # print("personal_best_positions:", personal_best_positions, "Tipo:", type(personal_best_positions))
+            # print("positions:", positions, "Tipo:", type(positions))
+            # print("global_best_position:", global_best_position, "Tipo:", type(global_best_position))
+            # print("personal_best_scores:", personal_best_scores, "Tipo:", type(personal_best_scores))
+            # print("global_best_score:", global_best_score, "Tipo:", type(global_best_score))
+            # print("\n\n=====================\n\n")
 
         # PSO Optimization
         for iteration in range(num_int):
             for i in range(num_particles):
                 r1, r2 = np.random.rand(), np.random.rand()
 
-                velocities[i] = (omega * velocities[i] + phip * r1 * (personal_best_positions[i] - positions[i]) + phig * r2 * (global_best_position - positions[i]))
-                positions[i] += velocities[i] # conjunto de novas particulas 
-                positions[i] = np.clip(positions[i], lb, ub) # ajusta os valores fora do limite, tem que ver se isso faz sentido
+                # Update velocity and position based on the PSO equation
+                velocities[i] = (omega * velocities[i] + 
+                                 phip * r1 * (personal_best_positions[i] - positions[i]) + 
+                                 phig * r2 * (global_best_position - positions[i]))
+                positions[i] += velocities[i] 
+                positions[i] = np.clip(positions[i], lb, ub) 
                 
-            score = objective_function_pso(positions) # erro de cada iteração feita pelo for
-            self.call_count_interation += 1
+            score = objective_function_pso(positions) 
+            
+            # print('score', len(score))
+            # print('personl', len(personal_best_scores))
 
             for i in range(num_particles):
                 if score[i] < personal_best_scores[i]:
@@ -236,23 +281,24 @@ class PsoManager():
                     global_best_score = score[i]
                     global_best_position = positions[i]
         
-            PsoManager.show_results(self, velocities, personal_best_positions, positions, global_best_position, global_best_score)
+            global_best_scores_history.append(global_best_score) 
+            PsoManager.show_results(self, velocities, personal_best_positions, positions, global_best_position, personal_best_scores, global_best_score, global_best_scores_history)
 
-            self.call_count_interation += 1
-            global_best_scores_history.append(global_best_score) # melhor resultado de cada iteração
+            self.call_count_iteration += 1
             
-            print("global_best_score", global_best_score)
-            print("global_best_scores_history", global_best_scores_history)
+            
+            # print("global_best_score", global_best_score)
+            # print("global_best_scores_history", global_best_scores_history)
 
-            # Verificar critério de parada
+            # Check stopping criteria
             if global_best_score < minfunc:
-                print(f"Critério de parada atingido na iteração {iteration+1}")
+                print(f"Stopping criterion met at iteration {iteration+1}")
                 break
 
         return global_best_position, global_best_score
+        # return [0,0,0] , 0
 
-
-    def show_results(self, velocities, personal_best_positions, positions, global_best_position, global_best_score):
+    def show_results(self, velocities, personal_best_positions, positions, global_best_position, personal_best_scores, global_best_score, global_best_scores_history):
         """
         Displays the results of the best particle from PSO.
         """
@@ -261,30 +307,33 @@ class PsoManager():
         self.position = positions
         self.global_best_position = global_best_position
         self.global_best_score = global_best_score
+        self.personal_best_scores = personal_best_scores
+        self.global_best_scores_history = global_best_scores_history
 
         df = pd.read_excel(os.path.join(self.excel_dir, 'datas.xlsx'))
         mat_row = df[(df['Parameter p'] == np.round(global_best_position[0], 2)) & (df['Parameter D2'] == np.round(global_best_position[1], 2)) & (df['Parameter Ts'] == np.round(global_best_position[2], 2))]
+        print(mat_row)
         if not mat_row.empty:
-            self.exp_cutting_force = mat_row['Experiment Cutting Force'].values[0]
-            self.sim_cutting_force = mat_row['Simulation Cutting Force'].values[0]
-            self.error_cutting_force = mat_row['Error Fc'].values[0]
+            # self.exp_cutting_force = mat_row['Experiment Cutting Force'].values[0]
+            # self.sim_cutting_force = mat_row['Simulation Cutting Force'].values[0]
+            self.error_cutting_force = mat_row['Error Fc'].mean()
             
-            self.exp_normal_force = mat_row['Experiment Normal Force'].values[0]
-            self.sim_normal_force = mat_row['Simulation Normal Force'].values[0]
-            self.error_normal_force = mat_row['Error Fn'].values[0]
+            # self.exp_normal_force = mat_row['Experiment Normal Force'].values[0]
+            # self.sim_normal_force = mat_row['Simulation Normal Force'].values[0]
+            self.error_normal_force = mat_row['Error Fn'].mean()
             
-            self.exp_temp = mat_row['Experiment Temperature'].values[0]
-            self.sim_temp = mat_row['Simulation Temperature'].values[0]
-            self.error_temp = mat_row['Error T'].values[0]
+            # self.exp_temp = mat_row['Experiment Temperature'].values[0]
+            # self.sim_temp = mat_row['Simulation Temperature'].values[0]
+            self.error_temp = mat_row['Error T'].mean()
 
-            self.exp_CCR = mat_row['Experiment CCR'].values[0]
-            self.sim_CCR = mat_row['Simulation CCR'].values[0]
-            self.error_CCR = mat_row['Error CCR'].values[0]
+            # self.exp_CCR = mat_row['Experiment CCR'].values[0]
+            # self.sim_CCR = mat_row['Simulation CCR'].values[0]
+            self.error_CCR = mat_row['Error CCR'].mean()
 
-            self.exp_CSR = mat_row['Experiment CSR'].values[0]
-            self.sim_CSR = mat_row['Simulation CSR'].values[0]
-            self.error_CSR = mat_row['Error CSR'].values[0]
-
+            # self.exp_CSR = mat_row['Experiment CSR'].values[0]
+            # self.sim_CSR = mat_row['Simulation CSR'].values[0]
+            self.error_CSR = mat_row['Error CSR'].mean()
+            
             FileUtils.set_text(self, "message-5")
             FileUtils.code_status(self, "iteration")
         else:
